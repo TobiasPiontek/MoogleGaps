@@ -18,5 +18,9 @@ Repository for the University Stuttgart "Fachpraktikum"
             - Detailed tagging information for coastlines
             
             
-## Notes
-We try to use https://neis-one.org/2017/10/processing-osm-data-java/ as a library to parse the pbs data files of OSM
+
+- #### Dependencies used (located in dependencies folder):
+    - Osmosis Pbf
+        - Downloaded from https://mvnrepository.com/artifact/org.openstreetmap.osmosis/osmosis-pbf/0.46
+        - Is used to parse PBF Files in java
+        - Tutorials to use: https://neis-one.org/2017/10/processing-osm-data-java/
