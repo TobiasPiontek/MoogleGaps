@@ -20,5 +20,18 @@
         <jarDirectory url="file://$MODULE_DIR$/dependencies" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/dependencies/osmosis" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/dependencies/osmosis" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/osmosis" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/osmosis" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

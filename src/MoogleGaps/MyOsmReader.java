@@ -1,8 +1,7 @@
 package MoogleGaps;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer;
@@ -13,8 +12,6 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Tag;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 
-import crosby.binary.osmosis.OsmosisReader;
-
 /**
  * Receives data from the Osmosis pipeline and prints ways which have the
  * 'highway key.
@@ -22,6 +19,9 @@ import crosby.binary.osmosis.OsmosisReader;
  * @author pa5cal
  */
 public class MyOsmReader implements Sink {
+
+    public List<Long> nodes = new ArrayList<Long>();
+    public List<Integer> wayIds = new ArrayList<Integer>();
 
     @Override
     public void initialize(Map<String, Object> arg0) {
@@ -34,8 +34,15 @@ public class MyOsmReader implements Sink {
         } else if (entityContainer instanceof WayContainer) {
             Way myWay = ((WayContainer) entityContainer).getEntity();
             for (Tag myTag : myWay.getTags()) {
-                if ("highway".equalsIgnoreCase(myTag.getKey())) {
-                    System.out.println(" Woha, it's a highway: " + myWay.getId());
+                if ("coastline".equalsIgnoreCase(myTag.getValue())) {
+                    if (wayIds.isEmpty()) {
+                        wayIds.add(0);
+                    } else {
+                        wayIds.add(myWay.getWayNodes().size() + wayIds.get(wayIds.size() - 1));
+                    }
+                    for (int i = 0; i < myWay.getWayNodes().size(); i++) {
+                        nodes.add(myWay.getWayNodes().get(i).getNodeId());
+                    }
                     break;
                 }
             }
