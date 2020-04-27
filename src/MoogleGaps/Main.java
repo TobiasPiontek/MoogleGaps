@@ -1,8 +1,5 @@
 package MoogleGaps;
 
-
-import com.sun.xml.internal.bind.v2.model.annotation.FieldLocatable;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Scanner;

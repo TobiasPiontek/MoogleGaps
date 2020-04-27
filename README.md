@@ -25,3 +25,8 @@ Repository for the University Stuttgart "Fachpraktikum"
         - Komplettes Osmosis Archiev: https://github.com/openstreetmap/osmosis/releases/tag/0.47.4
         - Is used to parse PBF Files in java
         - Tutorials to use: https://neis-one.org/2017/10/processing-osm-data-java/
+        
+## Anleitung
+- legen sie in das OSMMapData Verzeichnis im Projekt ihre pbf Dateien ab
+- starten sie das Backend
+- wählen sie ihre gewünsche Datei im Dialog mit der aufgeführten nummer aus und bestätigen sie mit [Enter]
