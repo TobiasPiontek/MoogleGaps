@@ -2,6 +2,8 @@ package MoogleGaps;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -31,10 +33,23 @@ public class Main {
         for (File pbfFile : files) {
             System.out.println("[" + indexCounter++ + "]: " + pbfFile.getName());
         }
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter file to load: ");
-        int select = scan.nextInt();
-        scan.close();
-        return files[select-1].getPath();
+        int select;
+        String pathValue;
+        while(true) {
+            try {
+                Scanner scan = new Scanner(System.in);
+                System.out.print("Enter file to load: ");
+                select = scan.nextInt();
+                scan.close();
+                return files[select-1].getPath();
+
+            } catch (InputMismatchException e) {
+                System.err.println("Only numbers as input are allowed!");
+                continue;
+            }
+
+        }
+
+
     }
 }
