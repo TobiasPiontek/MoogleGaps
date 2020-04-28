@@ -26,6 +26,8 @@ public class WayReader implements Sink {
     public List<Double> allNodeLongitudes = new ArrayList<Double>();
     public List<Double> allNodeLatitudes = new ArrayList<Double>();
     public List<Long> allNodeIds = new ArrayList<Long>();
+    Way myWay;
+    Node myNode;
 
     @Override
     public void initialize(Map<String, Object> arg0) {
@@ -34,14 +36,17 @@ public class WayReader implements Sink {
     @Override
     public void process(EntityContainer entityContainer) {
         if (entityContainer instanceof NodeContainer) {
-            Node myNode = ((NodeContainer) entityContainer).getEntity();
+            myNode = ((NodeContainer) entityContainer).getEntity();
+            /*
             allNodeIds.add(myNode.getId());
             allNodeLongitudes.add(myNode.getLongitude());
             allNodeLatitudes.add(myNode.getLatitude());
-
+            */
 
         } else if (entityContainer instanceof WayContainer) {
-            Way myWay = ((WayContainer) entityContainer).getEntity();
+            myWay = ((WayContainer) entityContainer).getEntity();
+
+
             for (Tag myTag : myWay.getTags()) {
                 if ("coastline".equalsIgnoreCase(myTag.getValue())) {
                     if (wayIds.isEmpty()) {
@@ -55,6 +60,7 @@ public class WayReader implements Sink {
                     break;
                 }
             }
+
         } else if (entityContainer instanceof RelationContainer) {
             // Nothing to do here
         } else {

@@ -21,10 +21,15 @@ Repository for the University Stuttgart "Fachpraktikum"
 
 - #### Dependencies used (located in dependencies folder):
     - Osmosis Pbf
+        - Is used to parse PBF Files in java
         - Downloaded from https://mvnrepository.com/artifact/org.openstreetmap.osmosis/osmosis-pbf/0.46
         - Komplettes Osmosis Archiev: https://github.com/openstreetmap/osmosis/releases/tag/0.47.4
-        - Is used to parse PBF Files in java
         - Tutorials to use: https://neis-one.org/2017/10/processing-osm-data-java/
+    - osm4j
+        - used to parsePBF files in Java (alternative for Osmosis)
+        - https://github.com/topobyte/osm4j-extra
+        
+        
         
 ## Manual
 - Store the PBF Files in OSMMapData Folder
