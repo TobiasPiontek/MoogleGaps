@@ -47,20 +47,15 @@ public class FileReader {
         reader.setSink(wayData);
         reader.run();
 
-        /**
-        OsmosisReader readerTheSecond = new OsmosisReader(inputStream);
-        NodeReader nodeData = new NodeReader();
-        readerTheSecond.setSink(nodeData);
-        readerTheSecond.run();
-         **/
 
         System.out.println(wayData.allNodeIds.size());
-        System.out.println(wayData.longitudes.size());
-        System.out.println(wayData.latitudes.size());
+        System.out.println(wayData.allNodelongitudes.size());
+        System.out.println(wayData.allNodeLatitudes.size());
         System.out.println(wayData.nodeIds.size());
-        for(int i = 0; i < wayData.nodeIds.size(); i++) {
-            System.out.println(wayData.nodeIds.get(i));
-        }
+        //System.out.println("Printing way nodes:");
+        //for(int i = 0; i < wayData.nodeIds.size(); i++) {
+        //   System.out.println(wayData.nodeIds.get(i));
+        //}
 
         for (int i = 0; i < wayData.nodeIds.size(); i++) {
             // System.out.println(wayData.nodeIds.get(i) + ": [" + nodeData.latitudes.get(i) + ", " + nodeData.longitudes.get(i) + "]");
