@@ -23,7 +23,7 @@ public class WayReader implements Sink {
 
     public List<Long> nodeIds = new ArrayList<Long>();
     public List<Integer> wayIds = new ArrayList<Integer>();
-    public List<Double> allNodelongitudes = new ArrayList<Double>();
+    public List<Double> allNodeLongitudes = new ArrayList<Double>();
     public List<Double> allNodeLatitudes = new ArrayList<Double>();
     public List<Long> allNodeIds = new ArrayList<Long>();
 
@@ -36,7 +36,7 @@ public class WayReader implements Sink {
         if (entityContainer instanceof NodeContainer) {
             Node myNode = ((NodeContainer) entityContainer).getEntity();
             allNodeIds.add(myNode.getId());
-            allNodelongitudes.add(myNode.getLongitude());
+            allNodeLongitudes.add(myNode.getLongitude());
             allNodeLatitudes.add(myNode.getLatitude());
 
 
@@ -69,4 +69,5 @@ public class WayReader implements Sink {
     @Override
     public void close() {
     }
+
 }

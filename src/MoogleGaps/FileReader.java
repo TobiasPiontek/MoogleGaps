@@ -36,22 +36,29 @@ public class FileReader {
 
     public static void readPbfFile(String relativeFilePath) {
         InputStream inputStream = null;
+        System.out.println("reading file");
         try {
             inputStream = new FileInputStream(relativeFilePath);
         } catch (FileNotFoundException e) {
             System.err.println("File not found!");
         }
+        System.out.println("Done reading file!");
 
+        System.out.println("creating OsmosisReader");
         OsmosisReader reader = new OsmosisReader(inputStream);
+        System.out.println("new Way reader");
         WayReader wayData = new WayReader();
+        System.out.println("setting sink");
         reader.setSink(wayData);
+        System.out.println("reader run!");
         reader.run();
-
+        System.out.println("reader finished!");
 
         System.out.println(wayData.allNodeIds.size());
-        System.out.println(wayData.allNodelongitudes.size());
+        System.out.println(wayData.allNodeLongitudes.size());
         System.out.println(wayData.allNodeLatitudes.size());
         System.out.println(wayData.nodeIds.size());
+        System.out.println(wayData.wayIds.size());
         //System.out.println("Printing way nodes:");
         //for(int i = 0; i < wayData.nodeIds.size(); i++) {
         //   System.out.println(wayData.nodeIds.get(i));
