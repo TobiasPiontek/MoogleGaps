@@ -26,7 +26,7 @@ Repository for the University Stuttgart "Fachpraktikum"
         - Is used to parse PBF Files in java
         - Tutorials to use: https://neis-one.org/2017/10/processing-osm-data-java/
         
-## Anleitung
-- legen sie in das OSMMapData Verzeichnis im Projekt ihre pbf Dateien ab
-- starten sie das Backend
-- wählen sie ihre gewünsche Datei im Dialog mit der aufgeführten nummer aus und bestätigen sie mit [Enter]
+## Manual
+- Store the PBF Files in OSMMapData Folder
+- Start the Backend
+- Choose the wanted File in the Dialog with its listed Number and confirm with [Enter]

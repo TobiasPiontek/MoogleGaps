@@ -3,14 +3,13 @@ package MoogleGaps;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         FileReader fileReader = new FileReader();
-        FileReader.readPBSFile(getFilename(".pbf", "./OSMMapData"));
+        FileReader.readPbfFile(getFilename(".pbf", "./OSMMapData"));
     }
 
     /***
