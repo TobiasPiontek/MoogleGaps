@@ -39,6 +39,9 @@ public class NodeReader implements Sink {
             if (index > -1) {
                 FileReader.longitudes[index] = myNode.getLongitude();
                 FileReader.latitudes[index] = myNode.getLatitude();
+                if((int) myNode.getLongitude() == 0){       //debugging purpose
+                    System.out.println("0-Node gefunden bei: " + index);
+                }
             }
         } else if (entityContainer instanceof WayContainer) {
             // Nothing to do here
