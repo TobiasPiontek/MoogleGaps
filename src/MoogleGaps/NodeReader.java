@@ -1,6 +1,7 @@
 package MoogleGaps;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,43 +20,28 @@ import org.openstreetmap.osmosis.core.task.v0_6.Sink;
  *
  * @author pa5cal
  */
-public class WayReader implements Sink {
+public class NodeReader implements Sink {
 
-    Way myWay;
+    Node myNode;
 
     @Override
     public void initialize(Map<String, Object> arg0) {
     }
 
-    // gets IDs of all WayNodes with Tag "coastline"
+    // gets coordinates of WayNodes
     @Override
     public void process(EntityContainer entityContainer) {
         if (entityContainer instanceof NodeContainer) {
-            // Nothing to do here
-        } else if (entityContainer instanceof WayContainer) {
-            myWay = ((WayContainer) entityContainer).getEntity();
+            myNode = ((NodeContainer) entityContainer).getEntity();
 
-            for (Tag myTag : myWay.getTags()) {
-
-                // loop over all Ways with Tag "coastline"
-                if ("coastline".equalsIgnoreCase(myTag.getValue())) {
-
-                    // add #Nodes in Way to wayIds
-                    if (FileReader.wayIds.isEmpty()) {
-                        FileReader.wayIds.add(0);
-                    } else {
-                        FileReader.wayIds.add(myWay.getWayNodes().size() + FileReader.wayIds.get(FileReader.wayIds.size() - 1));
-                    }
-
-                    // add every Node to nodeIds
-                    for (int i = 0; i < myWay.getWayNodes().size(); i++) {
-                        FileReader.nodeIds.add(myWay.getWayNodes().get(i).getNodeId());
-                    }
-
-                    break;
-                }
+            // add long- and latitudes to respective Lists
+            int index = Collections.binarySearch(FileReader.nodeIds, myNode.getId());
+            if (index > -1) {
+                FileReader.longitudes[index] = myNode.getLongitude();
+                FileReader.latitudes[index] = myNode.getLatitude();
             }
-
+        } else if (entityContainer instanceof WayContainer) {
+            // Nothing to do here
         } else if (entityContainer instanceof RelationContainer) {
             // Nothing to do here
         } else {
