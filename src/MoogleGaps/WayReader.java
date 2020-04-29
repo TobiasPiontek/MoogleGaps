@@ -36,7 +36,7 @@ public class WayReader implements Sink {
     @Override
     public void process(EntityContainer entityContainer) {
         if (entityContainer instanceof NodeContainer) {
-            myNode = ((NodeContainer) entityContainer).getEntity();
+            //myNode = ((NodeContainer) entityContainer).getEntity();
             /*
             allNodeIds.add(myNode.getId());
             allNodeLongitudes.add(myNode.getLongitude());

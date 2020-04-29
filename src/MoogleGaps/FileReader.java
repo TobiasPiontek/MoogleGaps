@@ -54,6 +54,8 @@ public class FileReader {
         System.out.println(wayData.nodeIds.size());
         System.out.println(wayData.wayIds.size());
         System.out.println(wayData.myNode);
+        System.out.println(wayData.myNode);
+        System.out.println(wayData.myNode);
 
         //System.out.println("Printing way nodes:");
         //for(int i = 0; i < wayData.nodeIds.size(); i++) {
