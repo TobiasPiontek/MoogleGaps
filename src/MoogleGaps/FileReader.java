@@ -60,6 +60,10 @@ public class FileReader {
             // System.out.println(nodeIds.get(i) + ": [" + longitudes[i] + ", " + latitudes[i] + "]");
         }
 
+        for (int i = 0; i < 100; i++) {
+            // System.out.println(wayIds.get(i));
+        }
+
     }
 
 }
