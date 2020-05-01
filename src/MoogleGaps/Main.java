@@ -2,6 +2,7 @@ package MoogleGaps;
 
 import com.sun.nio.sctp.SendFailedNotification;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
@@ -30,11 +31,14 @@ public class Main {
         System.out.println("Size of startnodes is: " + startnodes.size());
         System.out.println("Size of endnodes is: " + endnodes.size());
 
+        int merges = 0;
         for(int i = 0; i < FileReader.wayIds.size()-1; i++){
             if(startnodes.contains(endnodes.get(i))){
-                System.out.println("Mergeable ways found!");
+                System.out.println("way: " + i + " with size: " + FileReader.wayIds.get(i)  + " and: " + startnodes.indexOf(endnodes.get(i)) + " with size: " + FileReader.wayIds.get(startnodes.indexOf(endnodes.get(i)))  + " are mergeable!");
+                merges++;
             }
         }
+        System.out.println("Merges found: " + merges);
 
         //detect if ends math with start nodes
 
