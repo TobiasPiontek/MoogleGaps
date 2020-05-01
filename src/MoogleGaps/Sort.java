@@ -12,6 +12,7 @@ public class Sort {
     public static ArrayList<Long> sortWays(ArrayList<Long> nodeIds, int wayId) {
         seenWays[wayId] = true;
         for (int i = 0; i < FileReader.wayIds.size(); i++) {
+
             if (!seenWays[i]) {
                 if (nodeIds.get(nodeIds.size() - 1) == FileReader.getFirstNodeOfWay(i)) {
 
@@ -31,16 +32,17 @@ public class Sort {
     }
 
     public static void completeWays() {
-        for (int i = 0; i < seenWays.length; i++) {
+        for (int i = 0; i < seenWays.length-1; i++) {
             if (!seenWays[i]) {
                 ArrayList<Long> way = sortWays(FileReader.getWayAtId(i), i);
                 nodeIds.addAll(i, way);
                 wayIds.add(way.size());
             }
         }
+
         for (int i = 0; i < wayIds.size(); i++) {
             System.out.println(wayIds.get(i));
         }
         System.out.println("Sort.wayIds.size() = " + wayIds.size());
-    }
+     }
 }
