@@ -36,6 +36,8 @@ public class FileReader {
         System.out.println(nodeIds.size());
         // System.out.println(wayIds.size());
 
+        // wayIds.add(nodeIds.size());
+
         Collections.sort(nodeIds);
 
         System.out.println(nodeIds.size());
@@ -66,4 +68,23 @@ public class FileReader {
 
     }
 
+    public static ArrayList<Long> getWayAtId(int wayId) {
+        ArrayList<Long> wayAtIndex = new ArrayList<Long>();
+        for (int i = wayIds.get(wayId); i < FileReader.wayIds.get(wayId + 1); i++) {
+            wayAtIndex.add(nodeIds.get(i));
+        }
+        return wayAtIndex;
+    }
+
+    public static long getFirstNodeOfWay(int id) {
+        return nodeIds.get(wayIds.get(id));
+    }
+
+    public static long getLastNodeOfWay(int id) {
+        if (id == wayIds.size() - 1) {
+            return nodeIds.get(nodeIds.size() - 1);
+        } else {
+            return nodeIds.get(wayIds.get(id + 1) - 1);
+        }
+    }
 }
