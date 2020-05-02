@@ -17,7 +17,8 @@ public class Main {
 
         //GeoJson.printGeoJson();
 
-        // output of end and starting node
+
+        FileReader.getLatitudes(3);
 
         // testing code for way merging with duplication detection
         startNodes = new ArrayList<>(FileReader.wayIds.size());
@@ -39,12 +40,18 @@ public class Main {
 
         //detect if ends math with start nodes
 
-        Sort.completeWays();
+
+
+
+        //Sort.completeWays();
 
         /**
         for(int i = 0; i < FileReader.wayIds.size()-1; i++){
             System.out.println("Way: " + i + " First Element: " + FileReader.nodeIds.get(FileReader.wayIds.get(i)) + " ,End Element: " + FileReader.nodeIds.get(FileReader.wayIds.get(i+1)-1));
         }
         **/
+
+
+
     }
 }

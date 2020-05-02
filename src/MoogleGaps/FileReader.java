@@ -76,6 +76,45 @@ public class FileReader {
         return wayAtIndex;
     }
 
+    public static double[] getLatitudes(int wayIndex){
+        int startpoint;
+        int endpoint;
+        startpoint = wayIds.get(wayIndex);
+        if(wayIndex < wayIds.size()-1){ //if its not the last element
+            endpoint = wayIds.get(wayIndex+1)-1;
+        }else{
+            endpoint=nodeIds.size()-1;
+        }
+        int size = endpoint-startpoint;
+        double[] wayAtId = new double[size];
+
+        for(int i = 0; i < size; i++){
+            wayAtId[i] = latitudes[i + startpoint];
+        }
+
+        return wayAtId;
+    }
+
+
+    public static double[] getLongitudes(int wayIndex){
+        int startpoint;
+        int endpoint;
+        startpoint = wayIds.get(wayIndex);
+        if(wayIndex < wayIds.size()-1){ //if its not the last element
+            endpoint = wayIds.get(wayIndex+1)-1;
+        }else{
+            endpoint=nodeIds.size()-1;
+        }
+        int size = endpoint-startpoint;
+        double[] wayAtId = new double[size];
+
+        for(int i = 0; i < size; i++){
+            wayAtId[i] = longitudes[i + startpoint];
+        }
+        return wayAtId;
+    }
+
+
     public static long getFirstNodeOfWay(int id) {
         return nodeIds.get(wayIds.get(id));
     }
