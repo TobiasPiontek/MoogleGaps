@@ -2,9 +2,9 @@ package MoogleGaps;
 
 public class Geometry {
 
-    // takes longitude and latitude of point
-    // returns n-vector, i.e. vector originating from center of earth through point
-    public static double[] getNVector(double longitude, double latitude) {
+    // takes latitude and longitude of point
+    // returns n-vector, i.e. to earth's surface perpendicular vector through point
+    public static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
         nVector[0] = Math.cos(latitude)*Math.cos(longitude);
         nVector[1] = Math.cos(latitude)*Math.sin(longitude);
@@ -12,20 +12,21 @@ public class Geometry {
         return nVector;
     }
 
-    // takes longitudes and latitudes of four points a, b, c, and d
+    // takes latitudes and longitudes of four points a, b, c, and d
     // returns n-vector of the intersection of ab and cd
-    public static double[] getIntersection(double longitudeA, double latitudeA, double longitudeB, double latitudeB, double longitudeC, double latitudeC, double longitudeD, double latitudeD) {
-        double[] nVectorA = getNVector(longitudeA, latitudeA);
-        double[] nVectorB = getNVector(longitudeB, latitudeB);
-        double[] nVectorC = getNVector(longitudeC, latitudeC);
-        double[] nVectorD = getNVector(longitudeD, latitudeD);
+    public static double[] getIntersection(double latitudeA, double longitudeA, double latitudeB, double longitudeB, double latitudeC, double longitudeC, double latitudeD, double longitudeD) {
+        double[] nVectorA = getNVector(latitudeA, longitudeA);
+        double[] nVectorB = getNVector(latitudeB, longitudeB);
+        double[] nVectorC = getNVector(latitudeC, longitudeC);
+        double[] nVectorD = getNVector(latitudeD, longitudeD);
         double[] greatCircle1 = getCrossProduct(nVectorA, nVectorB);
         double[] greatCircle2 = getCrossProduct(nVectorC, nVectorD);
+
+        // compute first candidate
         double[] nVectorIntersection = getCrossProduct(greatCircle1, greatCircle2);
-        double[] nVectorMid = new double[3];
-        for (int i = 0; i < 3; i++) {
-            nVectorMid[i] = nVectorA[i] + nVectorB[i] + nVectorC[i] + nVectorD[i];
-        }
+        double[] nVectorMid = getMidpoint(nVectorA, getMidpoint(nVectorB, getMidpoint(nVectorC, nVectorD)));
+
+        // return closer point
         if (getDotProduct(nVectorMid, nVectorIntersection) > 0) {
             return nVectorIntersection;
         } else {
@@ -51,5 +52,36 @@ public class Geometry {
             dotProduct += a[i]*b[i];
         }
         return dotProduct;
+    }
+
+    // takes n-vector of point
+    // returns its latitude and longitude
+    public static double[] getCoordinates(double[] nVector) {
+        double[] coordinates = new double[2];
+        coordinates[0] = Math.atan2(nVector[2], Math.sqrt(nVector[0]*nVector[0] + nVector[1]*nVector[1]));
+        coordinates[1] = Math.atan2(nVector[1], nVector[0]);
+        return coordinates;
+    }
+
+    // takes n-vectors of two points a and b
+    // returns their distance in km with R = 6371 km
+    public static double getDistance(double[] nVectorA, double[] nVectorB) {
+        return 6371*Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB));
+    }
+
+    // takes vector
+    // returns its Euclidean norm
+    public static double getEuclideanNorm(double[] vector) {
+        return Math.sqrt(getDotProduct(vector, vector));
+    }
+
+    // takes n-vectors of two points a and b
+    // returns the n-vector of their midpoint
+    public static double[] getMidpoint(double[] nVectorA, double[] nVectorB) {
+        double[] midpoint = new double[3];
+        for (int i = 0; i < 3; i++) {
+            midpoint[i] = nVectorA[i] + nVectorB[i];
+        }
+        return midpoint;
     }
 }
