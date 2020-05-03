@@ -76,7 +76,8 @@ public class FileReader {
         return wayAtIndex;
     }
 
-    public static double[] getLatitudes(int wayIndex){
+
+    public static double[] getLatitudesOfWay(int wayIndex){
         int startpoint;
         int endpoint;
         startpoint = wayIds.get(wayIndex);
@@ -96,7 +97,7 @@ public class FileReader {
     }
 
 
-    public static double[] getLongitudes(int wayIndex){
+    public static double[] getLongitudesOfWay(int wayIndex){
         int startpoint;
         int endpoint;
         startpoint = wayIds.get(wayIndex);
