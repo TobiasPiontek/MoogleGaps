@@ -37,7 +37,10 @@ Repository for the University Stuttgart "Fachpraktikum"
         - used to parsePBF files in Java (alternative for Osmosis)
         - https://github.com/topobyte/osm4j-extra
         
-        
+- #### Tutorial used
+    - ##### Task 3
+        - [Tutorial for vector matheatics](http://www.movable-type.co.uk/scripts/latlong-vectors.html)
+        - [Point in polygon test](http://geomalgorithms.com/a03-_inclusion.html)
         
 ## Manual
 - Store the PBF Files in OSMMapData Folder
