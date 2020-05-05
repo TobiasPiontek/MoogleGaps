@@ -5,9 +5,13 @@ import java.util.List;
 
 public class Sort {
 
+
+    //variables for recursive implementation
     private static boolean[] seenWays = new boolean[FileReader.wayIds.size()];
     private static List<Long> nodeIds = new ArrayList<Long>();
     private static List<Integer> wayIds = new ArrayList<Integer>();
+
+    //variables for iterative implementation
 
     public static ArrayList<Long> sortWays(ArrayList<Long> nodeIds, int wayId) {
         seenWays[wayId] = true;
@@ -47,6 +51,12 @@ public class Sort {
      }
 
 
+
+    public static void iterativeWaySort(){
+
+
+
+    }
 
 
 

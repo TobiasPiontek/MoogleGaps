@@ -15,10 +15,6 @@ public class Main {
         FileReader fileReader = new FileReader();
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
 
-        //GeoJson.printGeoJson();
-
-
-        FileReader.getLatitudes(3);
 
         // testing code for way merging with duplication detection
         startNodes = new ArrayList<>(FileReader.wayIds.size());
@@ -38,12 +34,10 @@ public class Main {
         System.out.println("Size of startNodes is: " + startNodes.size());
         System.out.println("Size of endNodes is: " + endNodes.size());
 
-        //detect if ends math with start nodes
-
-
-
-
-        //Sort.completeWays();
+        for(int i = 0; i<10;i++){
+            System.out.println("\n\n\n\n\nWay: " + i + " is as followed: ");
+            GeoJson.printWay(i);
+        }
 
         /**
         for(int i = 0; i < FileReader.wayIds.size()-1; i++){
