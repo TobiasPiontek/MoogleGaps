@@ -47,6 +47,10 @@ public class GeoJson {
         return Element;
     }
 
+    /**
+     * Mainly used for debbugging purposes
+     * @param wayIndex  the index of the way to print
+     */
     public static void printWay(int wayIndex){
         double[] longitudes =  FileReader.getLongitudesOfWay(wayIndex);
         double[] latitdudes = FileReader.getLatitudesOfWay(wayIndex);

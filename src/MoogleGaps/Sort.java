@@ -7,7 +7,7 @@ public class Sort {
 
 
     //variables for recursive implementation
-    private static boolean[] seenWays = new boolean[FileReader.wayIds.size()];
+    private static boolean[] seenWays = new boolean[FileReader.wayIds.size()];  //also used for iterative way sort
     private static List<Long> nodeIds = new ArrayList<Long>();
     private static List<Integer> wayIds = new ArrayList<Integer>();
 
@@ -54,6 +54,12 @@ public class Sort {
 
     public static void iterativeWaySort(){
 
+        for(int i = 0; i<seenWays.length; i++){
+            if(seenWays[i]){
+
+            }
+
+        }
 
 
     }
