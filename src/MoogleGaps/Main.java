@@ -34,8 +34,8 @@ public class Main {
         System.out.println("Size of startNodes is: " + startNodes.size());
         System.out.println("Size of endNodes is: " + endNodes.size());
 
-        for(int i = 0; i<10;i++){
-            System.out.println("\n\n\n\n\nWay: " + i + " is as followed: ");
+        for(int i = 0; i < 10;i++){
+            System.out.println("\n\n\n\n\nWay " + i + " is as followed: ");
             GeoJson.printWay(i);
         }
 
