@@ -4,6 +4,7 @@ import crosby.binary.osmosis.OsmosisReader;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class FileReader {
@@ -21,7 +22,7 @@ public class FileReader {
         // read files
         InputStream wayInputStream = null;
         InputStream nodeInputStream = null;
-        System.out.println("reading file");
+        System.out.println("reading file..." + new Timestamp(System.currentTimeMillis()));
         try {
             wayInputStream = new FileInputStream(relativeFilePath);
             nodeInputStream = new FileInputStream(relativeFilePath);
@@ -29,50 +30,27 @@ public class FileReader {
             System.err.println("File not found!");
         }
 
-        // extract WayNodes
+        System.out.println("Reading in Ways " + new Timestamp(System.currentTimeMillis()));
         OsmosisReader wayReader = new OsmosisReader(wayInputStream);
         WayReader wayData = new WayReader();
         wayReader.setSink(wayData);
         wayReader.run();
 
-        System.out.println(nodeIds.size());
-        // System.out.println(wayIds.size());
-
-        // wayIds.add(nodeIds.size());
-
-        //Collections.sort(nodeIds);
+        System.out.println("Sorting NodeIds... " + new Timestamp(System.currentTimeMillis()));
         nodeIdLookUp = new ArrayList<>(nodeIds.size());
         nodeIdLookUp=Quicksort.quickSort(nodeIds);
 
-        System.out.println(nodeIds.size());
 
-        // check that nodeIds is sorted correctly
-        for (int i = 0; i < nodeIds.size() - 1; i++) {
-            if (nodeIds.get(i) > nodeIds.get(i + 1)) {
-                System.out.println("F");
-            }
-        }
-
+        System.out.println("Reading in node coordinates... " + new Timestamp(System.currentTimeMillis()));
         longitudes = new double[nodeIds.size()];
         latitudes = new double[nodeIds.size()];
-
-
-
 
         // extract longitudes and latitudes
         OsmosisReader nodeReader = new OsmosisReader(nodeInputStream);
         NodeReader nodeData = new NodeReader();
         nodeReader.setSink(nodeData);
         nodeReader.run();
-
-        for (int i = 0; i < nodeIds.size(); i++) {
-            // System.out.println(nodeIds.get(i) + ": [" + longitudes[i] + ", " + latitudes[i] + "]");
-        }
-
-        for (int i = 0; i < 100; i++) {
-            // System.out.println(wayIds.get(i));
-        }
-
+        System.out.println("Done with reading Nodes... " + new Timestamp(System.currentTimeMillis()));
     }
 
     public static ArrayList<Long> getWayAtId(int wayId) {
