@@ -37,8 +37,8 @@ public class NodeReader implements Sink {
             // add long- and latitudes to respective Lists
             int index = Collections.binarySearch(FileReader.nodeIds, myNode.getId());
             if (index > -1) {
-                FileReader.longitudes[index] = myNode.getLongitude();
-                FileReader.latitudes[index] = myNode.getLatitude();
+                FileReader.longitudes[FileReader.nodeIdLookUp.get(index)] = myNode.getLongitude();
+                FileReader.latitudes[FileReader.nodeIdLookUp.get(index)] = myNode.getLatitude();
                 /**
                 if((int) myNode.getLongitude() == 0){       //debugging purpose
                     System.out.println("0-Node gefunden bei: " + index);

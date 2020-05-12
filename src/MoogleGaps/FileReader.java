@@ -56,6 +56,9 @@ public class FileReader {
         longitudes = new double[nodeIds.size()];
         latitudes = new double[nodeIds.size()];
 
+
+
+
         // extract longitudes and latitudes
         OsmosisReader nodeReader = new OsmosisReader(nodeInputStream);
         NodeReader nodeData = new NodeReader();
