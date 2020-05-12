@@ -3,13 +3,13 @@ package MoogleGaps;
 import crosby.binary.osmosis.OsmosisReader;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class FileReader {
 
     public static List<Long> nodeIds = new ArrayList<Long>();
+
+
     public static List<Integer> wayIds = new ArrayList<Integer>();
     public static double[] longitudes;
     public static double[] latitudes;

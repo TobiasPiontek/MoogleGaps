@@ -50,6 +50,7 @@ public class WayReader implements Sink {
                     // add every Node to nodeIds
                     for (int i = 0; i < myWay.getWayNodes().size(); i++) {
                         FileReader.nodeIds.add(myWay.getWayNodes().get(i).getNodeId());
+
                     }
 
                     break;
