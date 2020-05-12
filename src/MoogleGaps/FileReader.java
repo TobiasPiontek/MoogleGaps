@@ -75,7 +75,7 @@ public class FileReader {
         double[] wayAtId = new double[size];
 
         for(int i = 0; i < size; i++){
-            wayAtId[i] = latitudes[i + startpoint];
+            wayAtId[i] = latitudes[FileReader.nodeIdLookUp.get(i + startpoint)];
         }
 
         return wayAtId;
@@ -95,7 +95,7 @@ public class FileReader {
         double[] wayAtId = new double[size];
 
         for(int i = 0; i < size; i++){
-            wayAtId[i] = longitudes[i + startpoint];
+            wayAtId[i] = longitudes[FileReader.nodeIdLookUp.get(i + startpoint)];
         }
         return wayAtId;
     }
