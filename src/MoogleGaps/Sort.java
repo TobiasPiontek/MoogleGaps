@@ -70,7 +70,7 @@ public class Sort {
         return inputArray;
     }
 
-    public MergeSort(ArrayList<Integer> inputArray){
+    public void MergeSort(ArrayList<Integer> inputArray){
         this.inputArray = inputArray;
     }
 

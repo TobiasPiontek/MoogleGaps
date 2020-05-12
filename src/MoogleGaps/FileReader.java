@@ -3,11 +3,13 @@ package MoogleGaps;
 import crosby.binary.osmosis.OsmosisReader;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class FileReader {
 
-    public static List<Long> nodeIds = new ArrayList<Long>();
+    public static ArrayList<Long> nodeIds = new ArrayList<Long>();
+    public static ArrayList<Integer> nodeIdLookUp;
 
 
     public static List<Integer> wayIds = new ArrayList<Integer>();
@@ -38,7 +40,9 @@ public class FileReader {
 
         // wayIds.add(nodeIds.size());
 
-        Collections.sort(nodeIds);
+        //Collections.sort(nodeIds);
+        nodeIdLookUp = new ArrayList<>(nodeIds.size());
+        nodeIdLookUp=Quicksort.quickSort(nodeIds);
 
         System.out.println(nodeIds.size());
 
