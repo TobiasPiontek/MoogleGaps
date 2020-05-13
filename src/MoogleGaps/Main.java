@@ -19,19 +19,8 @@ public class Main {
 
 
 
-
-
-
-        for(int i = 0; i < 1; i++){
-            System.out.println("\n\n\n\n\nWay " + i + " is as followed: ");
-            GeoJson.printWay(i);
-        }
-
-
-
-
-
-
+            System.out.println("\n\n\n\n\nWay is as followed: ");
+            GeoJson.printWay(3);
 
 
         if (Geometry.inPolygon(Polygons.getLatitudes(), Polygons.getLongitudes(), -69.034, -68.36)) {
