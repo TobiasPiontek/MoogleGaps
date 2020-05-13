@@ -34,10 +34,10 @@ public class Main {
         System.out.println("Size of startNodes is: " + startNodes.size());
         System.out.println("Size of endNodes is: " + endNodes.size());
 
-        for(int i = 0; i < 10;i++){
+        /**for(int i = 0; i < 1; i++){
             System.out.println("\n\n\n\n\nWay " + i + " is as followed: ");
             GeoJson.printWay(i);
-        }
+        }**/
 
         /**
         for(int i = 0; i < FileReader.wayIds.size()-1; i++){
@@ -45,7 +45,11 @@ public class Main {
         }
         **/
 
-
+        if (Geometry.inPolygon(Polygons.getLatitudes(), Polygons.getLongitudes(), -69.04327869415283, -68.35991778197821)) {
+            System.out.println("Yup.");
+        } else {
+            System.out.println("Nope.");
+        }
 
     }
 }

@@ -8,8 +8,8 @@ public class Geometry {
     // returns n-vector, i.e. to earth's surface perpendicular vector through point
     public static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
-        nVector[0] = Math.cos(latitude)*Math.cos(longitude);
-        nVector[1] = Math.cos(latitude)*Math.sin(longitude);
+        nVector[0] = Math.cos(latitude) * Math.cos(longitude);
+        nVector[1] = Math.cos(latitude) * Math.sin(longitude);
         nVector[2] = Math.sin(latitude);
         return nVector;
     }
@@ -30,8 +30,16 @@ public class Geometry {
 
         // return closer point
         if (getDotProduct(nVectorMid, nVectorIntersection) > 0) {
+
+            // DEBUG
+            System.out.println(getCoordinates(nVectorIntersection)[0] + ", "+ getCoordinates(nVectorIntersection)[1]);
+
             return nVectorIntersection;
         } else {
+
+            // DEBUG
+            System.out.println(getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[0] + ", "+ getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[1]);
+
             return getCrossProduct(greatCircle2, greatCircle1);
         }
     }
@@ -40,9 +48,9 @@ public class Geometry {
     // returns their cross product a x b
     public static double[] getCrossProduct(double[] a, double[] b) {
         double[] crossProduct = new double[3];
-        crossProduct[0] = a[2]*b[3] - a[3]*b[2];
-        crossProduct[1] = a[3]*b[1] - a[1]*b[3];
-        crossProduct[2] = a[1]*b[2] - a[2]*b[1];
+        crossProduct[0] = a[1] * b[2] - a[2] * b[1];
+        crossProduct[1] = a[2] * b[0] - a[0] * b[2];
+        crossProduct[2] = a[0] * b[1] - a[1] * b[0];
         return crossProduct;
     }
 
@@ -83,7 +91,7 @@ public class Geometry {
     // returns its latitude and longitude
     public static double[] getCoordinates(double[] nVector) {
         double[] coordinates = new double[2];
-        coordinates[0] = Math.atan2(nVector[2], Math.sqrt(nVector[0]*nVector[0] + nVector[1]*nVector[1]));
+        coordinates[0] = Math.atan2(nVector[2], Math.sqrt(nVector[0] * nVector[0] + nVector[1] * nVector[1]));
         coordinates[1] = Math.atan2(nVector[1], nVector[0]);
         return coordinates;
     }
@@ -118,7 +126,7 @@ public class Geometry {
 
         // iterate over all edges of the polygon
         for (int i = 0; i < n; i++) {
-            double[] intersection = getIntersection(latitudes[i], longitudes[i], latitudes[(i + 1)%n], longitudes[(i + 1)%n], latitude, longitude, 0.0, 0.0);
+            double[] intersection = getIntersection(latitudes[i], longitudes[i], latitudes[(i + 1) % n], longitudes[(i + 1) % n], latitude, longitude, 0.0, 0.0);
             double[] coordinates = getCoordinates(intersection);
 
             // increment intersections counter if the intersection is between point and fixed point
@@ -129,8 +137,11 @@ public class Geometry {
             }
         }
 
+        // DEBUG
+        System.out.println(intersections);
+
         // if even number of intersections, the point lies in the polygon
-        if (intersections%2 == 1) {
+        if (intersections % 2 == 1) {
             return true;
         } else {
             return false;

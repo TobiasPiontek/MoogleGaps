@@ -100,7 +100,6 @@ public class FileReader {
         return wayAtId;
     }
 
-
     public static long getFirstNodeOfWay(int id) {
         return nodeIds.get(wayIds.get(id));
     }

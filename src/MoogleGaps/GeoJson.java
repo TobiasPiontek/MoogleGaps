@@ -68,4 +68,20 @@ public class GeoJson {
             }
         }
     }
+
+    public static void printWayByCoordinates(double[] latitdudes, double[] longitudes){
+        System.out.println("{");
+        System.out.println("  \"type\": \"FeatureCollection\",");
+        System.out.println("  \"features\": [");
+        for (int i = 0; i < longitudes.length; i++) {       // used before: FileReader.nodeIds.size()
+            System.out.println(getGeoJsonElement(6 , longitudes[i], latitdudes[i]));
+
+            if(i != longitudes.length-1) {
+                System.out.print("}, ");
+            } else {
+                System.out.println("}]");
+                System.out.println("}");
+            }
+        }
+    }
 }
