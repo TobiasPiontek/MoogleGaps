@@ -8,9 +8,9 @@ public class Geometry {
     // returns n-vector, i.e. to earth's surface perpendicular vector through point
     public static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
-        nVector[0] = Math.cos(latitude) * Math.cos(longitude);
-        nVector[1] = Math.cos(latitude) * Math.sin(longitude);
-        nVector[2] = Math.sin(latitude);
+        nVector[0] = Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(longitude));
+        nVector[1] = Math.cos(Math.toRadians(latitude)) * Math.sin(Math.toRadians(longitude));
+        nVector[2] = Math.sin(Math.toRadians(latitude));
         return nVector;
     }
 
@@ -32,13 +32,13 @@ public class Geometry {
         if (getDotProduct(nVectorMid, nVectorIntersection) > 0) {
 
             // DEBUG
-            System.out.println(getCoordinates(nVectorIntersection)[0] + ", "+ getCoordinates(nVectorIntersection)[1]);
+            //System.out.println(getCoordinates(nVectorIntersection)[0] + ", "+ getCoordinates(nVectorIntersection)[1]);
 
             return nVectorIntersection;
         } else {
 
             // DEBUG
-            System.out.println(getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[0] + ", "+ getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[1]);
+            //System.out.println(getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[0] + ", "+ getCoordinates(getCrossProduct(greatCircle2, greatCircle1))[1]);
 
             return getCrossProduct(greatCircle2, greatCircle1);
         }
@@ -91,15 +91,15 @@ public class Geometry {
     // returns its latitude and longitude
     public static double[] getCoordinates(double[] nVector) {
         double[] coordinates = new double[2];
-        coordinates[0] = Math.atan2(nVector[2], Math.sqrt(nVector[0] * nVector[0] + nVector[1] * nVector[1]));
-        coordinates[1] = Math.atan2(nVector[1], nVector[0]);
+        coordinates[0] = Math.toDegrees(Math.atan2(nVector[2], Math.sqrt(nVector[0] * nVector[0] + nVector[1] * nVector[1])));
+        coordinates[1] = Math.toDegrees(Math.atan2(nVector[1], nVector[0]));
         return coordinates;
     }
 
     // takes n-vectors of two points a and b
     // returns their distance in km with R = 6371 km
     public static double getDistance(double[] nVectorA, double[] nVectorB) {
-        return 6371*Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB));
+        return 6371*Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
     }
 
     // takes vector
@@ -124,10 +124,18 @@ public class Geometry {
         int intersections = 0;
         int n = latitudes.length;
 
+        // DEBUG
+        double[] intersectionLatitudes = new double[n];
+        double[] intersectionLongitudes = new double[n];
+
         // iterate over all edges of the polygon
         for (int i = 0; i < n; i++) {
             double[] intersection = getIntersection(latitudes[i], longitudes[i], latitudes[(i + 1) % n], longitudes[(i + 1) % n], latitude, longitude, 0.0, 0.0);
             double[] coordinates = getCoordinates(intersection);
+
+            // DEBUG
+            intersectionLatitudes[i] = coordinates[0];
+            intersectionLongitudes[i] = coordinates[1];
 
             // increment intersections counter if the intersection is between point and fixed point
             if (Math.signum(coordinates[0]) == Math.signum(latitude) && Math.signum(coordinates[1]) == Math.signum(longitude)) {
@@ -139,6 +147,7 @@ public class Geometry {
 
         // DEBUG
         System.out.println(intersections);
+        GeoJson.printWayByCoordinates(intersectionLatitudes, intersectionLongitudes);
 
         // if even number of intersections, the point lies in the polygon
         if (intersections % 2 == 1) {
