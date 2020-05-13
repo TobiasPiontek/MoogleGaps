@@ -44,7 +44,7 @@ public class WayReader implements Sink {
                     if (FileReader.wayIds.isEmpty()) {
                         FileReader.wayIds.add(0);
                     } else {
-                        FileReader.wayIds.add(myWay.getWayNodes().size() + FileReader.wayIds.get(FileReader.wayIds.size() - 1));
+                        FileReader.wayIds.add(FileReader.nodeIds.size());
                     }
 
                     // add every Node to nodeIds
@@ -60,7 +60,7 @@ public class WayReader implements Sink {
         } else if (entityContainer instanceof RelationContainer) {
             // Nothing to do here
         } else {
-            System.out.println("Unknown Entity!");
+
         }
     }
 
