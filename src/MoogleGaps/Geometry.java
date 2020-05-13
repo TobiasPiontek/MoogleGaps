@@ -146,8 +146,9 @@ public class Geometry {
         }
 
         // DEBUG
-        System.out.println(intersections);
-        GeoJson.printWayByCoordinates(intersectionLatitudes, intersectionLongitudes);
+
+        //System.out.println(intersections);
+        //GeoJson.printWayByCoordinates(intersectionLatitudes, intersectionLongitudes);
 
         // if even number of intersections, the point lies in the polygon
         if (intersections % 2 == 1) {

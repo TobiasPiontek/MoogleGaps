@@ -39,18 +39,32 @@ public class NodeReader implements Sink {
             if (index > -1) {
                 FileReader.longitudes[index] = myNode.getLongitude();
                 FileReader.latitudes[index] = myNode.getLatitude();
-                /**
-                if((int) myNode.getLongitude() == 0){       //debugging purpose
-                    System.out.println("0-Node gefunden bei: " + index);
+
+                //search on right side of sorted list
+
+                int i = 1;
+                while(index+i<FileReader.nodeIds.size() && myNode.getId()==FileReader.nodeIds.get(index+i) ){
+                    FileReader.longitudes[index+i] = myNode.getLongitude();
+                    FileReader.latitudes[index+i] = myNode.getLatitude();
+                    i++;
                 }
-                 **/
+
+                //search on the left side of sorted list
+                int j = 1;
+                while(index-j>=0 && myNode.getId()==FileReader.nodeIds.get(index-j)){
+                    FileReader.longitudes[index-j] = myNode.getLongitude();
+                    FileReader.latitudes[index-j] = myNode.getLatitude();
+                    j++;
+                }
+
+
             }
         } else if (entityContainer instanceof WayContainer) {
             // Nothing to do here
         } else if (entityContainer instanceof RelationContainer) {
             // Nothing to do here
         } else {
-            System.out.println("Unknown Entity!");
+            // Nothing to do here
         }
     }
 
