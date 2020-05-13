@@ -1,6 +1,6 @@
-# MoogleGaps
+# MoogleGaps 
 Repository for the University Stuttgart "Fachpraktikum"
-
+Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCourseMeetingSS20
 - #### Task 1: Understand OSM Data Structures
     - as a first step, we need to get to know how the data is organized inside OSM.we are primarily interested in “nodes” and “ways”.
         - Resources
