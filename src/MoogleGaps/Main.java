@@ -16,14 +16,10 @@ public class Main {
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
         PolygonsV2.createPolygons();
 
-
-
-
             System.out.println("\n\n\n\n\nWay is as followed: ");
             GeoJson.printWay(0);
 
-
-        if (Geometry.coordinateIsInsidePolygon(Polygons.getLongitudes(), Polygons.getLatitudes(),  -58.44180464744568, -62.22894320613803)) {
+        if (Geometry.coordinateIsInsidePolygon(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0),  -69.02924537658691, -68.3538239160708)) {
             System.out.println("Yup.");
         } else {
             System.out.println("Nope.");
