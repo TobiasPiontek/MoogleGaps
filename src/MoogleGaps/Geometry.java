@@ -158,7 +158,7 @@ public class Geometry {
         }
     }
 
-    public static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double latitude, double longitude) {
+    public static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double longitude, double latitude) {
         double angle = 0;
         double latitudeA, longitudeA, latitudeB, longitudeB;
         int n = latitudes.length;
@@ -183,11 +183,14 @@ public class Geometry {
         double theta2 = Math.atan2(yB, xB);
         double dtheta = theta2 - theta1;
 
+        // DEBUG
+        // System.out.println(dtheta);
+
         while (dtheta > Math.PI) {
             dtheta -= 2 * Math.PI;
         }
 
-        while (dtheta < Math.PI) {
+        while (dtheta < -Math.PI) {
             dtheta += 2 * Math.PI;
         }
 

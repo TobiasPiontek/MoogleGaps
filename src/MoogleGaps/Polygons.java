@@ -8,7 +8,7 @@ public class Polygons {
     //public ArrayList<Double> longitudes;
 
     public static double[] getLatitudes() {
-        double[] latitudes = FileReader.getLatitudesOfWay(3);
+        double[] latitudes = FileReader.getLatitudesOfWay(0);
         double[] realLatitudes = new double[latitudes.length - 1];
         for (int i = 1; i < latitudes.length; i++) {
             realLatitudes[i - 1] = latitudes[i];
@@ -18,7 +18,7 @@ public class Polygons {
     }
 
     public static double[] getLongitudes() {
-        double[] longitudes = FileReader.getLongitudesOfWay(3);
+        double[] longitudes = FileReader.getLongitudesOfWay(0);
         double[] realLongitudes = new double[longitudes.length - 1];
         for (int i = 1; i < longitudes.length; i++) {
             realLongitudes[i - 1] = longitudes[i];
