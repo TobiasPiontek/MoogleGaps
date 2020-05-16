@@ -129,4 +129,13 @@ public class FileReader {
         }
     }
 
+    public static int getLengthOfWay(int index){
+        if(index < wayIds.size()-1){
+            return wayIds.get(index+1) -1 - wayIds.get(index);
+        }else{
+            return (nodeIds.size()-1)-wayIds.get(index);
+        }
+
+    }
+
 }
