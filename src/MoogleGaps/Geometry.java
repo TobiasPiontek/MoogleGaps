@@ -147,14 +147,50 @@ public class Geometry {
 
         // DEBUG
 
-        //System.out.println(intersections);
-        //GeoJson.printWayByCoordinates(intersectionLatitudes, intersectionLongitudes);
+        System.out.println(intersections);
+        GeoJson.printWayByCoordinates(intersectionLatitudes, intersectionLongitudes);
 
-        // if even number of intersections, the point lies in the polygon
+        // if odd number of intersections, the point lies in the polygon
         if (intersections % 2 == 1) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double latitude, double longitude) {
+        double angle = 0;
+        double latitudeA, longitudeA, latitudeB, longitudeB;
+        int n = latitudes.length;
+
+        for (int i = 0; i < n; i++) {
+            latitudeA = latitudes[i] - latitude;
+            longitudeA = longitudes[i] - longitude;
+            latitudeB = latitudes[(i + 1) % n] - latitude;
+            longitudeB = longitudes[(i + 1) % n] - longitude;
+            angle += getAngle(latitudeA, longitudeA, latitudeB, longitudeB);
+        }
+
+        if (Math.abs(angle) < Math.PI) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static double getAngle(double xA, double yA, double xB, double yB) {
+        double theta1 = Math.atan2(yA, xA);
+        double theta2 = Math.atan2(yB, xB);
+        double dtheta = theta2 - theta1;
+
+        while (dtheta > Math.PI) {
+            dtheta -= 2 * Math.PI;
+        }
+
+        while (dtheta < Math.PI) {
+            dtheta += 2 * Math.PI;
+        }
+
+        return(dtheta);
     }
 }

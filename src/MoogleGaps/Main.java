@@ -20,10 +20,10 @@ public class Main {
 
 
             System.out.println("\n\n\n\n\nWay is as followed: ");
-            GeoJson.printWay(3);
+            GeoJson.printWay(0);
 
 
-        if (Geometry.inPolygon(Polygons.getLatitudes(), Polygons.getLongitudes(), -69.034, -68.36)) {
+        if (Geometry.coordinateIsInsidePolygon(Polygons.getLongitudes(), Polygons.getLatitudes(),  -58.44180464744568, -62.22894320613803)) {
             System.out.println("Yup.");
         } else {
             System.out.println("Nope.");
