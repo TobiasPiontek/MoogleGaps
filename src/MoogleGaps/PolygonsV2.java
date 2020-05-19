@@ -32,11 +32,13 @@ public class PolygonsV2 {
                     wayIds.add(0);
                 }else{
                     wayIds.add(coordinatesSize);
+                    //System.out.println("WayIndex:" + i +" Startindex:" + coordinatesSize + " length of this way " + FileReader.getLengthOfWay(i));
                 }
 
-                for(int j = 0; j < FileReader.getLongitudesOfWay(i).length;  j++){
-                    latitudes[j+ coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
-                    longitudes[j+ coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
+                for(int j = 0; j < FileReader.getLengthOfWay(i);  j++){
+                    //System.out.println("Filled coordinate: " + (j + coordinatesSize));
+                    latitudes[j + coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
+                    longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
                 }
 
                 coordinatesSize += FileReader.getLengthOfWay(i);

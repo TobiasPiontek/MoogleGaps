@@ -67,7 +67,7 @@ public class GeoJson {
         }
     }
 
-    public static void printWay(int wayIndex, double[] longitudes, double[] latitudes) {
+    public static void printWay(double[] longitudes, double[] latitudes) {
 
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");

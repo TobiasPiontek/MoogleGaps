@@ -17,9 +17,11 @@ public class Main {
         PolygonsV2.createPolygons();
 
         //System.out.println("\n\n\n\n\nWay is as followed: ");
-        //GeoJson.printWay(0, FileReader.getLongitudesOfWay(0),FileReader.getLatitudesOfWay(0));
+        GeoJson.printWay(FileReader.getLongitudesOfWay(4),FileReader.getLatitudesOfWay(4));
 
-        GeoJson.printWay(1, PolygonsV2.getPolygonLongitudes(1),PolygonsV2.getPolygonLatitudes(1) );
+        //GeoJson.printWay(PolygonsV2.getPolygonLongitudes(3),PolygonsV2.getPolygonLatitudes(3) );
+
+
 
         if (Geometry.coordinateIsInsidePolygon(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0),  -69.02924537658691, -68.3538239160708)) {
             System.out.println("Yup.");
