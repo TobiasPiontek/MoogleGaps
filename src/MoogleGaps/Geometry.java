@@ -158,6 +158,9 @@ public class Geometry {
         }
     }
 
+    // takes polygon and point with latitudes and longitudes
+    // returns true if point is in the polygon
+    // https://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map
     public static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double longitude, double latitude) {
         double angle = 0;
         double latitudeA, longitudeA, latitudeB, longitudeB;
@@ -178,6 +181,8 @@ public class Geometry {
         }
     }
 
+    // takes two points with their x and y coordinates
+    // returns the angle formed with the origin (0, 0)
     public static double getAngle(double xA, double yA, double xB, double yB) {
         double theta1 = Math.atan2(yA, xA);
         double theta2 = Math.atan2(yB, xB);
@@ -195,5 +200,80 @@ public class Geometry {
         }
 
         return(dtheta);
+    }
+
+    // takes two points A and B with their x and y coordinates
+    // returns the quadrant of A relative to B
+    public static int quadrant(double xA, double yA, double xB, double yB) {
+        if (xA > xB) {
+            if (yA > yB) {
+                return 0;
+            } else {
+                return 3;
+            }
+        } else {
+            if (yA > yB) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+    }
+
+    // takes polygon and point with latitudes and longitudes
+    // returns true if point is in the polygon
+    // Weiler, Kevin (1994), "An Incremental Angle Point in Polygon Test", in Heckbert, Paul S. (ed.), Graphics Gems IV, San Diego, CA, USA: Academic Press Professional, Inc., pp. 16–23, ISBN 0-12-336155-9.
+    public static boolean pointInPoly(double[] longitudes, double[] latitudes, double longitude, double latitude) {
+        int n = longitudes.length;
+        int angle = 0;
+        double longitudeA = longitudes[0];
+        double latitudeA = latitudes[0];
+        int quad = quadrant(longitudeA, latitudeA, longitude, latitude);
+        int nextQuad, delta;
+        double longitudeB, latitudeB;
+
+        for (int i = 0; i < n; i++) {
+            longitudeB = longitudes[(i + 1) % n];
+            latitudeB = latitudes[(i + 1) % n];
+            nextQuad = quadrant(longitudeB, latitudeB, longitude, latitude);
+            delta = nextQuad - quad;
+            delta = adjustDelta(delta, longitudeA, latitudeA, longitudeB, latitudeB, longitude, latitude);
+            angle += delta;
+            quad = nextQuad;
+            longitudeA = longitudeB;
+            latitudeA = latitudeB;
+        }
+
+        if (angle == 4 || angle == -4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // takes delta and three points A, B, and C with their x and y coordinates
+    // returns the adjusted delta for summing the angle
+    public static int adjustDelta(int delta, double xA, double yA, double xB, double yB, double xC, double yC) {
+        switch (delta) {
+            case 3:
+                return -1;
+            case -3:
+                return 1;
+            case 2:
+            case -2:
+                if (xIntercept(xA, yA, xB, yB, yC) > xC) {
+                    return -delta;
+                } else {
+                    return delta;
+                }
+            default:
+                return delta;
+        }
+    }
+
+    // takes two points A and B with their x and y coordinates and a y coordinate
+    // returns x-intercept of polygon edge with horizontal line at y value
+    public static double xIntercept (double xA, double yA, double xB, double yB, double y) {
+        return xB - ((yB - y) * ((xA - xB) / (yA - yB)));
     }
 }
