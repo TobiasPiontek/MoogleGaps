@@ -64,7 +64,6 @@ public class PolygonsV2 {
         int k = 0;
         int startIndex= wayIds.get(i);
         for(int j = 0; j < getWayLength(i); j++){
-            System.out.println("Longitudes debug" +longitudes[j]);
             polygonLongitudes[k]=longitudes[j + startIndex];
             k++;
         }
@@ -81,7 +80,6 @@ public class PolygonsV2 {
         int k = 0;
         int startIndex= wayIds.get(i);
         for(int j = 0; j < getWayLength(i); j++){
-            System.out.println("Longitudes debug" +longitudes[j]);
             polygonLatitudes[k]=latitudes[j + startIndex];
             k++;
         }
