@@ -17,9 +17,9 @@ public class Main {
         PolygonsV2.createPolygons();
 
         //System.out.println("\n\n\n\n\nWay is as followed: ");
-        GeoJson.printWay(FileReader.getLongitudesOfWay(4),FileReader.getLatitudesOfWay(4));
+        //GeoJson.printWay(FileReader.getLongitudesOfWay(4),FileReader.getLatitudesOfWay(4));
 
-        //GeoJson.printWay(PolygonsV2.getPolygonLongitudes(3),PolygonsV2.getPolygonLatitudes(3) );
+        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(4),PolygonsV2.getPolygonLatitudes(4) );
 
 
 

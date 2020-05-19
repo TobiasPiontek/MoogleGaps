@@ -37,6 +37,9 @@ public class PolygonsV2 {
 
                 for(int j = 0; j < FileReader.getLengthOfWay(i);  j++){
                     //System.out.println("Filled coordinate: " + (j + coordinatesSize));
+                    if(FileReader.getLatitudesOfWay(i)[j] < 0.1 && FileReader.getLatitudesOfWay(i)[j]>-0.1){
+                        System.out.println(FileReader.getLatitudesOfWay(i)[j]);
+                    }
                     latitudes[j + coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
                     longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
                 }
@@ -59,8 +62,11 @@ public class PolygonsV2 {
         double[] polygonLongitudes = new double[getWayLength(i)];
 
         int k = 0;
-        for(int j = wayIds.get(i); j < getWayLength(i); j++){
-            polygonLongitudes[k++]=longitudes[j];
+        int startIndex= wayIds.get(i);
+        for(int j = 0; j < getWayLength(i); j++){
+            System.out.println("Longitudes debug" +longitudes[j]);
+            polygonLongitudes[k]=longitudes[j + startIndex];
+            k++;
         }
         return polygonLongitudes;
     }
@@ -73,8 +79,11 @@ public class PolygonsV2 {
         double[] polygonLatitudes = new double[getWayLength(i)];
 
         int k = 0;
-        for(int j = wayIds.get(i); j < getWayLength(i); j++){
-            polygonLatitudes[k++]=latitudes[j];
+        int startIndex= wayIds.get(i);
+        for(int j = 0; j < getWayLength(i); j++){
+            System.out.println("Longitudes debug" +longitudes[j]);
+            polygonLatitudes[k]=latitudes[j + startIndex];
+            k++;
         }
         return polygonLatitudes;
     }
