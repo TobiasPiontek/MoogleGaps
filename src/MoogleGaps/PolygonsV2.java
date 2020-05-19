@@ -1,6 +1,5 @@
 package MoogleGaps;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class PolygonsV2 {
@@ -9,10 +8,9 @@ public class PolygonsV2 {
     static double[] longitudes = new double[FileReader.longitudes.length];
 
     static ArrayList<Integer> wayIds = new ArrayList<Integer>();
+    private static int coordinatesSize =0;
 
     public static void createPolygons(){
-
-        System.out.println("Starting the create Polygons Method!");
 
         long[] startNodes = new long[FileReader.wayIds.size()];
         long[] endNodes = new long[FileReader.wayIds.size()];
@@ -26,44 +24,67 @@ public class PolygonsV2 {
             endNodes[i] = FileReader.getLastNodeOfWay(i);
         }
 
-        int checkSize=0;
+
         for(int i = 0; i < FileReader.wayIds.size();i++){
             if(startNodes[i]==endNodes[i]){
 
                 if(wayIds.isEmpty()){
                     wayIds.add(0);
                 }else{
-                    wayIds.add(checkSize);
+                    wayIds.add(coordinatesSize);
                 }
 
                 for(int j = 0; j < FileReader.getLongitudesOfWay(i).length;  j++){
-                    latitudes[j+checkSize]= FileReader.getLatitudesOfWay(i)[j];
-                    longitudes[j+checkSize] = FileReader.getLongitudesOfWay(i)[j];
+                    latitudes[j+ coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
+                    longitudes[j+ coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
                 }
 
-                checkSize += FileReader.getLengthOfWay(i);
+                coordinatesSize += FileReader.getLengthOfWay(i);
                 waysUsed[i] = true;
             }
         }
-
-        System.out.println("wayids at 0= " + wayIds.get(0) + "Wayids at 1= " + wayIds.get(1));
-
-        for(int i = 0; i < 1; i++){
-            for(int j = wayIds.get(i); j < wayIds.get(i+1); j++){
-                System.out.println("Latitude: " + latitudes[j] + " longitudes: " + longitudes[j]);
-            }
-
-        }
-
 
         }
 
         //Start and Endnodes are now filled in the list
 
-    public static void getPolygonLongitudes(int i){
-        
+
+    /**
+     * @param i The index of the Polygon in the List
+     * @return an Array of all Longitude coordinates
+     */
+    public static double[] getPolygonLongitudes(int i){
+        double[] polygonLongitudes = new double[getWayLength(i)];
+
+        int k = 0;
+        for(int j = wayIds.get(i); j < getWayLength(i); j++){
+            polygonLongitudes[k++]=longitudes[j];
+        }
+        return polygonLongitudes;
     }
-    public static void getPolygonLatitudes(int i){
+
+    /**
+     * @param i The index of the Polygon in the List
+     * @return an Array of all Latitude coordinates
+     */
+    public static double[] getPolygonLatitudes(int i){
+        double[] polygonLatitudes = new double[getWayLength(i)];
+
+        int k = 0;
+        for(int j = wayIds.get(i); j < getWayLength(i); j++){
+            polygonLatitudes[k++]=latitudes[j];
+        }
+        return polygonLatitudes;
+    }
+
+    //helper Method to get the Length of an
+    private static int getWayLength(int i){
+        if(i < wayIds.size() -1 ){
+            return wayIds.get(i+1)-wayIds.get(i);
+        }else{
+            return coordinatesSize - wayIds.get(i);
+        }
+
 
     }
 
