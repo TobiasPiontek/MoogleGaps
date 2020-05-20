@@ -56,7 +56,6 @@ public class FileReader {
         NodeReader nodeData = new NodeReader();
         nodeReader.setSink(nodeData);
         nodeReader.run();
-        System.out.println("Done with reading Nodes... " + new Timestamp(System.currentTimeMillis()));
     }
 
     /**

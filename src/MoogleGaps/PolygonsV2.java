@@ -1,5 +1,6 @@
 package MoogleGaps;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class PolygonsV2 {
@@ -11,6 +12,7 @@ public class PolygonsV2 {
     private static int coordinatesSize =0;
 
     public static void createPolygons(){
+        System.out.println("Start of simple Polygon detection... " + new Timestamp(System.currentTimeMillis()));
 
         long[] startNodes = new long[FileReader.wayIds.size()];
         long[] endNodes = new long[FileReader.wayIds.size()];
@@ -24,7 +26,6 @@ public class PolygonsV2 {
             endNodes[i] = FileReader.getLastNodeOfWay(i);
         }
 
-
         for(int i = 0; i < FileReader.wayIds.size();i++){
             if(startNodes[i]==endNodes[i]){
 
@@ -32,13 +33,9 @@ public class PolygonsV2 {
                     wayIds.add(0);
                 }else{
                     wayIds.add(coordinatesSize);
-                    //System.out.println("WayIndex:" + i +" Startindex:" + coordinatesSize + " length of this way " + FileReader.getLengthOfWay(i));
                 }
-
                 for(int j = 0; j < FileReader.getLengthOfWay(i);  j++){
-                    //System.out.println("Filled coordinate: " + (j + coordinatesSize));
                     if(FileReader.getLatitudesOfWay(i)[j] < 0.1 && FileReader.getLatitudesOfWay(i)[j]>-0.1){
-                        System.out.println(FileReader.getLatitudesOfWay(i)[j]);
                     }
                     latitudes[j + coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
                     longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
@@ -48,6 +45,7 @@ public class PolygonsV2 {
                 waysUsed[i] = true;
             }
         }
+        System.out.println("End of Simple Polygon detection Stage..." + new Timestamp(System.currentTimeMillis()));
 
         }
 
@@ -94,8 +92,6 @@ public class PolygonsV2 {
             return coordinatesSize - wayIds.get(i);
         }
 
-
     }
-
 
 }
