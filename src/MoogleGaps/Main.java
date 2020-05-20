@@ -19,7 +19,7 @@ public class Main {
         //System.out.println("\n\n\n\n\nWay is as followed: ");
         //GeoJson.printWay(FileReader.getLongitudesOfWay(4),FileReader.getLatitudesOfWay(4));
 
-        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(8),PolygonsV2.getPolygonLatitudes(8));
+        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(10),PolygonsV2.getPolygonLatitudes(10));
 
         if (Geometry.pointInPoly(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0), -69.04151916503906, -68.36142121194034)) {
             System.out.println("Yup.");
