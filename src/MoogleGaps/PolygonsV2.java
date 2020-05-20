@@ -53,15 +53,15 @@ public class PolygonsV2 {
 
 
     /**
-     * @param i The index of the Polygon in the List
+     * @param index The index of the Polygon in the List
      * @return an Array of all Longitude coordinates
      */
-    public static double[] getPolygonLongitudes(int i){
-        double[] polygonLongitudes = new double[getWayLength(i)];
+    public static double[] getPolygonLongitudes(int index){
+        double[] polygonLongitudes = new double[getWayLength(index)];
 
         int k = 0;
-        int startIndex= wayIds.get(i);
-        for(int j = 0; j < getWayLength(i); j++){
+        int startIndex= wayIds.get(index);
+        for(int j = 0; j < getWayLength(index); j++){
             polygonLongitudes[k]=longitudes[j + startIndex];
             k++;
         }
@@ -69,15 +69,15 @@ public class PolygonsV2 {
     }
 
     /**
-     * @param i The index of the Polygon in the List
+     * @param index The index of the Polygon in the List
      * @return an Array of all Latitude coordinates
      */
-    public static double[] getPolygonLatitudes(int i){
-        double[] polygonLatitudes = new double[getWayLength(i)];
+    public static double[] getPolygonLatitudes(int index){
+        double[] polygonLatitudes = new double[getWayLength(index)];
 
         int k = 0;
-        int startIndex= wayIds.get(i);
-        for(int j = 0; j < getWayLength(i); j++){
+        int startIndex= wayIds.get(index);
+        for(int j = 0; j < getWayLength(index); j++){
             polygonLatitudes[k]=latitudes[j + startIndex];
             k++;
         }
