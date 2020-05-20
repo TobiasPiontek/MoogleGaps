@@ -21,9 +21,7 @@ public class Main {
 
         GeoJson.printWay(PolygonsV2.getPolygonLongitudes(8),PolygonsV2.getPolygonLatitudes(8));
 
-
-
-        if (Geometry.coordinateIsInsidePolygon(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0),  -69.02924537658691, -68.3538239160708)) {
+        if (Geometry.pointInPoly(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0), -69.04151916503906, -68.36142121194034)) {
             System.out.println("Yup.");
         } else {
             System.out.println("Nope.");

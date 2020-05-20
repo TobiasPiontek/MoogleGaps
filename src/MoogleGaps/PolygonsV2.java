@@ -12,7 +12,7 @@ public class PolygonsV2 {
     private static int coordinatesSize =0;
 
     public static void createPolygons(){
-        System.out.println("Start of simple Polygon detection... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println("Start of simple polygon detection..." + new Timestamp(System.currentTimeMillis()));
 
         long[] startNodes = new long[FileReader.wayIds.size()];
         long[] endNodes = new long[FileReader.wayIds.size()];
@@ -45,7 +45,7 @@ public class PolygonsV2 {
                 waysUsed[i] = true;
             }
         }
-        System.out.println("End of Simple Polygon detection Stage..." + new Timestamp(System.currentTimeMillis()));
+        System.out.println("End of simple polygon detection..." + new Timestamp(System.currentTimeMillis()));
 
         }
 
