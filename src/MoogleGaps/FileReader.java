@@ -27,7 +27,7 @@ public class FileReader {
         //Read the PBF file
         InputStream wayInputStream = null;
         InputStream nodeInputStream = null;
-        System.out.println("reading file..." + new Timestamp(System.currentTimeMillis()));
+        System.out.println("Opening file ..." + new Timestamp(System.currentTimeMillis()));
         try {
             wayInputStream = new FileInputStream(relativeFilePath);
             nodeInputStream = new FileInputStream(relativeFilePath);
@@ -36,7 +36,7 @@ public class FileReader {
         }
 
         //Trigger the first stage with the read of the way nodes
-        System.out.println("Reading in Ways " + new Timestamp(System.currentTimeMillis()));
+        System.out.println("Reading ways..." + new Timestamp(System.currentTimeMillis()));
         OsmosisReader wayReader = new OsmosisReader(wayInputStream);
         WayReader wayData = new WayReader();
         wayReader.setSink(wayData);
@@ -65,10 +65,8 @@ public class FileReader {
         //nodeIdLookUp=Quicksort.quickSort(nodeIds);
 
 
-
-
         //allocating the arrays with their sizes
-        System.out.println("Reading in node coordinates... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println("Extracting node coordinates... " + new Timestamp(System.currentTimeMillis()));
         longitudes = new double[nodeIds.size()];
         latitudes = new double[nodeIds.size()];
 
