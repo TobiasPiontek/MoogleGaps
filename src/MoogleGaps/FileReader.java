@@ -1,9 +1,9 @@
 package MoogleGaps;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import crosby.binary.osmosis.OsmosisReader;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -11,7 +11,8 @@ public class FileReader {
 
     //Arrays for the Node management
     public static ArrayList<Long> nodeIds = new ArrayList<Long>();
-    public static ArrayList<Integer> nodeIdLookUp;
+    //public static ArrayList<Integer> nodeIdLookUp;
+    public static Integer[] nodeIdLookUps;
 
     //Arrays for the ways with their coordinates
     public static List<Integer> wayIds = new ArrayList<Integer>();
@@ -40,11 +41,31 @@ public class FileReader {
         WayReader wayData = new WayReader();
         wayReader.setSink(wayData);
         wayReader.run();
+        System.out.println(wayIds.size() + " wayNodes detected, " + nodeIds.size() + " nodes detected!");
+
 
         //Sort The NodeIds Array to speed up the link of nodeid and coordinates information
         System.out.println("Sorting NodeIds... " + new Timestamp(System.currentTimeMillis()));
-        nodeIdLookUp = new ArrayList<>(nodeIds.size());
-        nodeIdLookUp=Quicksort.quickSort(nodeIds);
+
+
+        NodeSortComparator comparator = new NodeSortComparator(nodeIds);
+        Integer[]nodeIdsInverted = comparator.createIndexArray();
+        Arrays.sort(nodeIdsInverted,comparator);
+
+        nodeIdLookUps= new Integer[nodeIdsInverted.length];
+        for(int i = 0; i < nodeIdsInverted.length; i++){
+            //inverted.set(index[i],i);
+            nodeIdLookUps[nodeIdsInverted[i]] = i;
+        }
+        nodeIdsInverted = null;     //to tell the garbage collection to delete this value
+
+        Collections.sort(nodeIds);
+
+        //nodeIdLookUp = new ArrayList<>(nodeIds.size());
+        //nodeIdLookUp=Quicksort.quickSort(nodeIds);
+
+
+
 
         //allocating the arrays with their sizes
         System.out.println("Reading in node coordinates... " + new Timestamp(System.currentTimeMillis()));
@@ -87,7 +108,7 @@ public class FileReader {
         double[] wayAtId = new double[size];
 
         for(int i = 0; i < size; i++){
-            wayAtId[i] = latitudes[FileReader.nodeIdLookUp.get(i + startpoint)];
+            wayAtId[i] = latitudes[nodeIdLookUps[i + startpoint]];
         }
 
         return wayAtId;
@@ -110,21 +131,21 @@ public class FileReader {
         double[] wayAtId = new double[size];
 
         for(int i = 0; i < size; i++){
-            wayAtId[i] = longitudes[FileReader.nodeIdLookUp.get(i + startpoint)];
+            wayAtId[i] = longitudes[nodeIdLookUps[i + startpoint]];
         }
         return wayAtId;
     }
 
     
     public static long getFirstNodeOfWay(int id) {
-        return nodeIds.get(nodeIdLookUp.get(wayIds.get(id)));
+        return nodeIds.get(nodeIdLookUps[wayIds.get(id)]);
     }
 
     public static long getLastNodeOfWay(int id) {
         if (id == wayIds.size() - 1) {
-            return nodeIds.get(nodeIdLookUp.get(nodeIds.size() - 1));
+            return nodeIds.get(nodeIdLookUps[nodeIds.size() - 1]);
         } else {
-            return nodeIds.get(nodeIdLookUp.get(wayIds.get(id + 1) - 1));
+            return nodeIds.get(nodeIdLookUps[wayIds.get(id + 1) - 1]);
         }
     }
 

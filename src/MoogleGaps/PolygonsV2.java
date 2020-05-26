@@ -45,7 +45,7 @@ public class PolygonsV2 {
                 waysUsed[i] = true;
             }
         }
-        System.out.println("End of Simple Polygon detection Stage..." + new Timestamp(System.currentTimeMillis()));
+        System.out.println(wayIds.size() + " Polygons detected " + new Timestamp(System.currentTimeMillis()));
 
         }
 

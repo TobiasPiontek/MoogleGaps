@@ -41,8 +41,13 @@ Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCour
     - ##### Task 3
         - [Tutorial for vector matheatics](http://www.movable-type.co.uk/scripts/latlong-vectors.html)
         - [Point in polygon test](http://geomalgorithms.com/a03-_inclusion.html)
+        - Sorting Arrays with index List https://stackoverflow.com/questions/4859261/get-the-indices-of-an-array-after-sorting
+        - https://howtodoinjava.com/sort/collections-sort/
         
 ## Manual
+- import the project into intellij
+- Goto the VM-options of the main method and add at least 
+- Xmx8192m or higher to allow the project to allocate enough ram
 - Store the PBF Files in OSMMapData Folder
 - Start the Backend
 - Choose the wanted File in the Dialog with its listed Number and confirm with [Enter]

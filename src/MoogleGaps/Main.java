@@ -17,11 +17,20 @@ public class Main {
         PolygonsV2.createPolygons();
 
         //System.out.println("\n\n\n\n\nWay is as followed: ");
-        //GeoJson.printWay(FileReader.getLongitudesOfWay(4),FileReader.getLatitudesOfWay(4));
+        //GeoJson.printWay(FileReader.getLongitudesOfWay(0),FileReader.getLatitudesOfWay(0));
 
-        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(10),PolygonsV2.getPolygonLatitudes(10));
+        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(54846),PolygonsV2.getPolygonLatitudes(54846));
 
 
+        int size = 0;
+        int index = 0;
+        for(int i = 0; i< PolygonsV2.wayIds.size(); i++){
+            if(size < PolygonsV2.getPolygonLatitudes(i).length){
+                size = PolygonsV2.getPolygonLatitudes(i).length;
+                index = i;
+            }
+        }
+        System.out.println("largest is: " + index);
 
         if (Geometry.coordinateIsInsidePolygon(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0),  -69.02924537658691, -68.3538239160708)) {
             System.out.println("Yup.");
