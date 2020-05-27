@@ -46,17 +46,16 @@ public class GeoJson {
     }
 
     /**
-     * Mainly used for debbugging purposes
-     * @param wayIndex  the index of the way to print
+     * mainly used for debugging purposes
+     * @param longitudes
+     * @param latitudes
      */
-    public static void printWayOld(int wayIndex){
-        double[] longitudes =  FileReader.getLongitudesOfWay(wayIndex);
-        double[] latitdudes = FileReader.getLatitudesOfWay(wayIndex);
+    public static void printNodes(double[] longitudes, double[] latitudes){
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
         for (int i = 0; i < longitudes.length; i++) {       // used before: FileReader.nodeIds.size()
-            System.out.println(getGeoJsonElement(6 , longitudes[i], latitdudes[i]));
+            System.out.println(getGeoJsonElement(6 , longitudes[i], latitudes[i]));
 
             if(i != longitudes.length-1) {
                 System.out.print("}, ");
@@ -110,12 +109,12 @@ public class GeoJson {
         System.out.println("}");
     }
 
-    public static void printWayByCoordinates(double[] latitdudes, double[] longitudes){
+    public static void printWayByCoordinates(double[] latitudes, double[] longitudes){
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
         for (int i = 0; i < longitudes.length; i++) {       // used before: FileReader.nodeIds.size()
-            System.out.println(getGeoJsonElement(6 , longitudes[i], latitdudes[i]));
+            System.out.println(getGeoJsonElement(6 , longitudes[i], latitudes[i]));
 
             if(i != longitudes.length-1) {
                 System.out.print("}, ");
