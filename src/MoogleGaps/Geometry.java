@@ -4,9 +4,15 @@ import java.util.Arrays;
 
 public class Geometry {
 
+    //
+    // FIRST POINT IN POLYGON TEST
+    // Ray casting algorithm
+    // http://www.movable-type.co.uk/scripts/latlong-vectors.html
+    //
+
     // takes latitude and longitude of point
     // returns n-vector, i.e. to earth's surface perpendicular vector through point
-    public static double[] getNVector(double latitude, double longitude) {
+    private static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
         nVector[0] = Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(longitude));
         nVector[1] = Math.cos(Math.toRadians(latitude)) * Math.sin(Math.toRadians(longitude));
@@ -16,7 +22,7 @@ public class Geometry {
 
     // takes latitudes and longitudes of four points a, b, c, and d
     // returns n-vector of the intersection of ab and cd
-    public static double[] getIntersection(double latitudeA, double longitudeA, double latitudeB, double longitudeB, double latitudeC, double longitudeC, double latitudeD, double longitudeD) {
+    private static double[] getIntersection(double latitudeA, double longitudeA, double latitudeB, double longitudeB, double latitudeC, double longitudeC, double latitudeD, double longitudeD) {
         double[] nVectorA = getNVector(latitudeA, longitudeA);
         double[] nVectorB = getNVector(latitudeB, longitudeB);
         double[] nVectorC = getNVector(latitudeC, longitudeC);
@@ -46,7 +52,7 @@ public class Geometry {
 
     // takes two vectors a and b
     // returns their cross product a x b
-    public static double[] getCrossProduct(double[] a, double[] b) {
+    private static double[] getCrossProduct(double[] a, double[] b) {
         double[] crossProduct = new double[3];
         crossProduct[0] = a[1] * b[2] - a[2] * b[1];
         crossProduct[1] = a[2] * b[0] - a[0] * b[2];
@@ -56,7 +62,7 @@ public class Geometry {
 
     // takes two vectors a and b
     // returns the great circle containing them
-    public static double[] getGreatCircle(double[] a, double[] b) {
+    private static double[] getGreatCircle(double[] a, double[] b) {
         double[] n = getNVector(0, 0);
         double[] m = getNVector(1, 1);
         if (Arrays.equals(a, b)) {
@@ -79,7 +85,7 @@ public class Geometry {
 
     // takes two vector a and b
     // returns their dot product ab
-    public static double getDotProduct(double[] a, double[] b) {
+    private static double getDotProduct(double[] a, double[] b) {
         double dotProduct = 0;
         for (int i = 0; i < 3; i++) {
             dotProduct += a[i]*b[i];
@@ -89,7 +95,7 @@ public class Geometry {
 
     // takes n-vector of point
     // returns its latitude and longitude
-    public static double[] getCoordinates(double[] nVector) {
+    private static double[] getCoordinates(double[] nVector) {
         double[] coordinates = new double[2];
         coordinates[0] = Math.toDegrees(Math.atan2(nVector[2], Math.sqrt(nVector[0] * nVector[0] + nVector[1] * nVector[1])));
         coordinates[1] = Math.toDegrees(Math.atan2(nVector[1], nVector[0]));
@@ -98,19 +104,19 @@ public class Geometry {
 
     // takes n-vectors of two points a and b
     // returns their distance in km with R = 6371 km
-    public static double getDistance(double[] nVectorA, double[] nVectorB) {
+    private static double getDistance(double[] nVectorA, double[] nVectorB) {
         return 6371*Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
     }
 
     // takes vector
     // returns its Euclidean norm
-    public static double getEuclideanNorm(double[] vector) {
+    private static double getEuclideanNorm(double[] vector) {
         return Math.sqrt(getDotProduct(vector, vector));
     }
 
     // takes n-vectors of two points a and b
     // returns the n-vector of their midpoint
-    public static double[] getMidpoint(double[] nVectorA, double[] nVectorB) {
+    private static double[] getMidpoint(double[] nVectorA, double[] nVectorB) {
         double[] midpoint = new double[3];
         for (int i = 0; i < 3; i++) {
             midpoint[i] = nVectorA[i] + nVectorB[i];
@@ -118,9 +124,15 @@ public class Geometry {
         return midpoint;
     }
 
+    //
+    // SECOND POINT IN POLYGON TEST
+    // Winding number algorithm
+    // https://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map
+    //
+
     // takes polygon and point with latitudes and longitudes
     // returns true if point is in the polygon
-    public static boolean inPolygon(double[] latitudes, double[] longitudes, double latitude, double longitude) {
+    private static boolean inPolygon(double[] latitudes, double[] longitudes, double latitude, double longitude) {
         int intersections = 0;
         int n = latitudes.length;
 
@@ -161,7 +173,7 @@ public class Geometry {
     // takes polygon and point with latitudes and longitudes
     // returns true if point is in the polygon
     // https://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map
-    public static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double longitude, double latitude) {
+    private static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double longitude, double latitude) {
         double angle = 0;
         double latitudeA, longitudeA, latitudeB, longitudeB;
         int n = latitudes.length;
@@ -183,7 +195,7 @@ public class Geometry {
 
     // takes two points with their x and y coordinates
     // returns the angle formed with the origin (0, 0)
-    public static double getAngle(double xA, double yA, double xB, double yB) {
+    private static double getAngle(double xA, double yA, double xB, double yB) {
         double theta1 = Math.atan2(yA, xA);
         double theta2 = Math.atan2(yB, xB);
         double dtheta = theta2 - theta1;
@@ -202,9 +214,15 @@ public class Geometry {
         return(dtheta);
     }
 
+    //
+    // THIRD POINT IN POLYGON TEST
+    // Winding number algorithm
+    // Weiler, Kevin (1994), "An Incremental Angle Point in Polygon Test", in Heckbert, Paul S. (ed.), Graphics Gems IV, San Diego, CA, USA: Academic Press Professional, Inc., pp. 16–23, ISBN 0-12-336155-9.
+    //
+
     // takes two points A and B with their x and y coordinates
     // returns the quadrant of A relative to B
-    public static int quadrant(double xA, double yA, double xB, double yB) {
+    private static int quadrant(double xA, double yA, double xB, double yB) {
         if (xA > xB) {
             if (yA > yB) {
                 return 0;
@@ -223,7 +241,7 @@ public class Geometry {
     // takes polygon and point with latitudes and longitudes
     // returns true if point is in the polygon
     // Weiler, Kevin (1994), "An Incremental Angle Point in Polygon Test", in Heckbert, Paul S. (ed.), Graphics Gems IV, San Diego, CA, USA: Academic Press Professional, Inc., pp. 16–23, ISBN 0-12-336155-9.
-    public static boolean pointInPoly(double[] longitudes, double[] latitudes, double longitude, double latitude) {
+    private static boolean pointInPoly(double[] longitudes, double[] latitudes, double longitude, double latitude) {
         int n = longitudes.length;
         int angle = 0;
         double longitudeA = longitudes[0];
@@ -253,7 +271,7 @@ public class Geometry {
 
     // takes delta and three points A, B, and C with their x and y coordinates
     // returns the adjusted delta for summing the angle
-    public static int adjustDelta(int delta, double xA, double yA, double xB, double yB, double xC, double yC) {
+    private static int adjustDelta(int delta, double xA, double yA, double xB, double yB, double xC, double yC) {
         switch (delta) {
             case 3:
                 return -1;
@@ -273,7 +291,23 @@ public class Geometry {
 
     // takes two points A and B with their x and y coordinates and a y coordinate
     // returns x-intercept of polygon edge with horizontal line at y value
-    public static double xIntercept (double xA, double yA, double xB, double yB, double y) {
+    private static double xIntercept (double xA, double yA, double xB, double yB, double y) {
         return xB - ((yB - y) * ((xA - xB) / (yA - yB)));
+    }
+
+    /**
+     * takes point with coordinates as longitude and latitude as double
+     * @param longitude
+     * @param latitude
+     * @return true if point is in a polygon, i.e. on land; false if point is in water
+     */
+    public static boolean pointInPolygonTest(double longitude, double latitude) {
+        for (int i = 0; i < Polygons.wayIds.size(); i++) {
+            if (pointInPoly(Polygons.getPolygonLongitudes(i), Polygons.getPolygonLatitudes(i), longitude, latitude)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

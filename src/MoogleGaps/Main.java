@@ -1,8 +1,6 @@
 package MoogleGaps;
 
-import com.sun.nio.sctp.SendFailedNotification;
-
-import java.io.File;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Main {
@@ -14,30 +12,44 @@ public class Main {
     public static void main(String[] args) {
         FileReader fileReader = new FileReader();
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
-        PolygonsV2.createPolygons();
+        Polygons.createPolygons();
 
         //System.out.println("\n\n\n\n\nWay is as followed: ");
         //GeoJson.printWay(FileReader.getLongitudesOfWay(0),FileReader.getLatitudesOfWay(0));
 
-        GeoJson.printWay(PolygonsV2.getPolygonLongitudes(54846), PolygonsV2.getPolygonLatitudes(54846));
+        GeoJson.printWay(Polygons.getPolygonLongitudes(54846), Polygons.getPolygonLatitudes(54846));
 
-
+        /*
         int size = 0;
         int index = 0;
-        for (int i = 0; i < PolygonsV2.wayIds.size(); i++) {
-            if (size < PolygonsV2.getPolygonLatitudes(i).length) {
-                size = PolygonsV2.getPolygonLatitudes(i).length;
+        for (int i = 0; i < Polygons.wayIds.size(); i++) {
+            if (size < Polygons.getPolygonLatitudes(i).length) {
+                size = Polygons.getPolygonLatitudes(i).length;
                 index = i;
             }
         }
-        System.out.println("largest is: " + index);
+        */
 
-        if (Geometry.coordinateIsInsidePolygon(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0), -69.02924537658691, -68.3538239160708)) {
-            if (Geometry.pointInPoly(FileReader.getLongitudesOfWay(0), FileReader.getLatitudesOfWay(0), -69.04151916503906, -68.36142121194034)) {
-                System.out.println("Yup.");
+        // 54846
+        // System.out.println("largest is: " + index);
+
+        if (Geometry.pointInPolygonTest(42.74353265762329, 13.997037155092595)) {
+            System.out.println("Land ahoy!");
+        } else {
+            System.out.println("Splash!");
+        }
+
+        System.out.println(new Timestamp(System.currentTimeMillis()));
+
+        for(int i = 0; i < 100; i++) {
+            if (Geometry.pointInPolygonTest(42.64353265762329, 13.997037155092595)) {
+                System.out.println("Land ahoy!");
             } else {
-                System.out.println("Nope.");
+                //System.out.println("Splash!");
             }
         }
+
+        System.out.println(new Timestamp(System.currentTimeMillis()));
+
     }
 }

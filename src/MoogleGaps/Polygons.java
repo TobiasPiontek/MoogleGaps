@@ -1,29 +1,98 @@
 package MoogleGaps;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Polygons {
+    //store the coordinates of the polygons
+    static double[] latitudes = new double[FileReader.latitudes.length];
+    static double[] longitudes = new double[FileReader.longitudes.length];
 
-    //public ArrayList<Double> latitudes;
-    //public ArrayList<Double> longitudes;
+    static ArrayList<Integer> wayIds = new ArrayList<Integer>();
+    private static int coordinatesSize =0;
 
-    public static double[] getLatitudes() {
-        double[] latitudes = FileReader.getLatitudesOfWay(0);
-        double[] realLatitudes = new double[latitudes.length - 1];
-        for (int i = 1; i < latitudes.length; i++) {
-            realLatitudes[i - 1] = latitudes[i];
+    public static void createPolygons(){
+        System.out.println("Start of simple polygon detection..." + new Timestamp(System.currentTimeMillis()));
+
+        long[] startNodes = new long[FileReader.wayIds.size()];
+        long[] endNodes = new long[FileReader.wayIds.size()];
+
+        //memorize wether a way has already been used or not
+        boolean[] waysUsed = new boolean[FileReader.wayIds.size()];
+
+        // fill arrays with start and end nodes
+        for(int i = 0; i < FileReader.wayIds.size(); i++){
+            startNodes[i] = FileReader.getFirstNodeOfWay(i);
+            endNodes[i] = FileReader.getLastNodeOfWay(i);
         }
-        System.out.println(realLatitudes[0]);
-        return realLatitudes;
+
+        for(int i = 0; i < FileReader.wayIds.size();i++){
+            if(startNodes[i]==endNodes[i]){
+
+                if(wayIds.isEmpty()){
+                    wayIds.add(0);
+                }else{
+                    wayIds.add(coordinatesSize);
+                }
+                for(int j = 0; j < FileReader.getLengthOfWay(i);  j++){
+                    if(FileReader.getLatitudesOfWay(i)[j] < 0.1 && FileReader.getLatitudesOfWay(i)[j]>-0.1){
+                    }
+                    latitudes[j + coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
+                    longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
+                }
+
+                coordinatesSize += FileReader.getLengthOfWay(i);
+                waysUsed[i] = true;
+            }
+        }
+        System.out.println(wayIds.size() + " Polygons detected " + new Timestamp(System.currentTimeMillis()));
+
+
+        }
+
+        //Start and Endnodes are now filled in the list
+
+
+    /**
+     * @param index The index of the Polygon in the List
+     * @return an Array of all Longitude coordinates
+     */
+    public static double[] getPolygonLongitudes(int index){
+        double[] polygonLongitudes = new double[getWayLength(index)];
+
+        int k = 0;
+        int startIndex= wayIds.get(index);
+        for(int j = 0; j < getWayLength(index); j++){
+            polygonLongitudes[k]=longitudes[j + startIndex];
+            k++;
+        }
+        return polygonLongitudes;
     }
 
-    public static double[] getLongitudes() {
-        double[] longitudes = FileReader.getLongitudesOfWay(0);
-        double[] realLongitudes = new double[longitudes.length - 1];
-        for (int i = 1; i < longitudes.length; i++) {
-            realLongitudes[i - 1] = longitudes[i];
+    /**
+     * @param index The index of the Polygon in the List
+     * @return an Array of all Latitude coordinates
+     */
+    public static double[] getPolygonLatitudes(int index){
+        double[] polygonLatitudes = new double[getWayLength(index)];
+
+        int k = 0;
+        int startIndex= wayIds.get(index);
+        for(int j = 0; j < getWayLength(index); j++){
+            polygonLatitudes[k]=latitudes[j + startIndex];
+            k++;
         }
-        System.out.println(realLongitudes[0]);
-        return realLongitudes;
+        return polygonLatitudes;
     }
+
+    //helper Method to get the Length of an
+    private static int getWayLength(int i){
+        if(i < wayIds.size() -1 ){
+            return wayIds.get(i+1)-wayIds.get(i);
+        }else{
+            return coordinatesSize - wayIds.get(i);
+        }
+
+    }
+
 }
