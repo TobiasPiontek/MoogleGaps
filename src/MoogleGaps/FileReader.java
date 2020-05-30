@@ -27,7 +27,6 @@ public class FileReader {
         //Read the PBF file
         InputStream wayInputStream = null;
         InputStream nodeInputStream = null;
-        System.out.println("Opening file ..." + new Timestamp(System.currentTimeMillis()));
         try {
             wayInputStream = new FileInputStream(relativeFilePath);
             nodeInputStream = new FileInputStream(relativeFilePath);

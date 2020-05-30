@@ -8,24 +8,56 @@ public class Polygons {
     static double[] latitudes = new double[FileReader.latitudes.length];
     static double[] longitudes = new double[FileReader.longitudes.length];
 
-    static ArrayList<Integer> wayIds = new ArrayList<Integer>();
-    private static int coordinatesSize =0;
+    private static boolean[] waysUsed = new boolean[FileReader.wayIds.size()];
+    private static long[] startNodes = new long[FileReader.wayIds.size()];
+    private static long[] endNodes = new long[FileReader.wayIds.size()];
+
+    static ArrayList<Integer> wayIds = new ArrayList<Integer>();    //saves the start Ids of the Ways
+    private static int coordinatesSize =0;      //A Cursor to know where the next Polygon has to be written in the Array
 
     public static void createPolygons(){
         System.out.println("Start of simple polygon detection..." + new Timestamp(System.currentTimeMillis()));
+        createStartAndEndNodeArray();
+        simpleCycleDetection();
+        System.out.println(wayIds.size() + " Polygons detected with simple Circle detection " + new Timestamp(System.currentTimeMillis()));
 
-        long[] startNodes = new long[FileReader.wayIds.size()];
-        long[] endNodes = new long[FileReader.wayIds.size()];
+        //prototype of setting cycles together
 
-        //memorize wether a way has already been used or not
-        boolean[] waysUsed = new boolean[FileReader.wayIds.size()];
+        /*
+        for(int i = 0 ; i < FileReader.wayIds.size(); i++){
+            if(!waysUsed[i]){
+                long start = startNodes[i];
+                long end = endNodes[i];
+                boolean foundRight = true;
+                System.out.println("Cycle: " + i);
+                while(foundRight){
+                    foundRight = false;
+                    for(int j = 0 ; j < FileReader.wayIds.size(); j++){
+                        if(!waysUsed[j] && end == startNodes[j]){
+                            System.out.println("Glued together!");
+                            end = startNodes[j];
+                            waysUsed[j]= true;
+                            foundRight = true;
+                            break;
+                        }
+                    }
+                }
 
-        // fill arrays with start and end nodes
-        for(int i = 0; i < FileReader.wayIds.size(); i++){
-            startNodes[i] = FileReader.getFirstNodeOfWay(i);
-            endNodes[i] = FileReader.getLastNodeOfWay(i);
+            }
         }
+        */
+        
+    }
 
+
+
+
+    /**
+     * Used to detect Polygons simply by choosing Ways where the end and startnode are equal
+     */
+    private static void simpleCycleDetection() {
+        //memorize wether a way has already been used or not
+        // fill arrays with start and end nodes
         for(int i = 0; i < FileReader.wayIds.size();i++){
             if(startNodes[i]==endNodes[i]){
 
@@ -45,12 +77,14 @@ public class Polygons {
                 waysUsed[i] = true;
             }
         }
-        System.out.println(wayIds.size() + " Polygons detected " + new Timestamp(System.currentTimeMillis()));
+    }
 
-
+    private static void createStartAndEndNodeArray() {
+        for(int i = 0; i < FileReader.wayIds.size(); i++){
+            startNodes[i] = FileReader.getFirstNodeOfWay(i);
+            endNodes[i] = FileReader.getLastNodeOfWay(i);
         }
-
-        //Start and Endnodes are now filled in the list
+    }
 
 
     /**

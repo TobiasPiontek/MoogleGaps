@@ -17,7 +17,7 @@ public class Main {
         //System.out.println("\n\n\n\n\nWay is as followed: ");
         //GeoJson.printWay(FileReader.getLongitudesOfWay(0),FileReader.getLatitudesOfWay(0));
 
-        //GeoJson.printWay(Polygons.getPolygonLongitudes(54846), Polygons.getPolygonLatitudes(54846));
+        GeoJson.printWay(Polygons.getPolygonLongitudes(10), Polygons.getPolygonLatitudes(10));
 
         /*
         int size = 0;
@@ -33,7 +33,7 @@ public class Main {
         // 54846
         // System.out.println("largest is: " + index);
 
-        /*
+
         if (Geometry.pointInPolygonTest(42.74353265762329, 13.997037155092595)) {
             System.out.println("Land ahoy!");
         } else {
@@ -51,8 +51,9 @@ public class Main {
         }
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
-        */
 
+
+        /*
         GridGraph.generate(100);
 
         ArrayList<Double> longitudes = new ArrayList();
@@ -77,5 +78,7 @@ public class Main {
         }
 
         GeoJson.printNodes(longs, lats);
+
+         */
     }
 }
