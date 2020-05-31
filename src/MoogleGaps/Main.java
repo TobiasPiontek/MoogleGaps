@@ -1,5 +1,7 @@
 package MoogleGaps;
 
+import sun.security.util.ArrayUtil;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ public class Main {
         //System.out.println("\n\n\n\n\nWay is as followed: ");
         //GeoJson.printWay(FileReader.getLongitudesOfWay(0),FileReader.getLatitudesOfWay(0));
 
-        GeoJson.printWay(Polygons.getPolygonLongitudes(10), Polygons.getPolygonLatitudes(10));
+        //GeoJson.printWay(Polygons.getPolygonLongitudes(10), Polygons.getPolygonLatitudes(10));
 
         /*
         int size = 0;
@@ -33,15 +35,17 @@ public class Main {
         // 54846
         // System.out.println("largest is: " + index);
 
-
+        /*
         if (Geometry.pointInPolygonTest(42.74353265762329, 13.997037155092595)) {
             System.out.println("Land ahoy!");
         } else {
             System.out.println("Splash!");
         }
+        */
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
 
+        /*
         for(int i = 0; i < 100; i++) {
             if (Geometry.pointInPolygonTest(42.64353265762329, 13.997037155092595)) {
                 System.out.println("Land ahoy!");
@@ -49,9 +53,28 @@ public class Main {
                 //System.out.println("Splash!");
             }
         }
+        */
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
 
+        GridGraph.generate(64800);
+
+        ArrayList<Double> longitudes = new ArrayList<>();
+        ArrayList<Double> latitudes = new ArrayList<>();
+        int[] gridCoordinates = new int[2];
+        double[] coordinates = new double[2];
+
+        for (int i = 0; i < GridGraph.vertexData.length; i++) {
+            gridCoordinates = GridGraph.idToGrid(i);
+            if (GridGraph.vertexData[i]) {
+                coordinates = GridGraph.gridToCoordinates(gridCoordinates[0], gridCoordinates[1]);
+                longitudes.add(coordinates[0]);
+                latitudes.add(coordinates[1]);
+            }
+        }
+
+
+        GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
 
         /*
         GridGraph.generate(100);
