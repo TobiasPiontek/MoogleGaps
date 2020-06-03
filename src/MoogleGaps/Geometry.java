@@ -303,6 +303,7 @@ public class Geometry {
      */
     public static boolean pointInPolygonTest(double longitude, double latitude) {
         for (int i = 0; i < Polygons.wayIds.size(); i++) {
+            System.out.println("i = " + i);
             if (pointInPoly(Polygons.getPolygonLongitudes(i), Polygons.getPolygonLatitudes(i), longitude, latitude)) {
                 return true;
             }

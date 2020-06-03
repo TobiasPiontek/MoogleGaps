@@ -33,8 +33,9 @@ public class Main {
 
         // 54846
         System.out.println("largest is: " + index);
+        System.out.println("with Polygoncount " + Polygons.getPolygonLatitudes(index).length);
 
-        GeoJson.printWay(Polygons.getPolygonLongitudes(6220),Polygons.getPolygonLatitudes(6220));
+        //GeoJson.printWay(Polygons.getPolygonLongitudes(6220),Polygons.getPolygonLatitudes(6220));
 
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
