@@ -21,32 +21,53 @@ public class Polygons {
         simpleCycleDetection();
         System.out.println(wayIds.size() + " Polygons detected with simple Circle detection " + new Timestamp(System.currentTimeMillis()));
 
-        //prototype of setting cycles together
 
-        /*
         for(int i = 0 ; i < FileReader.wayIds.size(); i++){
             if(!waysUsed[i]){
                 long start = startNodes[i];
                 long end = endNodes[i];
                 boolean foundRight = true;
-                System.out.println("Cycle: " + i);
+                //System.out.println("Cycle: " + i);
+                int count = 0;
                 while(foundRight){
                     foundRight = false;
                     for(int j = 0 ; j < FileReader.wayIds.size(); j++){
                         if(!waysUsed[j] && end == startNodes[j]){
-                            System.out.println("Glued together!");
-                            end = startNodes[j];
+                            count ++;
+                            //System.out.println("with " + j + "Glued together!");
+                            //System.out.println("Total start was: " + start + "end was: " + end + " start was: " + startNodes[j] + " new End is: " + endNodes[j]);
+                            end = endNodes[j];
                             waysUsed[j]= true;
                             foundRight = true;
                             break;
                         }
                     }
                 }
+                boolean foundLeft = true;
+                while(foundLeft){
+                    foundLeft = false;
+                    for(int j = 0 ; j < FileReader.wayIds.size(); j++){
+                        if(!waysUsed[j] && start == endNodes[j]){
+                            count ++;
+                            start =  startNodes[j];
+                            waysUsed[j]= true;
+                            foundLeft=true;
+                            break;
+                        }
+                    }
+                }
 
+            System.out.println("Length is: " + count);
+                if(start == end){
+                    System.out.println("2 Edge cycle found: " + i + " length " + count);
+                }
             }
+
+
         }
-        */
-        
+
+        System.out.println("End of MultiwayPolygon detection " + new Timestamp(System.currentTimeMillis()));
+
     }
 
 

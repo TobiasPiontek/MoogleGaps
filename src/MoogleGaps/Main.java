@@ -1,6 +1,5 @@
 package MoogleGaps;
 
-import sun.security.util.ArrayUtil;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,29 +34,13 @@ public class Main {
         // 54846
         // System.out.println("largest is: " + index);
 
-        /*
-        if (Geometry.pointInPolygonTest(42.74353265762329, 13.997037155092595)) {
-            System.out.println("Land ahoy!");
-        } else {
-            System.out.println("Splash!");
-        }
-        */
+
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
 
+
         /*
-        for(int i = 0; i < 100; i++) {
-            if (Geometry.pointInPolygonTest(42.64353265762329, 13.997037155092595)) {
-                System.out.println("Land ahoy!");
-            } else {
-                //System.out.println("Splash!");
-            }
-        }
-        */
-
-        System.out.println(new Timestamp(System.currentTimeMillis()));
-
-        GridGraph.generate(64800);
+        GridGraph.generate(648);
 
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
@@ -72,36 +55,8 @@ public class Main {
                 latitudes.add(coordinates[1]);
             }
         }
-
-
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
+        */
 
-        /*
-        GridGraph.generate(100);
-
-        ArrayList<Double> longitudes = new ArrayList();
-        ArrayList<Double> latitudes = new ArrayList();
-        double[] coordinates;
-
-        System.out.println(GridGraph.vertexData.size());
-
-        for (int i = 0; i < GridGraph.vertexData.size(); i++) {
-            if (GridGraph.vertexData.get(i)) {
-                coordinates = GridGraph.getCoordinates(GridGraph.idToGrid(i));
-                longitudes.add(coordinates[0]);
-                latitudes.add(coordinates[1]);
-            }
-        }
-
-        double[] longs = new double[longitudes.size()];
-        double[] lats = new double[latitudes.size()];
-        for (int i = 0; i < longs.length; i++) {
-            longs[i] = longitudes.get(i);
-            lats[i] = latitudes.get(i);
-        }
-
-        GeoJson.printNodes(longs, lats);
-
-         */
     }
 }
