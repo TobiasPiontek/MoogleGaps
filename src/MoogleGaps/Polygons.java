@@ -21,56 +21,62 @@ public class Polygons {
         simpleCycleDetection();
         System.out.println(wayIds.size() + " Polygons detected with simple Circle detection " + new Timestamp(System.currentTimeMillis()));
 
-
         for(int i = 0 ; i < FileReader.wayIds.size(); i++){
             if(!waysUsed[i]){
                 long start = startNodes[i];
                 long end = endNodes[i];
+                ArrayList<Integer> nodesIndexToAppend = new ArrayList<Integer>();
+
+                //check for right side
                 boolean foundRight = true;
                 //System.out.println("Cycle: " + i);
-                int count = 0;
                 while(foundRight){
                     foundRight = false;
                     for(int j = 0 ; j < FileReader.wayIds.size(); j++){
                         if(!waysUsed[j] && end == startNodes[j]){
-                            count ++;
-                            //System.out.println("with " + j + "Glued together!");
-                            //System.out.println("Total start was: " + start + "end was: " + end + " start was: " + startNodes[j] + " new End is: " + endNodes[j]);
+                            nodesIndexToAppend.add(j);
                             end = endNodes[j];
                             waysUsed[j]= true;
                             foundRight = true;
                             break;
                         }
-                    }
-                }
-                boolean foundLeft = true;
-                while(foundLeft){
-                    foundLeft = false;
-                    for(int j = 0 ; j < FileReader.wayIds.size(); j++){
-                        if(!waysUsed[j] && start == endNodes[j]){
-                            count ++;
-                            start =  startNodes[j];
-                            waysUsed[j]= true;
-                            foundLeft=true;
+                        if(start == end){
                             break;
                         }
                     }
                 }
 
-            System.out.println("Length is: " + count);
-                if(start == end){
-                    System.out.println("2 Edge cycle found: " + i + " length " + count);
+                //Check for the left side
+                boolean foundLeft = true;
+                while(foundLeft){
+                    foundLeft = false;
+                    for(int j = 0 ; j < FileReader.wayIds.size(); j++){
+                        if(!waysUsed[j] && start == endNodes[j]){
+                            start =  startNodes[j];
+                            waysUsed[j]= true;
+                            foundLeft=true;
+                            break;
+                        }
+                        if(start == end){
+                            break;
+                        }
+                    }
                 }
+                if(start == end){
+                    writeCycleToPolygonList(nodesIndexToAppend);
+                }
+                else{
+                    System.out.println("Way of length " + nodesIndexToAppend.size());
+                }
+
             }
-
-
         }
+
+        System.out.println("Polygon count is " + wayIds.size());
 
         System.out.println("End of MultiwayPolygon detection " + new Timestamp(System.currentTimeMillis()));
 
     }
-
-
 
 
     /**
@@ -88,8 +94,6 @@ public class Polygons {
                     wayIds.add(coordinatesSize);
                 }
                 for(int j = 0; j < FileReader.getLengthOfWay(i);  j++){
-                    if(FileReader.getLatitudesOfWay(i)[j] < 0.1 && FileReader.getLatitudesOfWay(i)[j]>-0.1){
-                    }
                     latitudes[j + coordinatesSize]= FileReader.getLatitudesOfWay(i)[j];
                     longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
                 }
@@ -99,6 +103,31 @@ public class Polygons {
             }
         }
     }
+
+    private static void writeCycleToPolygonList(ArrayList<Integer> idsToAdd){
+        int cursor = coordinatesSize;
+        if(wayIds.isEmpty()){
+            wayIds.add(0);
+        }else{
+            wayIds.add(coordinatesSize);
+        }
+        int k = coordinatesSize;
+        for(int i = 0; i < idsToAdd.size();i++){
+            double[] polygonLatitudes=FileReader.getLatitudesOfWay(idsToAdd.get(i));
+            double[] polygonLongitudes=FileReader.getLongitudesOfWay(idsToAdd.get(i));
+
+            //intentionally leaving the last node out to prevent double detections
+            for(int j = 0; j < FileReader.getLengthOfWay(idsToAdd.get(i))-1; j++){
+                double test = polygonLatitudes[j];
+                double testtest = polygonLongitudes[j];
+                latitudes[k]=polygonLatitudes[j];
+                longitudes[k]=polygonLongitudes[j];
+                k++;
+            }
+        }
+        coordinatesSize=k;
+    }
+
 
     private static void createStartAndEndNodeArray() {
         for(int i = 0; i < FileReader.wayIds.size(); i++){

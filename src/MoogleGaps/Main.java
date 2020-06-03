@@ -20,7 +20,7 @@ public class Main {
 
         //GeoJson.printWay(Polygons.getPolygonLongitudes(10), Polygons.getPolygonLatitudes(10));
 
-        /*
+
         int size = 0;
         int index = 0;
         for (int i = 0; i < Polygons.wayIds.size(); i++) {
@@ -29,11 +29,12 @@ public class Main {
                 index = i;
             }
         }
-        */
+
 
         // 54846
-        // System.out.println("largest is: " + index);
+        System.out.println("largest is: " + index);
 
+        GeoJson.printWay(Polygons.getPolygonLongitudes(6220),Polygons.getPolygonLatitudes(6220));
 
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
