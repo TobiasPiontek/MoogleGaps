@@ -16,12 +16,12 @@ public class Polygons {
     private static int coordinatesSize = 0;      //A Cursor to know where the next Polygon has to be written in the Array
 
     public static void createPolygons() {
-        System.out.println("Detecting simple polygons... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting simple polygons...");
         createStartAndEndNodeArray();
         simpleCycleDetection();
         System.out.println(wayIds.size() + " Polygons detected with simple Circle detection ");
 
-        System.out.println("Detecting non-simple polygons... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting non-simple polygons...");
 
         for (int i = 0; i < FileReader.wayIds.size(); i++) {
             if (!waysUsed[i]) {
@@ -168,8 +168,8 @@ public class Polygons {
         return polygonLatitudes;
     }
 
-    //helper Method to get the Length of an
-    private static int getWayLength(int i) {
+    // helper method to get the length of a way
+    public static int getWayLength(int i) {
         if (i < wayIds.size() - 1) {
             return wayIds.get(i + 1) - wayIds.get(i);
         } else {

@@ -1,5 +1,6 @@
 package MoogleGaps;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Geometry {
@@ -269,6 +270,35 @@ public class Geometry {
         }
     }
 
+    private static boolean pointInPoly(int index, double longitude, double latitude) {
+        int n = Polygons.getWayLength(index);
+        int firstNode = Polygons.wayIds.get(index);
+        int angle = 0;
+        double longitudeA = Polygons.longitudes[firstNode];
+        double latitudeA = Polygons.latitudes[firstNode];
+        int quad = quadrant(longitudeA, latitudeA, longitude, latitude);
+        int nextQuad, delta;
+        double longitudeB, latitudeB;
+
+        for (int i = 0; i < n; i++) {
+            longitudeB = Polygons.longitudes[firstNode + ((i + 1) % n)];
+            latitudeB = Polygons.latitudes[firstNode + ((i + 1) % n)];
+            nextQuad = quadrant(longitudeB, latitudeB, longitude, latitude);
+            delta = nextQuad - quad;
+            delta = adjustDelta(delta, longitudeA, latitudeA, longitudeB, latitudeB, longitude, latitude);
+            angle += delta;
+            quad = nextQuad;
+            longitudeA = longitudeB;
+            latitudeA = latitudeB;
+        }
+
+        if (angle == 4 || angle == -4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // takes delta and three points A, B, and C with their x and y coordinates
     // returns the adjusted delta for summing the angle
     private static int adjustDelta(int delta, double xA, double yA, double xB, double yB, double xC, double yC) {
@@ -304,7 +334,7 @@ public class Geometry {
      */
     public static boolean pointInPolygonTest(double longitude, double latitude) {
         for (int i = 0; i < Polygons.wayIds.size(); i++) {
-            if (pointInPoly(Polygons.getPolygonLongitudes(i), Polygons.getPolygonLatitudes(i), longitude, latitude)) {
+            if (pointInPoly(i, longitude, latitude)) {
                 return true;
             }
         }

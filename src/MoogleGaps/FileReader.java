@@ -36,7 +36,7 @@ public class FileReader {
         }
 
         //Trigger the first stage with the read of the way nodes
-        System.out.println("Reading ways... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Reading ways...");
         OsmosisReader wayReader = new OsmosisReader(wayInputStream);
         WayReader wayData = new WayReader();
         wayReader.setSink(wayData);
@@ -45,7 +45,7 @@ public class FileReader {
 
 
         //Sort The NodeIds Array to speed up the link of nodeid and coordinates information
-        System.out.println("Sorting NodeIds... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Sorting NodeIds...");
 
 
         NodeSortComparator comparator = new NodeSortComparator(nodeIds);
@@ -66,7 +66,7 @@ public class FileReader {
 
 
         //allocating the arrays with their sizes
-        System.out.println("Extracting node coordinates... " + new Timestamp(System.currentTimeMillis()));
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Extracting node coordinates...");
         longitudes = new double[nodeIds.size()];
         latitudes = new double[nodeIds.size()];
 

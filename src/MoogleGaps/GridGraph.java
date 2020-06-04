@@ -53,9 +53,9 @@ public class GridGraph {
      * @param n
      */
     public static void generate(int n) {
-        System.out.println("Generating grid graph... " + new Timestamp(System.currentTimeMillis()));
-        southToNorth = (int) Math.sqrt(n / 2);
-        westToEast = southToNorth * 2;
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
+        southToNorth = (int) Math.sqrt(n / 2) - 1;
+        westToEast = southToNorth * 2 - 1;
         vertexData = new boolean[southToNorth * westToEast];
         System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         for (int i = 0; i < westToEast; i++) {
@@ -112,7 +112,7 @@ public class GridGraph {
     }
 
     public static double[] gridToCoordinates(int row, int col) {
-        double sideLength = 180 / southToNorth;
+        double sideLength = 180 / (double) (southToNorth - 1);
         double longitude = col * sideLength - 180;
         double latitude = row * sideLength - 90;
         double[] coordinates = new double[2];
