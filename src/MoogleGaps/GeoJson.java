@@ -11,9 +11,9 @@ public class GeoJson {
         System.out.println("  \"features\": [");
         int elementsToPrint = 100;
         for (int i = 0; i < elementsToPrint; i++) {       // used before: FileReader.nodeIds.size()
-            System.out.println(getGeoJsonElement(6 , FileReader.longitudes[i], FileReader.latitudes[i]));
+            System.out.println(getGeoJsonElement(6, FileReader.longitudes[i], FileReader.latitudes[i]));
 
-            if(i != elementsToPrint-1) {
+            if (i != elementsToPrint - 1) {
                 System.out.print("}, ");
             } else {
                 System.out.println("}]");
@@ -23,41 +23,42 @@ public class GeoJson {
     }
 
     /**
-     * @param moveCharsIn   the static amount of Chars to move in
-     * @param longitude     longitude coordinate of node to display
-     * @param latitude      latitude coordinate of node to display
-     * @return              a GeoJson representation of the coordinates
+     * @param moveCharsIn the static amount of Chars to move in
+     * @param longitude   longitude coordinate of node to display
+     * @param latitude    latitude coordinate of node to display
+     * @return a GeoJson representation of the coordinates
      */
-    private static String getGeoJsonElement(int moveCharsIn, double longitude, double latitude){
-        String indention= "";
-        for(int i=0; i<moveCharsIn; i++){
+    private static String getGeoJsonElement(int moveCharsIn, double longitude, double latitude) {
+        String indention = "";
+        for (int i = 0; i < moveCharsIn; i++) {
             indention.concat(" ");
         }
-        String Element =    "{\n" +
-                            indention + "\"type\": \"Feature\",\n" +
-                            indention + "\"geometry\": {\n" +
-                            indention + "  \"type\": \"Point\",\n" +
-                            indention + "  \"coordinates\": [" + longitude + ", " + latitude + "]\n" +
-                            indention + "},\n" +
-                            indention + "\"properties\": {\n" +
-                            indention + "\"prop0\": \"value0\"\n" +
-                            indention + "}\n";
+        String Element = "{\n" +
+                indention + "\"type\": \"Feature\",\n" +
+                indention + "\"geometry\": {\n" +
+                indention + "  \"type\": \"Point\",\n" +
+                indention + "  \"coordinates\": [" + longitude + ", " + latitude + "]\n" +
+                indention + "},\n" +
+                indention + "\"properties\": {\n" +
+                indention + "\"prop0\": \"value0\"\n" +
+                indention + "}\n";
         return Element;
     }
 
     /**
      * mainly used for debugging purposes
+     *
      * @param longitudes
      * @param latitudes
      */
-    public static void printNodes(double[] longitudes, double[] latitudes){
+    public static void printNodes(double[] longitudes, double[] latitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
         for (int i = 0; i < longitudes.length; i++) {       // used before: FileReader.nodeIds.size()
-            System.out.println(getGeoJsonElement(6 , longitudes[i], latitudes[i]));
+            System.out.println(getGeoJsonElement(6, longitudes[i], latitudes[i]));
 
-            if(i != longitudes.length-1) {
+            if (i != longitudes.length - 1) {
                 System.out.print("}, ");
             } else {
                 System.out.println("}]");
@@ -109,14 +110,14 @@ public class GeoJson {
         System.out.println("}");
     }
 
-    public static void printWayByCoordinates(double[] latitudes, double[] longitudes){
+    public static void printWayByCoordinates(double[] latitudes, double[] longitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
         for (int i = 0; i < longitudes.length; i++) {       // used before: FileReader.nodeIds.size()
-            System.out.println(getGeoJsonElement(6 , longitudes[i], latitudes[i]));
+            System.out.println(getGeoJsonElement(6, longitudes[i], latitudes[i]));
 
-            if(i != longitudes.length-1) {
+            if (i != longitudes.length - 1) {
                 System.out.print("}, ");
             } else {
                 System.out.println("}]");

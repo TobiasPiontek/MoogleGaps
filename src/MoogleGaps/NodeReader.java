@@ -43,17 +43,17 @@ public class NodeReader implements Sink {
                 //search on right side of sorted list
 
                 int i = 1;
-                while(index+i<FileReader.nodeIds.size() && myNode.getId()==FileReader.nodeIds.get(index+i) ){
-                    FileReader.longitudes[index+i] = myNode.getLongitude();
-                    FileReader.latitudes[index+i] = myNode.getLatitude();
+                while (index + i < FileReader.nodeIds.size() && myNode.getId() == FileReader.nodeIds.get(index + i)) {
+                    FileReader.longitudes[index + i] = myNode.getLongitude();
+                    FileReader.latitudes[index + i] = myNode.getLatitude();
                     i++;
                 }
 
                 //search on the left side of sorted list
                 int j = 1;
-                while(index-j>=0 && myNode.getId()==FileReader.nodeIds.get(index-j)){
-                    FileReader.longitudes[index-j] = myNode.getLongitude();
-                    FileReader.latitudes[index-j] = myNode.getLatitude();
+                while (index - j >= 0 && myNode.getId() == FileReader.nodeIds.get(index - j)) {
+                    FileReader.longitudes[index - j] = myNode.getLongitude();
+                    FileReader.latitudes[index - j] = myNode.getLatitude();
                     j++;
                 }
 

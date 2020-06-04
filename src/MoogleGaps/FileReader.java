@@ -21,6 +21,7 @@ public class FileReader {
 
     /**
      * Needs to be called to trigger the read in process
+     *
      * @param relativeFilePath the Path to the location of a PBF File
      */
     public static void readPbfFile(String relativeFilePath) {
@@ -48,11 +49,11 @@ public class FileReader {
 
 
         NodeSortComparator comparator = new NodeSortComparator(nodeIds);
-        Integer[]nodeIdsInverted = comparator.createIndexArray();
-        Arrays.sort(nodeIdsInverted,comparator);
+        Integer[] nodeIdsInverted = comparator.createIndexArray();
+        Arrays.sort(nodeIdsInverted, comparator);
 
-        nodeIdLookUps= new Integer[nodeIdsInverted.length];
-        for(int i = 0; i < nodeIdsInverted.length; i++){
+        nodeIdLookUps = new Integer[nodeIdsInverted.length];
+        for (int i = 0; i < nodeIdsInverted.length; i++) {
             //inverted.set(index[i],i);
             nodeIdLookUps[nodeIdsInverted[i]] = i;
         }
@@ -78,7 +79,7 @@ public class FileReader {
 
     /**
      * @param wayId the id of the way in the order where they have been read in
-     * @return  a ArrayList with all nodes included
+     * @return a ArrayList with all nodes included
      */
     public static ArrayList<Long> getWayAtId(int wayId) {
         ArrayList<Long> wayAtIndex = new ArrayList<Long>();
@@ -92,19 +93,19 @@ public class FileReader {
      * @param wayIndex the id of the way in the order where they have been read in
      * @return the latitute coordinates in order of the respecting way
      */
-    public static double[] getLatitudesOfWay(int wayIndex){
+    public static double[] getLatitudesOfWay(int wayIndex) {
         int startpoint;
         int endpoint;
         startpoint = wayIds.get(wayIndex);
-        if(wayIndex < wayIds.size()-1){ //if its not the last element
-            endpoint = wayIds.get(wayIndex+1)-1;
-        }else{
-            endpoint=nodeIds.size()-1;
+        if (wayIndex < wayIds.size() - 1) { //if its not the last element
+            endpoint = wayIds.get(wayIndex + 1) - 1;
+        } else {
+            endpoint = nodeIds.size() - 1;
         }
-        int size = endpoint-startpoint;
+        int size = endpoint - startpoint;
         double[] wayAtId = new double[size];
 
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             wayAtId[i] = latitudes[nodeIdLookUps[i + startpoint]];
         }
 
@@ -112,28 +113,28 @@ public class FileReader {
     }
 
     /**
-     * @param wayIndex  the id of the way in the order where they have been read in
-     * @return  the longitudes coordinates in order of the respecting way
+     * @param wayIndex the id of the way in the order where they have been read in
+     * @return the longitudes coordinates in order of the respecting way
      */
-    public static double[] getLongitudesOfWay(int wayIndex){
+    public static double[] getLongitudesOfWay(int wayIndex) {
         int startpoint;
         int endpoint;
         startpoint = wayIds.get(wayIndex);
-        if(wayIndex < wayIds.size()-1){ //if its not the last element
-            endpoint = wayIds.get(wayIndex+1)-1;
-        }else{
-            endpoint=nodeIds.size()-1;
+        if (wayIndex < wayIds.size() - 1) { //if its not the last element
+            endpoint = wayIds.get(wayIndex + 1) - 1;
+        } else {
+            endpoint = nodeIds.size() - 1;
         }
-        int size = endpoint-startpoint;
+        int size = endpoint - startpoint;
         double[] wayAtId = new double[size];
 
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             wayAtId[i] = longitudes[nodeIdLookUps[i + startpoint]];
         }
         return wayAtId;
     }
 
-    
+
     public static long getFirstNodeOfWay(int id) {
         return nodeIds.get(nodeIdLookUps[wayIds.get(id)]);
     }
@@ -146,11 +147,11 @@ public class FileReader {
         }
     }
 
-    public static int getLengthOfWay(int index){
-        if(index < wayIds.size()-1){
-            return wayIds.get(index+1) -1 - wayIds.get(index);
-        }else{
-            return (nodeIds.size()-1)-wayIds.get(index);
+    public static int getLengthOfWay(int index) {
+        if (index < wayIds.size() - 1) {
+            return wayIds.get(index + 1) - 1 - wayIds.get(index);
+        } else {
+            return (nodeIds.size() - 1) - wayIds.get(index);
         }
 
     }

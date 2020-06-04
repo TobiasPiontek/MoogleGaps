@@ -20,7 +20,7 @@ public class Main {
 
         //GeoJson.printWay(Polygons.getPolygonLongitudes(10), Polygons.getPolygonLatitudes(10));
 
-
+        /*
         int size = 0;
         int index = 0;
         for (int i = 0; i < Polygons.wayIds.size(); i++) {
@@ -28,20 +28,19 @@ public class Main {
                 size = Polygons.getPolygonLatitudes(i).length;
                 index = i;
             }
+            System.out.println(i + "    : " + Polygons.getPolygonLatitudes(i).length);
         }
-
-
-        // 54846
-        System.out.println("largest is: " + index);
+        System.out.println("largest is " + index);
         System.out.println("with Polygoncount " + Polygons.getPolygonLatitudes(index).length);
+         */
 
-        //GeoJson.printWay(Polygons.getPolygonLongitudes(6220),Polygons.getPolygonLatitudes(6220));
+
+        //GeoJson.printWay(Polygons.getPolygonLongitudes(6224),Polygons.getPolygonLatitudes(6224));
 
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
 
 
-        /*
         GridGraph.generate(648);
 
         ArrayList<Double> longitudes = new ArrayList<>();
@@ -58,7 +57,7 @@ public class Main {
             }
         }
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
-        */
+
 
     }
 }

@@ -48,6 +48,7 @@ public class GridGraph {
     /**
      * takes n as integer for number of grid points to generate
      * fills boolean array vertexData with True for on land and False for in water
+     *
      * @param n
      */
     public static void generate(int n) {
@@ -122,6 +123,7 @@ public class GridGraph {
 
     /**
      * converts grid coordinates to IDs
+     *
      * @param m
      * @param n
      * @return ID of point as integer
@@ -132,6 +134,7 @@ public class GridGraph {
 
     /**
      * converts IDs to grid coordinates
+     *
      * @param id
      * @return grid coordinates as integer array
      */
@@ -144,10 +147,11 @@ public class GridGraph {
 
     /**
      * takes m and n of vertex ID
+     *
      * @param mn
      * @return coordinates of vertex as double array {longitude, latitude}
      */
-    public static double[] getCoordinates (int[] mn) {
+    public static double[] getCoordinates(int[] mn) {
         double[] coordinates = new double[2];
 
         double phi = 2 * Math.PI * mn[1] / mPhi;
@@ -160,17 +164,19 @@ public class GridGraph {
 
     /**
      * takes row and column of vertex ID
+     *
      * @param row
      * @param col
      * @return IDs of neighboring vertices as 2D integer array
      */
-    public static int[][] getNeighbors (int row, int col) {
+    public static int[][] getNeighbors(int row, int col) {
         int[][] neighbors = {{0, 0}, {1, 1}};
         return neighbors;
     }
 
     /**
      * takes longitude and latitude of point
+     *
      * @param longitude
      * @param latitude
      * @return closest vertex ID as integer array

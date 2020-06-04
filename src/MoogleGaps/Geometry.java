@@ -88,7 +88,7 @@ public class Geometry {
     private static double getDotProduct(double[] a, double[] b) {
         double dotProduct = 0;
         for (int i = 0; i < 3; i++) {
-            dotProduct += a[i]*b[i];
+            dotProduct += a[i] * b[i];
         }
         return dotProduct;
     }
@@ -105,7 +105,7 @@ public class Geometry {
     // takes n-vectors of two points a and b
     // returns their distance in km with R = 6371 km
     private static double getDistance(double[] nVectorA, double[] nVectorB) {
-        return 6371*Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
+        return 6371 * Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
     }
 
     // takes vector
@@ -173,7 +173,7 @@ public class Geometry {
     // takes polygon and point with latitudes and longitudes
     // returns true if point is in the polygon
     // https://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map
-    private static boolean coordinateIsInsidePolygon (double[] longitudes, double[] latitudes, double longitude, double latitude) {
+    private static boolean coordinateIsInsidePolygon(double[] longitudes, double[] latitudes, double longitude, double latitude) {
         double angle = 0;
         double latitudeA, longitudeA, latitudeB, longitudeB;
         int n = latitudes.length;
@@ -211,7 +211,7 @@ public class Geometry {
             dtheta += 2 * Math.PI;
         }
 
-        return(dtheta);
+        return (dtheta);
     }
 
     //
@@ -291,19 +291,19 @@ public class Geometry {
 
     // takes two points A and B with their x and y coordinates and a y coordinate
     // returns x-intercept of polygon edge with horizontal line at y value
-    private static double xIntercept (double xA, double yA, double xB, double yB, double y) {
+    private static double xIntercept(double xA, double yA, double xB, double yB, double y) {
         return xB - ((yB - y) * ((xA - xB) / (yA - yB)));
     }
 
     /**
      * takes point with coordinates as longitude and latitude as double
+     *
      * @param longitude
      * @param latitude
      * @return true if point is in a polygon, i.e. on land; false if point is in water
      */
     public static boolean pointInPolygonTest(double longitude, double latitude) {
         for (int i = 0; i < Polygons.wayIds.size(); i++) {
-            System.out.println("i = " + i);
             if (pointInPoly(Polygons.getPolygonLongitudes(i), Polygons.getPolygonLatitudes(i), longitude, latitude)) {
                 return true;
             }
