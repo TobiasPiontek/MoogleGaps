@@ -1,5 +1,6 @@
 package MoogleGaps;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -52,12 +53,11 @@ public class GridGraph {
      * @param n
      */
     public static void generate(int n) {
+        System.out.println("Generating grid graph... " + new Timestamp(System.currentTimeMillis()));
         southToNorth = (int) Math.sqrt(n / 2);
         westToEast = southToNorth * 2;
         vertexData = new boolean[southToNorth * westToEast];
-        System.out.println("southToNorth = " + southToNorth);
-        System.out.println("westToEast = " + westToEast);
-        System.out.println("vertexData.length = " + vertexData.length);
+        System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         for (int i = 0; i < westToEast; i++) {
             double longitude = i * 360 / westToEast - 180;
             for (int j = 0; j < southToNorth; j++) {

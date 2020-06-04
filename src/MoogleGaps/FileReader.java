@@ -36,7 +36,7 @@ public class FileReader {
         }
 
         //Trigger the first stage with the read of the way nodes
-        System.out.println("Reading ways..." + new Timestamp(System.currentTimeMillis()));
+        System.out.println("Reading ways... " + new Timestamp(System.currentTimeMillis()));
         OsmosisReader wayReader = new OsmosisReader(wayInputStream);
         WayReader wayData = new WayReader();
         wayReader.setSink(wayData);
