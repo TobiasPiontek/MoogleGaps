@@ -15,7 +15,7 @@ public class Main {
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
         Polygons.createPolygons();
 
-        GridGraph.generate(6840);
+        GridGraph.generate(10000);
 
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();

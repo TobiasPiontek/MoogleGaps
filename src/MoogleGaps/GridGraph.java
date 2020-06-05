@@ -54,14 +54,14 @@ public class GridGraph {
      */
     public static void generate(int n) {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
-        southToNorth = (int) Math.sqrt(n / 2) - 1;
-        westToEast = southToNorth * 2 - 1;
+        southToNorth = (int) ((Math.sqrt(2 * n + 1) - 1) / 2);
+        westToEast = (southToNorth + 1) * 2;
         vertexData = new boolean[southToNorth * westToEast];
         System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         for (int i = 0; i < westToEast; i++) {
             double longitude = i * 360 / westToEast - 180;
             for (int j = 0; j < southToNorth; j++) {
-                double latitude = j * 180 / southToNorth - 90;
+                double latitude = (j + 1) * 180 / southToNorth - 90;
                 //System.out.println("(" + longitude + ", " + latitude + ")");
                 //System.out.println(i * southToNorth + j);
                 vertexData[i * southToNorth + j] = Geometry.pointInPolygonTest(longitude, latitude);
@@ -112,9 +112,9 @@ public class GridGraph {
     }
 
     public static double[] gridToCoordinates(int row, int col) {
-        double sideLength = 180 / (double) (southToNorth - 1);
+        double sideLength = 180 / (double) (southToNorth + 1);
         double longitude = col * sideLength - 180;
-        double latitude = row * sideLength - 90;
+        double latitude = (row + 1) * sideLength - 90;
         double[] coordinates = new double[2];
         coordinates[0] = longitude;
         coordinates[1] = latitude;
