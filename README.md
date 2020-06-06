@@ -29,6 +29,8 @@ Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCour
 - #### Task 4: Grid Graph
     - Implement a grid graph representation which allows routing on the oceanscorresponding to the input. Use a bit vector to distinguish between accessiblenodes (in the ocean) and non-accessible nodes (on land). Node position andedges should not explicitly be stored but be calculated on demand.
 
+- #### Task 5: Dijkstra’s Algorithm
+    - Implement Dijkstra’s Algorithm for shortest paths on your grid data structure.
 
 - #### Dependencies used (located in dependencies folder):
     - Osmosis Pbf
@@ -48,9 +50,10 @@ Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCour
         - https://howtodoinjava.com/sort/collections-sort/
         
 ## Manual
-- import the project into intellij
-- Goto the VM-options of the main method and add at least 
-- Xmx8192m or higher to allow the project to allocate enough ram
+- import the project into [intellij Community edition](https://www.jetbrains.com/de-de/idea/download/#section=windows)
+- Goto the VM-options of the main method and add
+    - Xmx8192m as a parameter or higher to allow the project to allocate enough ram
 - Store the PBF Files in OSMMapData Folder
+    - all Files need to end on .pbf to be detected by the backend
 - Start the Backend
 - Choose the wanted File in the Dialog with its listed Number and confirm with [Enter]
