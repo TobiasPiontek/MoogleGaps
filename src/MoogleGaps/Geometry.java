@@ -13,7 +13,7 @@ public class Geometry {
 
     // takes latitude and longitude of point
     // returns n-vector, i.e. to earth's surface perpendicular vector through point
-    private static double[] getNVector(double latitude, double longitude) {
+    public static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
         nVector[0] = Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(longitude));
         nVector[1] = Math.cos(Math.toRadians(latitude)) * Math.sin(Math.toRadians(longitude));

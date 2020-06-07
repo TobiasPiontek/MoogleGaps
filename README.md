@@ -27,7 +27,7 @@ Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCour
         - [Video with 3D animation of spherical vs vector coordinates](https://www.youtube.com/watch?v=FDyenWWlPdU)            
             
 - #### Task 4: Grid Graph
-    - Implement a grid graph representation which allows routing on the oceanscorresponding to the input. Use a bit vector to distinguish between accessiblenodes (in the ocean) and non-accessible nodes (on land). Node position andedges should not explicitly be stored but be calculated on demand.
+    - Implement a grid graph representation which allows routing on the oceanscorresponding to the input. Use a bit vector to distinguish between accessible nodes (in the ocean) and non-accessible nodes (on land). Node position and edges should not explicitly be stored but be calculated on demand.
 
 - #### Task 5: Dijkstra’s Algorithm
     - Implement Dijkstra’s Algorithm for shortest paths on your grid data structure.

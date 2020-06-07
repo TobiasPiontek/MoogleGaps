@@ -229,3 +229,12 @@ public class GridGraph {
         return vertex;
     }
 }
+
+        /*
+        int[] gridCoordinates1 = GridGraph.idToGrid(o1);
+        int[] gridCoordinates2 = GridGraph.idToGrid(o1);
+        double[] coordinates1 = GridGraph.gridToCoordinates(gridCoordinates1[0],gridCoordinates1[1]);
+        double[] coordinates2 = GridGraph.gridToCoordinates(gridCoordinates2[0],gridCoordinates2[1]);
+        double[] nVector1 = Geometry.getNVector(coordinates1[1],coordinates1[0]);
+        double[] nVector2 = Geometry.getNVector(coordinates2[1],coordinates2[0]);
+         */
