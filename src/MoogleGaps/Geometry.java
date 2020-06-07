@@ -105,7 +105,7 @@ public class Geometry {
 
     // takes n-vectors of two points a and b
     // returns their distance in km with R = 6371 km
-    private static double getDistance(double[] nVectorA, double[] nVectorB) {
+    public static double getDistance(double[] nVectorA, double[] nVectorB) {
         return 6371 * Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
     }
 

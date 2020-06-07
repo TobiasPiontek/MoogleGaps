@@ -67,7 +67,7 @@ public class GeoJson {
         }
     }
 
-    public static void printWay(double[] longitudes, double[] latitudes) {
+    public static void printPolygon(double[] longitudes, double[] latitudes) {
 
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
@@ -124,5 +124,49 @@ public class GeoJson {
                 System.out.println("}");
             }
         }
+    }
+
+    public static void printPolyline(double[] longitudes, double[] latitudes) {
+
+        System.out.println("{");
+        System.out.println("  \"type\": \"FeatureCollection\",");
+        System.out.println("  \"features\": [");
+        System.out.println("    {");
+        System.out.println("      \"type\": \"Feature\",");
+        System.out.println("      \"properties\": {},");
+        System.out.println("      \"geometry\": {");
+        System.out.println("        \"type\": \"LineString\",");
+        System.out.println("        \"coordinates\": [");
+        //System.out.println("          [");
+
+        for (int i = 0; i < longitudes.length - 1; i++) {
+            System.out.println("            [");
+            System.out.println("              " + longitudes[i] + ",");
+            System.out.println("              " + latitudes[i]);
+            System.out.println("            ],");
+        }
+
+        System.out.println("            [");
+        System.out.println("              " + longitudes[longitudes.length - 1] + ",");
+        System.out.println("              " + latitudes[longitudes.length - 1]);
+        System.out.println("            ]");
+
+        //System.out.println("          ]");
+        System.out.println("        ]");
+        System.out.println("      }");
+        System.out.println("    },");
+        System.out.println("    {");
+        System.out.println("      \"type\": \"Feature\",");
+        System.out.println("      \"properties\": {},");
+        System.out.println("      \"geometry\": {");
+        System.out.println("        \"type\": \"Point\",");
+        System.out.println("        \"coordinates\": [");
+        System.out.println("          " + longitudes[0] + ",");
+        System.out.println("          " + latitudes[0]);
+        System.out.println("        ]");
+        System.out.println("      }");
+        System.out.println("    }");
+        System.out.println("  ]");
+        System.out.println("}");
     }
 }

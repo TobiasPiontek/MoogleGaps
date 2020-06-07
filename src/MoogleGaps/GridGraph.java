@@ -15,6 +15,8 @@ public class GridGraph {
     public static boolean[] vertexData;
     private static int southToNorth;
     private static int westToEast;
+    public static double[] costs;
+    private static double sideLength;
 
     public static void generateEquidistant(int n) {
         nCount = 0;
@@ -56,21 +58,24 @@ public class GridGraph {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
         southToNorth = (int) ((Math.sqrt(2 * n + 1) - 1) / 2);
         westToEast = (southToNorth + 1) * 2;
+        sideLength = 180.0 / (southToNorth + 1);
         vertexData = new boolean[southToNorth * westToEast];
         System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         for (int i = 0; i < westToEast; i++) {
-            double longitude = i * 360 / westToEast - 180;
+            double longitude = i * 360.0 / westToEast - 180;
             for (int j = 0; j < southToNorth; j++) {
-                double latitude = (j + 1) * 180 / southToNorth - 90;
+                double latitude = (j + 1) * 180.0 / (southToNorth + 1) - 90;
                 //System.out.println("(" + longitude + ", " + latitude + ")");
                 //System.out.println(i * southToNorth + j);
                 vertexData[i * southToNorth + j] = Geometry.pointInPolygonTest(longitude, latitude);
             }
         }
+
+        computeCosts();
     }
 
     public static int findVertex(double longitude, double latitude) {
-        double sideLength = 180 / southToNorth;
+        //double sideLength = 180.0 / southToNorth;
         double midX = Math.floor(longitude / sideLength) + 0.5;
         double midLongitude = midX * sideLength;
         double midY = Math.floor(latitude / sideLength) + 0.5;
@@ -112,7 +117,7 @@ public class GridGraph {
     }
 
     public static double[] gridToCoordinates(int row, int col) {
-        double sideLength = 180 / (double) (southToNorth + 1);
+        //double sideLength = 180 / (double) (southToNorth + 1);
         double longitude = col * sideLength - 180;
         double latitude = (row + 1) * sideLength - 90;
         double[] coordinates = new double[2];
@@ -228,13 +233,51 @@ public class GridGraph {
         int[] vertex = {0, 0};
         return vertex;
     }
-}
 
-        /*
-        int[] gridCoordinates1 = GridGraph.idToGrid(o1);
-        int[] gridCoordinates2 = GridGraph.idToGrid(o1);
-        double[] coordinates1 = GridGraph.gridToCoordinates(gridCoordinates1[0],gridCoordinates1[1]);
-        double[] coordinates2 = GridGraph.gridToCoordinates(gridCoordinates2[0],gridCoordinates2[1]);
-        double[] nVector1 = Geometry.getNVector(coordinates1[1],coordinates1[0]);
-        double[] nVector2 = Geometry.getNVector(coordinates2[1],coordinates2[0]);
-         */
+    /**
+     * computes the costs of each edge in grid graph
+     * the first n - 2 alternate between horizontal and diagonal edge costs
+     * the last two are the final horizontal and the constant vertical
+     */
+    private static void computeCosts() {
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Computing edge costs...");
+
+        double latitude;
+        double longitudeA = colToLongitude(0);
+        double longitudeB = colToLongitude(1);
+        costs = new double[(southToNorth - 1) * 2 + 2];
+        double[] nVector;
+        for (int row = 0; row < southToNorth - 1; row++) {
+            latitude = rowToLatitude(row);
+
+            // create N-Vector of reference point
+            nVector = Geometry.getNVector(latitude, longitudeA);
+
+            // horizontal
+            costs[row * 2] = Geometry.getDistance(nVector, Geometry.getNVector(latitude, longitudeB));
+
+            // diagonal
+            costs[row * 2 + 1] = Geometry.getDistance(nVector, Geometry.getNVector(rowToLatitude(row + 1), longitudeB));
+        }
+
+        // last horizontal
+        latitude = rowToLatitude(southToNorth - 1);
+        nVector = Geometry.getNVector(latitude, longitudeA);
+        costs[(southToNorth - 1) * 2] = Geometry.getDistance(nVector, Geometry.getNVector(latitude, longitudeB));
+
+        // constant vertical
+        costs[(southToNorth - 1) * 2 + 1] = Geometry.getDistance(nVector, Geometry.getNVector(rowToLatitude(southToNorth - 2), longitudeA));
+    }
+
+    private static double rowToLatitude(int row) {
+        return (row + 1) * sideLength - 90;
+    }
+
+    private static double colToLongitude(int col) {
+        return col * sideLength - 180;
+    }
+
+    public static int idToRow(int id) {
+        return id % southToNorth;
+    }
+}
