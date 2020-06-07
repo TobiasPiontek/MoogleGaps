@@ -165,12 +165,55 @@ public class GridGraph {
     /**
      * takes row and column of vertex ID
      *
-     * @param row
-     * @param col
-     * @return IDs of neighboring vertices as 2D integer array
+     * @param index
+     * @return IDs of neighboring vertices as integer array
      */
-    public static int[][] getNeighbors(int row, int col) {
-        int[][] neighbors = {{0, 0}, {1, 1}};
+    public static int[] getNeighbors(int index) {
+        int[] neighbors;
+        int[] coordinates = idToGrid(index);
+        int rowPoint = coordinates[0];
+        int colPoint = coordinates[1];
+        int count = 0;
+        int row;
+        int col;
+        if (rowPoint != 0 && rowPoint != southToNorth - 1) {
+            neighbors = new int[8];
+            for (int i = 0; i < 3; i++) {
+                row = rowPoint - 1 + i;
+                for (int j = 0; j < 3; j++) {
+                    col = (((colPoint - 1 + j) % westToEast) + westToEast) % westToEast;
+                    if (!(i == 1 && j == 1)) {
+                        neighbors[count] = gridToId(row, col);
+                        count++;
+                    }
+                }
+            }
+        } else if (rowPoint == 0){
+            neighbors = new int[5];
+            for (int i = 0; i < 2; i++) {
+                row = rowPoint + i;
+                for (int j = 0; j < 3; j++) {
+                    col = (((colPoint - 1 + j) % westToEast) + westToEast) % westToEast;
+                    if (!(i == 0 && j == 1)) {
+                        neighbors[count] = gridToId(row, col);
+                        count++;
+                    }
+                }
+            }
+        } else {
+            neighbors = new int[5];
+            for (int i = 0; i < 2; i++) {
+                row = rowPoint - 1 + i;
+                for (int j = 0; j < 3; j++) {
+                    col = (((colPoint - 1 + j) % westToEast) + westToEast) % westToEast;
+                    if (!(i == 1 && j == 1)) {
+                        neighbors[count] = gridToId(row, col);
+                        count++;
+                    }
+                }
+            }
+        }
+
         return neighbors;
     }
 

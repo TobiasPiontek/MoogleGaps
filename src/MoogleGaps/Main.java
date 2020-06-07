@@ -15,8 +15,9 @@ public class Main {
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
         Polygons.createPolygons();
 
-        GridGraph.generate(10000);
+        GridGraph.generate(1000);
 
+        /*
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
         int[] gridCoordinates;
@@ -31,6 +32,19 @@ public class Main {
             }
         }
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
+        */
+
+        int neighborsA[] = GridGraph.getNeighbors(0);
+        for (int i = 0; i < neighborsA.length; i++) {
+            System.out.println("index = 0, neighbors[" + i + "] = " + neighborsA[i]);
+        }
+
+        /*
+        int neighborsB[] = GridGraph.getNeighbors(500);
+        for (int i = 0; i < neighborsB.length; i++) {
+            System.out.println("index = 500, neighbors[" + i + "] = " + neighborsB[i]);
+        }
+        */
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
     }
