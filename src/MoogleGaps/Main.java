@@ -54,6 +54,10 @@ public class Main {
         }
         */
 
+        System.err.println("These variables should generate the startnode");
+        System.err.println("Grid graph vertex " + GridGraph.findVertex(-49,-73));
+        System.err.println("new Test " + GridGraph.findVertex(-73,-49));
+        System.err.println("grid graph vertex " + GridGraph.findVertex(25,80));
 
         Navigation.dijkstra(22, 337);
 

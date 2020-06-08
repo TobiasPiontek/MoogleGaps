@@ -1,7 +1,5 @@
 package MoogleGaps;
 
-import com.sun.prism.shader.AlphaOne_LinearGradient_AlphaTest_Loader;
-
 public class GeoJson {
 
     // print GeoJSON of nodeIds

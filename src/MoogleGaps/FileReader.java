@@ -1,6 +1,5 @@
 package MoogleGaps;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import crosby.binary.osmosis.OsmosisReader;
 
 import java.io.*;

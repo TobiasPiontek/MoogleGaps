@@ -43,4 +43,9 @@ public class CLInterface {
             }
         }
     }
+
+    public static void generateNavigationRoute(){
+
+    }
+
 }
