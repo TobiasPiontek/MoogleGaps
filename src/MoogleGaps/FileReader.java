@@ -20,7 +20,6 @@ public class FileReader {
 
     /**
      * Needs to be called to trigger the read in process
-     *
      * @param relativeFilePath the Path to the location of a PBF File
      */
     public static void readPbfFile(String relativeFilePath) {
@@ -42,10 +41,7 @@ public class FileReader {
         wayReader.run();
         System.out.println(wayIds.size() + " wayNodes detected, " + nodeIds.size() + " nodes detected!");
 
-
-        //Sort The NodeIds Array to speed up the link of nodeid and coordinates information
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Sorting NodeIds...");
-
 
         NodeSortComparator comparator = new NodeSortComparator(nodeIds);
         Integer[] nodeIdsInverted = comparator.createIndexArray();
@@ -59,10 +55,6 @@ public class FileReader {
         nodeIdsInverted = null;     //to tell the garbage collection to delete this value
 
         Collections.sort(nodeIds);
-
-        //nodeIdLookUp = new ArrayList<>(nodeIds.size());
-        //nodeIdLookUp=Quicksort.quickSort(nodeIds);
-
 
         //allocating the arrays with their sizes
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Extracting node coordinates...");
@@ -133,11 +125,18 @@ public class FileReader {
         return wayAtId;
     }
 
-
+    /**
+     * @param id The id of the way to obtain the first node
+     * @return the Node ID of the first node
+     */
     public static long getFirstNodeOfWay(int id) {
         return nodeIds.get(nodeIdLookUps[wayIds.get(id)]);
     }
 
+    /**
+     * @param id The id of the way to obtain the last node
+     * @return the Node ID of the last node
+     */
     public static long getLastNodeOfWay(int id) {
         if (id == wayIds.size() - 1) {
             return nodeIds.get(nodeIdLookUps[nodeIds.size() - 1]);
@@ -146,13 +145,15 @@ public class FileReader {
         }
     }
 
-    public static int getLengthOfWay(int index) {
-        if (index < wayIds.size() - 1) {
-            return wayIds.get(index + 1) - 1 - wayIds.get(index);
+    /**
+     * @param id The id of the way to obtain the length
+     * @return The length of the way with this id
+     */
+    public static int getLengthOfWay(int id) {
+        if (id < wayIds.size() - 1) {
+            return wayIds.get(id + 1) - 1 - wayIds.get(id);
         } else {
-            return (nodeIds.size() - 1) - wayIds.get(index);
+            return (nodeIds.size() - 1) - wayIds.get(id);
         }
-
     }
-
 }

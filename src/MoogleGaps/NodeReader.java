@@ -11,10 +11,7 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 
 /**
- * Receives data from the Osmosis pipeline and prints ways which have the
- * 'highway key.
- *
- * @author pa5cal
+ * This class is used to obtain the coordinates of the ways detected earlier
  */
 public class NodeReader implements Sink {
 

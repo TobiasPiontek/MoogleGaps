@@ -6,10 +6,7 @@ import java.util.Comparator;
 
 public class NodeSortComparator implements Comparator<Integer>
 {
-    //private final String[] array;
     private final ArrayList<Long> array;
-
-
     public NodeSortComparator(ArrayList<Long> array)
     {
         this.array = array;
@@ -20,7 +17,7 @@ public class NodeSortComparator implements Comparator<Integer>
         Integer[] indexes = new Integer[array.size()];
         for (int i = 0; i < array.size(); i++)
         {
-            indexes[i] = i; // Autoboxing
+            indexes[i] = i;
         }
         return indexes;
     }
@@ -28,9 +25,6 @@ public class NodeSortComparator implements Comparator<Integer>
     @Override
     public int compare(Integer index1, Integer index2)
     {
-        // Autounbox from Integer to int to use as array indexes
-
         return array.get(index1).compareTo(array.get(index2));
-
     }
 }

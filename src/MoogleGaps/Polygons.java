@@ -14,7 +14,7 @@ public class Polygons {
     //variables that store polygon Information
     public static double[] latitudes = new double[FileReader.latitudes.length];
     public static double[] longitudes = new double[FileReader.longitudes.length];
-    public static ArrayList<Integer> wayIds = new ArrayList<Integer>();    //saves the start Ids of the Ways
+    public static ArrayList<Integer> polygonIds = new ArrayList<Integer>();    //saves the start Ids of the Ways
 
     //bounding box variables
     public static double[] boundingLatMin;
@@ -26,28 +26,31 @@ public class Polygons {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting simple polygons...");
         createStartAndEndNodeArray();
         simpleCycleDetection();
-        System.out.println(wayIds.size() + " Polygons with simple Circle detection found");
-        int simplePolygonsSize=wayIds.size();
+        System.out.println(polygonIds.size() + " Polygons with simple Circle detection found");
+        int simplePolygonsSize= polygonIds.size();
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting non-simple polygons...");
         multiwayCycleDetection();
-        int newPolygons = wayIds.size() - simplePolygonsSize;
+        int newPolygons = polygonIds.size() - simplePolygonsSize;
         System.out.println(newPolygons + " non-simple polygons found");
-        System.out.println(wayIds.size() + " Polygons in total");
+        System.out.println(polygonIds.size() + " Polygons in total");
 
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Building bounding boxes...");
         createBoundingBoxes();
-
     }
 
+    /**
+     * Is called to fill the bounding boxes list
+     * It contains of the upper left and the lower right vertex
+     */
     private static void createBoundingBoxes() {
         //initialization of boundingbox variables
-        boundingLatMin = new double[wayIds.size()];
-        boundingLatMax = new double[wayIds.size()];
-        boundingLonMin = new double[wayIds.size()];
-        boundingLonMax = new double[wayIds.size()];
+        boundingLatMin = new double[polygonIds.size()];
+        boundingLatMax = new double[polygonIds.size()];
+        boundingLonMin = new double[polygonIds.size()];
+        boundingLonMax = new double[polygonIds.size()];
 
         //bounding Box creation
-        for(int i = 0; i<wayIds.size();i++){
+        for(int i = 0; i< polygonIds.size(); i++){
             double[] latitudes = getPolygonLatitudes(i);
             double[] longitudes = getPolygonLongitudes(i);
 
@@ -79,6 +82,9 @@ public class Polygons {
         }
     }
 
+    /**
+     * This stage takes multiple ways glues them together to create larger polygons
+     */
     private static void multiwayCycleDetection() {
         for (int i = 0; i < FileReader.wayIds.size(); i++) {
             if (!waysUsed[i]) {
@@ -86,7 +92,6 @@ public class Polygons {
                 long end = endNodes[i];
                 ArrayList<Integer> nodesIndexToAppend = new ArrayList<Integer>();
 
-                //check for right side
                 boolean foundRight = true;
                 while (foundRight) {
                     foundRight = false;
@@ -115,35 +120,34 @@ public class Polygons {
      * Used to detect Polygons simply by choosing Ways where the end and startnode are equal
      */
     private static void simpleCycleDetection() {
-        //memorize wether a way has already been used or not
-        // fill arrays with start and end nodes
         for (int i = 0; i < FileReader.wayIds.size(); i++) {
             if (startNodes[i] == endNodes[i]) {
-
-                if (wayIds.isEmpty()) {
-                    wayIds.add(0);
+                if (polygonIds.isEmpty()) {
+                    polygonIds.add(0);
                 } else {
-                    wayIds.add(coordinatesSize);
+                    polygonIds.add(coordinatesSize);
                 }
                 for (int j = 0; j < FileReader.getLengthOfWay(i); j++) {
                     latitudes[j + coordinatesSize] = FileReader.getLatitudesOfWay(i)[j];
                     longitudes[j + coordinatesSize] = FileReader.getLongitudesOfWay(i)[j];
                 }
-
                 coordinatesSize += FileReader.getLengthOfWay(i);
                 waysUsed[i] = true;
             }
         }
     }
 
+    /**
+     * A helper method to write the multiwaypolygon to the polygonlist
+     * @param idsToAdd
+     */
     private static void writeCycleToPolygonList(ArrayList<Integer> idsToAdd) {
         int cursor = coordinatesSize;
-        if (wayIds.isEmpty()) {
-            wayIds.add(0);
-        } else if (wayIds.get(wayIds.size() - 1) < coordinatesSize) {
-            wayIds.add(coordinatesSize);
+        if (polygonIds.isEmpty()) {
+            polygonIds.add(0);
+        } else if (polygonIds.get(polygonIds.size() - 1) < coordinatesSize) {
+            polygonIds.add(coordinatesSize);
         }
-
         for (int i = 0; i < idsToAdd.size(); i++) {
             double[] polygonLatitudes = FileReader.getLatitudesOfWay(idsToAdd.get(i));
             double[] polygonLongitudes = FileReader.getLongitudesOfWay(idsToAdd.get(i));
@@ -157,7 +161,9 @@ public class Polygons {
         coordinatesSize = cursor;
     }
 
-
+    /**
+     * A helper Method to create an Array with the start and endnodes of the ways to speed up the polygon creation
+     */
     private static void createStartAndEndNodeArray() {
         for (int i = 0; i < FileReader.wayIds.size(); i++) {
             startNodes[i] = FileReader.getFirstNodeOfWay(i);
@@ -165,16 +171,14 @@ public class Polygons {
         }
     }
 
-
     /**
      * @param index The index of the Polygon in the List
      * @return an Array of all Longitude coordinates
      */
     private static double[] getPolygonLongitudes(int index) {
         double[] polygonLongitudes = new double[getWayLength(index)];
-
         int k = 0;
-        int startIndex = wayIds.get(index);
+        int startIndex = polygonIds.get(index);
         for (int j = 0; j < getWayLength(index); j++) {
             polygonLongitudes[k] = longitudes[j + startIndex];
             k++;
@@ -190,7 +194,7 @@ public class Polygons {
         double[] polygonLatitudes = new double[getWayLength(index)];
 
         int k = 0;
-        int startIndex = wayIds.get(index);
+        int startIndex = polygonIds.get(index);
         for (int j = 0; j < getWayLength(index); j++) {
             polygonLatitudes[k] = latitudes[j + startIndex];
             k++;
@@ -198,14 +202,16 @@ public class Polygons {
         return polygonLatitudes;
     }
 
-    // helper method to get the length of a way
+    /**
+     * helper method to get the length of a way
+     * @param i The length of the way
+     * @return
+     */
     public static int getWayLength(int i) {
-        if (i < wayIds.size() - 1) {
-            return wayIds.get(i + 1) - wayIds.get(i);
+        if (i < polygonIds.size() - 1) {
+            return polygonIds.get(i + 1) - polygonIds.get(i);
         } else {
-            return coordinatesSize - wayIds.get(i);
+            return coordinatesSize - polygonIds.get(i);
         }
-
     }
-
 }

@@ -271,7 +271,7 @@ public class Geometry {
 
     private static boolean pointInPoly(int index, double longitude, double latitude) {
         int n = Polygons.getWayLength(index);
-        int firstNode = Polygons.wayIds.get(index);
+        int firstNode = Polygons.polygonIds.get(index);
         int angle = 0;
         double longitudeA = Polygons.longitudes[firstNode];
         double latitudeA = Polygons.latitudes[firstNode];
@@ -332,7 +332,7 @@ public class Geometry {
      * @return true if point is in a polygon, i.e. on land; false if point is in water
      */
     public static boolean pointInPolygonTest(double longitude, double latitude) {
-        for (int i = 0; i < Polygons.wayIds.size(); i++) {
+        for (int i = 0; i < Polygons.polygonIds.size(); i++) {
             if (pointInPoly(i, longitude, latitude)) {
                 return true;
             }

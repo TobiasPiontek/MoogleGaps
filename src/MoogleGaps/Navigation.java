@@ -91,13 +91,10 @@ public class Navigation {
         return 0.0;
     }
 
-
     public static class PriorityComparator implements Comparator<Integer> {
         public int compare(Integer index1, Integer index2) {
             return Double.compare(weights[index1], weights[index2]);
         }
     }
-
-
 
 }
