@@ -55,14 +55,14 @@ public class Main {
         */
 
         System.err.println("These variables should generate the startnode");
-        System.err.println("Grid graph vertex " + GridGraph.findVertex(-49,-73));
-        System.err.println("new Test " + GridGraph.findVertex(-73,-49));
-        System.err.println("grid graph vertex " + GridGraph.findVertex(25,80));
+        System.err.println("First vertex: " + GridGraph.findVertex(-180,-90));
+        System.err.println("Center vertex: " + GridGraph.findVertex(0,0));
+        System.err.println("Last vertex: " + GridGraph.findVertex(180,90));
 
-        Navigation.dijkstra(22, 337);
-
-        ArrayList<Integer> way = Navigation.getWay(22, 337);
-
+        int source = GridGraph.findVertex(-82.96875, -71.41317683396565);
+        int target = GridGraph.findVertex(-42.890625, -75.05035357407698);
+        Navigation.dijkstra(source, target);
+        ArrayList<Integer> way = Navigation.getWay(source, target);
 
         int[] gridCoordinates;
         double[] coordinates;
