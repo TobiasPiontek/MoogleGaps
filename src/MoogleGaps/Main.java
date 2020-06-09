@@ -41,11 +41,13 @@ public class Main {
         */
 
         // Test point in Antarctica
+        /*
         if(Geometry.pointInPolygonTest(-167.7273, -85.9091))
             System.out.println("True");
         else{
             System.out.println("False");
         }
+         */
 
         /*
         for (int i = 0; i < GridGraph.costs.length; i++) {
@@ -59,6 +61,7 @@ public class Main {
 
         //Code to Print a route
 
+        /*
         int source = GridGraph.findVertex(-107, -75);
         int target = GridGraph.findVertex(-55, -70);
 
@@ -82,6 +85,10 @@ public class Main {
 
         GeoJson.printPolyline(longitudes, latitudes);
 
-        System.out.println(new Timestamp(System.currentTimeMillis()));
+         */
+
+        CLInterface.generateNavigationRoute();
+
+
     }
 }
