@@ -17,7 +17,7 @@ public class Main {
 
 
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Start of grid graph generation");
-        GridGraph.generate(100000);
+        GridGraph.generate(10000);
 
         System.out.println(new Timestamp(System.currentTimeMillis()) + " done...");
 
@@ -67,8 +67,8 @@ public class Main {
         //Code to Print a route
 
 
-        int source = GridGraph.findVertex(-107, -75);
-        int target = GridGraph.findVertex(-55, -70);
+        int source = GridGraph.findVertex(-98, -22);
+        int target = GridGraph.findVertex(0, 65);
 
         Navigation.dijkstra(source, target);
         ArrayList<Integer> way = Navigation.getWay(source, target);

@@ -264,7 +264,6 @@ public class GridGraph {
     }
 
     public static double rowToLatitude(int row) {
-        //System.out.println(row + 0.5);
         return (row + 0.5) * sideLength - 90;
     }
 

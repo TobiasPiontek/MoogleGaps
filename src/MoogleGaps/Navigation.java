@@ -32,31 +32,50 @@ public class Navigation {
         int currentNode;
         double currentWeight;
         double cost;
+        boolean surroundedByWater;
+        int[] neighborsOfNeighbor;
         do{
             currentNode = queue.poll();
             currentWeight = weights[currentNode];
             if(!visited[currentNode]){
                 int[] neighbors = GridGraph.getNeighbors(currentNode);
                 for (int neighbor : neighbors) {
-                    cost = getCosts(currentNode, neighbor);
-                    if (weights[neighbor] > currentWeight + cost && !GridGraph.vertexData[neighbor]) {
-                        weights[neighbor] = currentWeight + cost;
-                        prev[neighbor] = currentNode;
+                    if (!GridGraph.vertexData[neighbor]) {
+
+                        // check if neighbor is surrounded by water
+                        surroundedByWater = true;
+                        neighborsOfNeighbor = GridGraph.getNeighbors(neighbor);
+                        for (int neighborsNeighbor : neighborsOfNeighbor) {
+                            if (GridGraph.vertexData[neighborsNeighbor]) {
+                                surroundedByWater = false;
+                            }
+                        }
+                        if (surroundedByWater) {
+
+                            // check if neighbor is better
+                            cost = getCosts(currentNode, neighbor);
+                            if (weights[neighbor] > currentWeight + cost) {
+                                weights[neighbor] = currentWeight + cost;
+                                prev[neighbor] = currentNode;
+                            }
+                            queue.add(neighbor);
+                        }
                     }
-                    queue.add(neighbor);
                 }
                 visited[currentNode] = true;
             }
-        }while(!queue.isEmpty() && currentNode != targetId);
+        } while (!queue.isEmpty() && currentNode != targetId);
 
         return weights[targetId];
 
     }
 
     public static ArrayList<Integer> getWay(int sourceId, int targetId){
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Getting way...");
+
         int currentId = targetId;
         ArrayList<Integer> path = new ArrayList<>();
-        while(currentId != sourceId){
+        while (currentId != sourceId){
             path.add(currentId);
             currentId = prev[currentId];
         }

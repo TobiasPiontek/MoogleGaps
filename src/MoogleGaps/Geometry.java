@@ -2,8 +2,12 @@ package MoogleGaps;
 
 public class Geometry {
 
-    // takes latitude and longitude of point
-    // returns n-vector, i.e. to earth's surface perpendicular vector through point
+    /**
+     * takes latitude and longitude of point
+     * @param latitude
+     * @param longitude
+     * @return n-vector, i.e. to earth's surface perpendicular vector through point
+     */
     public static double[] getNVector(double latitude, double longitude) {
         double[] nVector = new double[3];
         nVector[0] = Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(longitude));
@@ -12,8 +16,12 @@ public class Geometry {
         return nVector;
     }
 
-    // takes two vectors a and b
-    // returns their cross product a x b
+    /**
+     * takes two 3D vectors A and B
+     * @param a
+     * @param b
+     * @return returns their cross product AxB
+     */
     private static double[] getCrossProduct(double[] a, double[] b) {
         double[] crossProduct = new double[3];
         crossProduct[0] = a[1] * b[2] - a[2] * b[1];
@@ -22,8 +30,12 @@ public class Geometry {
         return crossProduct;
     }
 
-    // takes two vector a and b
-    // returns their dot product ab
+    /**
+     * takes two 3D vectors A and B
+     * @param a
+     * @param b
+     * @return their dot product AB
+     */
     private static double getDotProduct(double[] a, double[] b) {
         double dotProduct = 0;
         for (int i = 0; i < 3; i++) {
@@ -32,31 +44,33 @@ public class Geometry {
         return dotProduct;
     }
 
-
-    // takes n-vectors of two points a and b
-    // returns their distance in km with R = 6371 km
+    /**
+     * takes N-vectors of two points A and B
+     * @param nVectorA
+     * @param nVectorB
+     * @return their distance in km with R = 6371km
+     */
     public static double getDistance(double[] nVectorA, double[] nVectorB) {
         return 6371 * Math.toDegrees(Math.atan2(getEuclideanNorm(getCrossProduct(nVectorA, nVectorB)), getDotProduct(nVectorA, nVectorB)));
     }
 
-    // takes vector
-    // returns its Euclidean norm
+    /**
+     * takes 3D vector
+     * @param vector
+     * @return its Euclidean norm
+     */
     private static double getEuclideanNorm(double[] vector) {
         return Math.sqrt(getDotProduct(vector, vector));
     }
 
-    // takes n-vectors of two points a and b
-    // returns the n-vector of their midpoint
-    private static double[] getMidpoint(double[] nVectorA, double[] nVectorB) {
-        double[] midpoint = new double[3];
-        for (int i = 0; i < 3; i++) {
-            midpoint[i] = nVectorA[i] + nVectorB[i];
-        }
-        return midpoint;
-    }
-
-    // takes two points A and B with their x and y coordinates
-    // returns the quadrant of A relative to B
+    /**
+     * takes two points A and B with their respective x and y coordinates
+     * @param xA
+     * @param yA
+     * @param xB
+     * @param yB
+     * @return the quadrant of A relative to B
+     */
     private static int quadrant(double xA, double yA, double xB, double yB) {
         if (xA > xB) {
             if (yA > yB) {
@@ -76,7 +90,6 @@ public class Geometry {
     /**
      * Winding number algorithm
      * Weiler, Kevin (1994), "An Incremental Angle Point in Polygon Test", in Heckbert, Paul S. (ed.), Graphics Gems IV, San Diego, CA, USA: Academic Press Professional, Inc., pp. 16–23, ISBN 0-12-336155-9.
-     *
      * @param index     the index of the Polygon to test
      * @param longitude the longitude of the point to test collision with
      * @param latitude  the latitude to test collision with
@@ -111,8 +124,17 @@ public class Geometry {
         }
     }
 
-    // takes delta and three points A, B, and C with their x and y coordinates
-    // returns the adjusted delta for summing the angle
+    /**
+     * takes delta and three points A, B, and C with their respective x and y coordinates
+     * @param delta
+     * @param xA
+     * @param yA
+     * @param xB
+     * @param yB
+     * @param xC
+     * @param yC
+     * @return the adjusted delta for summing the angle
+     */
     private static int adjustDelta(int delta, double xA, double yA, double xB, double yB, double xC, double yC) {
         switch (delta) {
             case 3:
@@ -131,15 +153,21 @@ public class Geometry {
         }
     }
 
-    // takes two points A and B with their x and y coordinates and a y coordinate
-    // returns x-intercept of polygon edge with horizontal line at y value
+    /**
+     * takes two points A and B with their respective x and y coordinates and a y coordinate
+     * @param xA
+     * @param yA
+     * @param xB
+     * @param yB
+     * @param y
+     * @return x-intercept of polygon edge with horizontal line at y value
+     */
     private static double xIntercept(double xA, double yA, double xB, double yB, double y) {
         return xB - ((yB - y) * ((xA - xB) / (yA - yB)));
     }
 
     /**
      * takes point with coordinates as longitude and latitude as double
-     *
      * @param longitude
      * @param latitude
      * @return true if point is in a polygon, i.e. on land; false if point is in water
