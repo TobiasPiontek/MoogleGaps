@@ -17,7 +17,9 @@ public class Main {
 
         GridGraph.generate(1000);
 
-        /*
+
+        //Code to see Grid graph nodes
+
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
         int[] gridCoordinates;
@@ -25,28 +27,18 @@ public class Main {
 
         for (int i = 0; i < GridGraph.vertexData.length; i++) {
             gridCoordinates = GridGraph.idToGrid(i);
-            //if (GridGraph.vertexData[i]) {
+            if (!GridGraph.vertexData[i]) {
                 coordinates = GridGraph.gridToCoordinates(gridCoordinates[0], gridCoordinates[1]);
                 longitudes.add(coordinates[0]);
                 latitudes.add(coordinates[1]);
-            //}
+            }
         }
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
-        */
 
-        /*
-        int neighborsA[] = GridGraph.getNeighbors(0);
-        for (int i = 0; i < neighborsA.length; i++) {
-            System.out.println("index = 0, neighbors[" + i + "] = " + neighborsA[i]);
-        }
-        */
 
-        /*
-        int neighborsB[] = GridGraph.getNeighbors(500);
-        for (int i = 0; i < neighborsB.length; i++) {
-            System.out.println("index = 500, neighbors[" + i + "] = " + neighborsB[i]);
-        }
-        */
+
+
+
 
         /*
         for (int i = 0; i < GridGraph.costs.length; i++) {
@@ -54,13 +46,17 @@ public class Main {
         }
         */
 
-        System.err.println("These variables should generate the startnode");
-        System.err.println("First vertex: " + GridGraph.findVertex(-180,-90));
-        System.err.println("Center vertex: " + GridGraph.findVertex(0,0));
-        System.err.println("Last vertex: " + GridGraph.findVertex(180,90));
+        /**
+         * upper left corner: lat: 90 ; long = -180
+         */
 
-        int source = GridGraph.findVertex(-82.96875, -71.41317683396565);
-        int target = GridGraph.findVertex(-42.890625, -75.05035357407698);
+        //Code to Print a route
+        /*
+
+        int source = GridGraph.findVertex(-107, -75);
+        int target = GridGraph.findVertex(-55, -70);
+
+
         Navigation.dijkstra(source, target);
         ArrayList<Integer> way = Navigation.getWay(source, target);
 
@@ -77,6 +73,7 @@ public class Main {
 
         GeoJson.printPolyline(longitudes, latitudes);
 
+        */
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
     }
