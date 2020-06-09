@@ -115,7 +115,6 @@ public class Polygons {
         }
     }
 
-
     /**
      * Used to detect Polygons simply by choosing Ways where the end and startnode are equal
      */
@@ -203,15 +202,15 @@ public class Polygons {
     }
 
     /**
-     * helper method to get the length of a way
-     * @param i The length of the way
-     * @return
+     * helper method to get the length of a Polygon
+     * @param iD The ID of the polygon
+     * @return the length of the given polygon id
      */
-    public static int getWayLength(int i) {
-        if (i < polygonIds.size() - 1) {
-            return polygonIds.get(i + 1) - polygonIds.get(i);
+    public static int getWayLength(int iD) {
+        if (iD < polygonIds.size() - 1) {
+            return polygonIds.get(iD + 1) - polygonIds.get(iD);
         } else {
-            return coordinatesSize - polygonIds.get(i);
+            return coordinatesSize - polygonIds.get(iD);
         }
     }
 }

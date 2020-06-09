@@ -1,9 +1,7 @@
 package MoogleGaps;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -62,7 +60,8 @@ public class CLInterface {
                 System.out.println("Enter Start node: ");
                 System.out.println("longitude: ");
                 Scanner scanner = new Scanner(System.in);
-
+                scanner.next();
+                scanner.close();
                 //longitudeStart= scanner.nextDouble();
                 longitudeStart = -107;
 

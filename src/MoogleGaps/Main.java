@@ -61,7 +61,7 @@ public class Main {
 
         //Code to Print a route
 
-        /*
+
         int source = GridGraph.findVertex(-107, -75);
         int target = GridGraph.findVertex(-55, -70);
 
@@ -85,9 +85,9 @@ public class Main {
 
         GeoJson.printPolyline(longitudes, latitudes);
 
-         */
 
-        CLInterface.generateNavigationRoute();
+
+        //CLInterface.generateNavigationRoute();
 
 
     }
