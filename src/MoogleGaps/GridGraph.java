@@ -56,17 +56,17 @@ public class GridGraph {
      */
     public static void generate(int n) {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
-        southToNorth = (int) ((Math.sqrt(2 * n + 1) - 1) / 2);
-        westToEast = (southToNorth + 1) * 2;
-        sideLength = 180.0 / (southToNorth + 1);
+        southToNorth = (int) Math.sqrt(n / 2.0);
+        westToEast = 2 * southToNorth;
+        sideLength = 180.0 / southToNorth;
         vertexData = new boolean[southToNorth * westToEast];
+        double longitude;
+        double latitude;
         System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         for (int i = 0; i < westToEast; i++) {
-            double longitude = i * 360.0 / westToEast - 180;
+            longitude = colToLongitude(i);
             for (int j = 0; j < southToNorth; j++) {
-                double latitude = (j + 1) * 180.0 / (southToNorth + 1) - 90;
-                //System.out.println("(" + longitude + ", " + latitude + ")");
-                //System.out.println(i * southToNorth + j);
+                latitude = rowToLatitude(j);
                 vertexData[i * southToNorth + j] = Geometry.pointInPolygonTest(longitude, latitude);
             }
         }
@@ -75,23 +75,18 @@ public class GridGraph {
     }
 
     public static int findVertex(double longitude, double latitude) {
-        //double sideLength = 180.0 / southToNorth;
-        double midX = Math.floor(longitude / sideLength) + 0.5;
-        double midLongitude = midX * sideLength;
-        double midY = Math.floor(latitude / sideLength) + 0.5;
-        double midLatitude = midY * sideLength;
-        int col;
-        int row;
-        if (longitude < midLongitude) {
-            col = (int) midX;
-        } else {
-            col = (int) (midX + 0.5);
+        int row = (int) ((latitude + 90.0) / sideLength);
+        if (row == southToNorth) {
+            row--;
         }
-        if (latitude < midLatitude) {
-            row = (int) midY;
-        } else {
-            row = (int) (midY + 0.5);
+
+        int col = (int) ((longitude + 180) / sideLength);
+        if (col == westToEast) {
+            col--;
         }
+
+        //System.out.println("row = " + row + ", col = " + col);
+
         return gridToId(row, col);
     }
 
@@ -175,9 +170,8 @@ public class GridGraph {
      */
     public static int[] getNeighbors(int index) {
         int[] neighbors;
-        int[] coordinates = idToGrid(index);
-        int rowPoint = coordinates[0];
-        int colPoint = coordinates[1];
+        int rowPoint = idToRow(index);
+        int colPoint = idToCol(index);
         int count = 0;
         int row;
         int col;
@@ -270,14 +264,18 @@ public class GridGraph {
     }
 
     private static double rowToLatitude(int row) {
-        return (row + 1) * sideLength - 90;
+        return (row + 0.5) * sideLength - 90;
     }
 
     private static double colToLongitude(int col) {
-        return col * sideLength - 180;
+        return (col + 0.5) * sideLength - 180;
     }
 
     public static int idToRow(int id) {
         return id % southToNorth;
+    }
+
+    public static int idToCol(int id) {
+        return id / southToNorth;
     }
 }
