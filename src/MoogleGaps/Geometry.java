@@ -76,10 +76,11 @@ public class Geometry {
     /**
      * Winding number algorithm
      * Weiler, Kevin (1994), "An Incremental Angle Point in Polygon Test", in Heckbert, Paul S. (ed.), Graphics Gems IV, San Diego, CA, USA: Academic Press Professional, Inc., pp. 16–23, ISBN 0-12-336155-9.
-     * @param index the index of the Polygon to test
+     *
+     * @param index     the index of the Polygon to test
      * @param longitude the longitude of the point to test collision with
-     * @param latitude the latitude to test collision with
-     * @return  true if point is in polygon, else false
+     * @param latitude  the latitude to test collision with
+     * @return true if point is in polygon, else false
      */
     private static boolean pointInPoly(int index, double longitude, double latitude) {
         int n = Polygons.getWayLength(index);
@@ -138,14 +139,18 @@ public class Geometry {
 
     /**
      * takes point with coordinates as longitude and latitude as double
+     *
      * @param longitude
      * @param latitude
      * @return true if point is in a polygon, i.e. on land; false if point is in water
      */
     public static boolean pointInPolygonTest(double longitude, double latitude) {
         for (int i = 0; i < Polygons.polygonIds.size(); i++) {
-            if (pointInPoly(i, longitude, latitude)) {
-                return true;
+            if (longitude > Polygons.boundingLonMin[i] && longitude < Polygons.boundingLonMax[i]
+                    && latitude > Polygons.boundingLatMin[i] && latitude < Polygons.boundingLatMax[i]) {
+                if (pointInPoly(i, longitude, latitude)) {
+                    return true;
+                }
             }
         }
         return false;

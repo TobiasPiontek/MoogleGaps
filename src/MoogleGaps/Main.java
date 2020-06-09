@@ -15,8 +15,11 @@ public class Main {
         FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
         Polygons.createPolygons();
 
-        GridGraph.generate(1000);
 
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Start of grid graph generation");
+        GridGraph.generate(100000);
+
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " done...");
 
         //Code to see Grid graph nodes
         /*
@@ -39,6 +42,8 @@ public class Main {
         }
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
         */
+
+
 
         // Test point in Antarctica
         /*
