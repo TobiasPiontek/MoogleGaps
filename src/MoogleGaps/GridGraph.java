@@ -263,11 +263,12 @@ public class GridGraph {
         costs[(southToNorth - 1) * 2 + 1] = Geometry.getDistance(nVector, Geometry.getNVector(rowToLatitude(southToNorth - 2), longitudeA));
     }
 
-    private static double rowToLatitude(int row) {
+    public static double rowToLatitude(int row) {
+        //System.out.println(row + 0.5);
         return (row + 0.5) * sideLength - 90;
     }
 
-    private static double colToLongitude(int col) {
+    public static double colToLongitude(int col) {
         return (col + 0.5) * sideLength - 180;
     }
 

@@ -19,26 +19,33 @@ public class Main {
 
 
         //Code to see Grid graph nodes
-
+        /*
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
-        int[] gridCoordinates;
-        double[] coordinates;
+        int row;
+        int col;
+        double latitude;
+        double longitude;
 
         for (int i = 0; i < GridGraph.vertexData.length; i++) {
-            gridCoordinates = GridGraph.idToGrid(i);
+            row = GridGraph.idToRow(i);
+            col = GridGraph.idToCol(i);
             if (!GridGraph.vertexData[i]) {
-                coordinates = GridGraph.gridToCoordinates(gridCoordinates[0], gridCoordinates[1]);
-                longitudes.add(coordinates[0]);
-                latitudes.add(coordinates[1]);
+                longitude = GridGraph.colToLongitude(col);
+                longitudes.add(longitude);
+                latitude = GridGraph.rowToLatitude(row);
+                latitudes.add(latitude);
             }
         }
         GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
+        */
 
-
-
-
-
+        // Test point in Antarctica
+        if(Geometry.pointInPolygonTest(-167.7273, -85.9091))
+            System.out.println("True");
+        else{
+            System.out.println("False");
+        }
 
         /*
         for (int i = 0; i < GridGraph.costs.length; i++) {
@@ -51,29 +58,29 @@ public class Main {
          */
 
         //Code to Print a route
-        /*
 
         int source = GridGraph.findVertex(-107, -75);
         int target = GridGraph.findVertex(-55, -70);
 
-
         Navigation.dijkstra(source, target);
         ArrayList<Integer> way = Navigation.getWay(source, target);
 
-        int[] gridCoordinates;
-        double[] coordinates;
+        int row;
+        int col;
+        double longitude;
+        double latitude;
         double[] longitudes = new double[way.size()];
         double[] latitudes = new double[way.size()];;
         for (int i = 0; i < way.size(); i++) {
-            gridCoordinates = GridGraph.idToGrid(way.get(i));
-            coordinates = GridGraph.gridToCoordinates(gridCoordinates[0], gridCoordinates[1]);
-            longitudes[i] = coordinates[0];
-            latitudes[i] = coordinates[1];
+            row = GridGraph.idToRow(way.get(i));
+            col = GridGraph.idToCol(way.get(i));
+            longitude = GridGraph.colToLongitude(col);
+            latitude = GridGraph.rowToLatitude(row);
+            longitudes[i] = longitude;
+            latitudes[i] = latitude;
         }
 
         GeoJson.printPolyline(longitudes, latitudes);
-
-        */
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
     }
