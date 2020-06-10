@@ -46,30 +46,28 @@ public class CLInterface {
     public static void generateNavigationRoute(){
         while(true) {
             try {
-                System.out.println("Please start by entering longitude of the start:");
                 System.out.println(new Timestamp(System.currentTimeMillis()));
-                double longitudeStart;
-                double latitudeStart;
-                double longitudeDest;
-                double latitudeDest;
-                System.out.println("Start of Route calculation: ");
-                System.out.println("Enter Start node: ");
-                System.out.print("longitude: ");
+                double longitudeSource;
+                double latitudeSource;
+                double longitudeTarget;
+                double latitudeTarget;
+                System.out.println("Enter source node");
+                System.out.print("    longitude: ");
                 Scanner scanner = new Scanner(System.in);
-                longitudeStart = scanner.nextDouble();
-                System.out.print("latitude: ");
-                latitudeStart = scanner.nextDouble();
-                int source = GridGraph.findVertex(longitudeStart,latitudeStart);
-                System.out.println("Node locked in to:  Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(source)) +
-                        " Source latitude: " + GridGraph.rowToLatitude(GridGraph.idToRow(source)));
-                System.out.println("Enter Destination node");
-                System.out.print("longitude: ");
-                longitudeDest = scanner.nextDouble();
-                System.out.print("latitude: ");
-                latitudeDest = scanner.nextDouble();
-                int target = GridGraph.findVertex(longitudeDest,latitudeDest);
-                System.out.println("Node locked in to:  Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(target)) +
-                        " Source latitude: " + GridGraph.rowToLatitude(GridGraph.idToRow(target)));
+                longitudeSource = scanner.nextDouble();
+                System.out.print("    latitude: ");
+                latitudeSource = scanner.nextDouble();
+                int source = GridGraph.findVertex(longitudeSource,latitudeSource);
+                System.out.println("Node locked in to (" + GridGraph.colToLongitude(GridGraph.idToCol(source)) +
+                        ", " + GridGraph.rowToLatitude(GridGraph.idToRow(source)) + ")");
+                System.out.println("Enter target node");
+                System.out.print("    longitude: ");
+                longitudeTarget = scanner.nextDouble();
+                System.out.print("    latitude: ");
+                latitudeTarget = scanner.nextDouble();
+                int target = GridGraph.findVertex(longitudeTarget,latitudeTarget);
+                System.out.println("Node locked in to (" + GridGraph.colToLongitude(GridGraph.idToCol(target)) +
+                        ", " + GridGraph.rowToLatitude(GridGraph.idToRow(target)) + ")");
                 Navigation.dijkstra(source, target);
                 ArrayList<Integer> way = Navigation.getWay(source, target);
 
@@ -87,13 +85,14 @@ public class CLInterface {
                     longitudes[i] = longitude;
                     latitudes[i] = latitude;
                 }
+
                 System.out.println("Printing out Route: ");
+                System.out.println();
                 GeoJson.printPolyline(longitudes, latitudes);
-
-
+                System.out.println();
 
             } catch (InputMismatchException e) {
-                System.err.println("Only coordinates input are allowed!");
+                System.err.println("Only coordinate inputs are allowed!");
                 continue;
             }
         }

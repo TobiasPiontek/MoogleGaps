@@ -190,6 +190,17 @@ public class GeoJson {
         System.out.println("          " + latitudes[0]);
         System.out.println("        ]");
         System.out.println("      }");
+        System.out.println("    },");
+        System.out.println("    {");
+        System.out.println("      \"type\": \"Feature\",");
+        System.out.println("      \"properties\": {},");
+        System.out.println("      \"geometry\": {");
+        System.out.println("        \"type\": \"Point\",");
+        System.out.println("        \"coordinates\": [");
+        System.out.println("          " + longitudes[longitudes.length - 1] + ",");
+        System.out.println("          " + latitudes[latitudes.length - 1]);
+        System.out.println("        ]");
+        System.out.println("      }");
         System.out.println("    }");
         System.out.println("  ]");
         System.out.println("}");
