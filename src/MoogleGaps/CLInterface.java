@@ -8,7 +8,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CLInterface {
-
     /***
      * @param directory filepath to search
      * @param  fileType the datatype to list
@@ -30,13 +29,11 @@ public class CLInterface {
             System.out.println("[" + indexCounter++ + "]: " + pbfFile.getName());
         }
         int select;
-        String pathValue;
         while(true) {
             try {
                 Scanner scan = new Scanner(System.in);
                 System.out.print("Enter file to load: ");
                 select = scan.nextInt();
-                scan.close();
                 return files[select-1].getPath();
 
             } catch (InputMismatchException e) {
@@ -56,38 +53,22 @@ public class CLInterface {
                 double longitudeDest;
                 double latitudeDest;
                 System.out.println("Start of Route calculation: ");
-
                 System.out.println("Enter Start node: ");
-                System.out.println("longitude: ");
-                Scanner scanner = new Scanner(System.in);
-                scanner.next();
-                scanner.close();
-                //longitudeStart= scanner.nextDouble();
-                longitudeStart = -107;
-
-                System.out.print("latitude: ");
-
-                //latitudeStart = scanner.nextDouble();
-                latitudeStart = -75;
-
-                int source = GridGraph.findVertex(longitudeStart,latitudeStart);
-                System.out.println("Node locked in to: ");
-                System.out.println("Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(source)) +
-                        " Source latitude: " + GridGraph.rowToLatitude(GridGraph.idToRow(source)));
-                System.out.print("Enter Destination node");
                 System.out.print("longitude: ");
-
-                //longitudeDest = scanner.nextDouble();
-                longitudeDest = -55;
-
+                Scanner scanner = new Scanner(System.in);
+                longitudeStart = scanner.nextDouble();
                 System.out.print("latitude: ");
-
-                //latitudeDest = scanner.nextDouble();
-                latitudeDest = -70;
-
+                latitudeStart = scanner.nextDouble();
+                int source = GridGraph.findVertex(longitudeStart,latitudeStart);
+                System.out.println("Node locked in to:  Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(source)) +
+                        " Source latitude: " + GridGraph.rowToLatitude(GridGraph.idToRow(source)));
+                System.out.println("Enter Destination node");
+                System.out.print("longitude: ");
+                longitudeDest = scanner.nextDouble();
+                System.out.print("latitude: ");
+                latitudeDest = scanner.nextDouble();
                 int target = GridGraph.findVertex(longitudeDest,latitudeDest);
-                System.out.println("Node locked in to: ");
-                System.out.println("Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(target)) +
+                System.out.println("Node locked in to:  Source longitude: " + GridGraph.colToLongitude(GridGraph.idToCol(target)) +
                         " Source latitude: " + GridGraph.rowToLatitude(GridGraph.idToRow(target)));
                 Navigation.dijkstra(source, target);
                 ArrayList<Integer> way = Navigation.getWay(source, target);
@@ -106,14 +87,9 @@ public class CLInterface {
                     longitudes[i] = longitude;
                     latitudes[i] = latitude;
                 }
-
+                System.out.println("Printing out Route: ");
                 GeoJson.printPolyline(longitudes, latitudes);
 
-                System.out.println("Printing out Route: ");
-
-
-                scanner.close();
-                System.exit(0);
 
 
             } catch (InputMismatchException e) {

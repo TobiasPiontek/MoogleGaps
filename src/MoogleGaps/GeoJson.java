@@ -1,5 +1,7 @@
 package MoogleGaps;
 
+import java.util.ArrayList;
+
 public class GeoJson {
 
     // print GeoJSON of nodeIds
@@ -123,6 +125,31 @@ public class GeoJson {
             }
         }
     }
+
+    /**
+     * For Debugging Purposes only
+     */
+    public static void printGridGraph(){
+        ArrayList<Double> longitudes = new ArrayList<>();
+        ArrayList<Double> latitudes = new ArrayList<>();
+        int row;
+        int col;
+        double latitude;
+        double longitude;
+
+        for (int i = 0; i < GridGraph.vertexData.length; i++) {
+            row = GridGraph.idToRow(i);
+            col = GridGraph.idToCol(i);
+            if (!GridGraph.vertexData[i]) {
+                longitude = GridGraph.colToLongitude(col);
+                longitudes.add(longitude);
+                latitude = GridGraph.rowToLatitude(row);
+                latitudes.add(latitude);
+            }
+        }
+        GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
+    }
+
 
     public static void printPolyline(double[] longitudes, double[] latitudes) {
 
