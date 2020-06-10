@@ -75,10 +75,11 @@ public class Navigation {
 
         int currentId = targetId;
         ArrayList<Integer> path = new ArrayList<>();
-        while (currentId != sourceId){
+        while (currentId != sourceId) {
             path.add(currentId);
             currentId = prev[currentId];
         }
+        path.add(sourceId);
         return path;
     }
 

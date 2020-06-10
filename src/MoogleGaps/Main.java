@@ -10,8 +10,8 @@ public class Main {
         Polygons.createPolygons();
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
         GridGraph.generate(10000);
-        //GeoJson.printGridGraph();
-        System.out.println(new Timestamp(System.currentTimeMillis()) + " Done.");
+        // GeoJson.printGridGraph();
+        // System.out.println(new Timestamp(System.currentTimeMillis()) + " Done");
         CLInterface.generateNavigationRoute();
     }
 }
