@@ -6,12 +6,13 @@ import java.sql.Timestamp;
 public class Main {
 
     public static void main(String[] args) {
-        FileReader.readPbfFile(CLInterface.getFilename(".pbf", "./OSMMapData"));
+        String filepath = CLInterface.getFilename(".pbf", "./OSMMapData");
+        int gridGraphSize = CLInterface.enterGridGraphResolution();
+        FileReader.readPbfFile(filepath);
         Polygons.createPolygons();
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Generating grid graph...");
-        GridGraph.generate(10000);
+        GridGraph.generate(gridGraphSize);
         //GeoJson.printGridGraph();
-        System.out.println(new Timestamp(System.currentTimeMillis()) + " Done.");
         CLInterface.generateNavigationRoute();
     }
 }

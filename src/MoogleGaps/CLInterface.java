@@ -100,4 +100,10 @@ public class CLInterface {
 
     }
 
+    public static int enterGridGraphResolution(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number of nodes for grid graph: ");
+        return scanner.nextInt();
+    }
+
 }
