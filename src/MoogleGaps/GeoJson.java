@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GeoJson {
 
     // print GeoJSON of nodeIds
-    public static void printGeoJson() {
+    public static void DebugPrintGeoJson() {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
@@ -46,12 +46,10 @@ public class GeoJson {
     }
 
     /**
-     * mainly used for debugging purposes
-     *
      * @param longitudes
      * @param latitudes
      */
-    public static void printNodes(double[] longitudes, double[] latitudes) {
+    public static void DebugprintNodes(double[] longitudes, double[] latitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
@@ -67,7 +65,13 @@ public class GeoJson {
         }
     }
 
-    public static void printPolygon(double[] longitudes, double[] latitudes) {
+    /**
+     * This function prints out poligons
+     *
+     * @param longitudes list of longitude coordinates
+     * @param latitudes  list of latitude coordinates
+     */
+    public static void DebugPrintPolygon(double[] longitudes, double[] latitudes) {
 
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
@@ -110,7 +114,7 @@ public class GeoJson {
         System.out.println("}");
     }
 
-    public static void printWayByCoordinates(double[] latitudes, double[] longitudes) {
+    public static void DebugPrintWayByCoordinates(double[] latitudes, double[] longitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
@@ -126,10 +130,8 @@ public class GeoJson {
         }
     }
 
-    /**
-     * For Debugging Purposes only
-     */
-    public static void printGridGraph(){
+
+    public static void DebugPrintGridGraph() {
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
         int row;
@@ -147,12 +149,11 @@ public class GeoJson {
                 latitudes.add(latitude);
             }
         }
-        GeoJson.printNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
+        GeoJson.DebugprintNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
     }
 
 
-    public static void printPolyline(double[] longitudes, double[] latitudes) {
-
+    public static void DebugPrintPolyline(double[] longitudes, double[] latitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
         System.out.println("  \"features\": [");
@@ -162,7 +163,6 @@ public class GeoJson {
         System.out.println("      \"geometry\": {");
         System.out.println("        \"type\": \"LineString\",");
         System.out.println("        \"coordinates\": [");
-        //System.out.println("          [");
 
         for (int i = 0; i < longitudes.length - 1; i++) {
             System.out.println("            [");
@@ -175,8 +175,6 @@ public class GeoJson {
         System.out.println("              " + longitudes[longitudes.length - 1] + ",");
         System.out.println("              " + latitudes[longitudes.length - 1]);
         System.out.println("            ]");
-
-        //System.out.println("          ]");
         System.out.println("        ]");
         System.out.println("      }");
         System.out.println("    },");
@@ -204,5 +202,17 @@ public class GeoJson {
         System.out.println("    }");
         System.out.println("  ]");
         System.out.println("}");
+    }
+
+    public static String generateRoute(double[] longitudes, double[] latitudes) {
+        String route = "{\"type\":\"LineString\", \"coordinates\":[";
+        for (int i = 0; i < longitudes.length; i++) {
+            route += "[" + longitudes[i] + "," + latitudes[i] + "]";
+            if (i < longitudes.length - 1) {
+                route += ",";
+            }
+        }
+        route = route + "]}";
+        return route;
     }
 }

@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>MoogleGaps</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div style="float:left;width: 20% ;height: 100%">
+        Lat1:
+        <id id="lat1"></id> Long1:
+        <id id="long1"></id>
+        <button type="button" onclick="checkFirst()" id="point1">Prüfen</button>
+        <br/> Lat2:
+        <id id="lat2"></id> Long2:
+        <id id="long2"></id>
+        <button type="button" onclick="checkSecond()" id="point2">Prüfen</button>
+        <br/> <button type="button" onclick="back()" id="back" disabled>Start setzen</button> <button type="button" onclick="next()" id="next">Ziel setzen</button> <button type="button" onclick="compute()" id="compute" disabled>Route berechen</button>
+        <br/> Aktuell:
+        <id id="Out1"> Setzen des ersten Markers </id>
+        <br/> Backbutton:
+        <id id="Out2"> Keine Funktion </id>
+        <br/> Nextbutton:
+        <id id="Out3"> Nächsten Marker setzen </id>
+        <br/> Compute:
+        <id id="Out4"> Keine Funktion </id>
+        <br/>
+        <br/>
+        <id id="Out5"> </id>
+		<br/>
+		<img src="Logo.png"; width="300" height="150" align="bottom" vspace="400">
+    </div>
+    <div id="mapcontainer" style="float:right;width: 80%; height: 100%"></div>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+    <script lang="javascript" src="scripts/leafletscript.js"></script>
+</body>
+
+</html>
