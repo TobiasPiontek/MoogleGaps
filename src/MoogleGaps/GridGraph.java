@@ -54,6 +54,122 @@ public class GridGraph {
         return gridToId(row, col);
     }
 
+    public static int findVertexInWater(int vertexId) {
+        if (!vertexData[vertexId]) {
+            return vertexId;
+        } else {
+            int loopCounter = 1;
+            while (true) {
+
+                // move north once
+                //System.out.println("move north");
+                vertexId = moveNorth(vertexId);
+                if (!vertexData[vertexId]) {
+                    return vertexId;
+                }
+
+                // move east once per loop
+                System.out.println("move east");
+                for (int i = 0; i < loopCounter; i++) {
+                    vertexId = moveEast(vertexId);
+                    if (!vertexData[vertexId]) {
+                        return vertexId;
+                    }
+                }
+
+                // move south twice per loop
+                //System.out.println("move south");
+                for (int i = 0; i < 2 * loopCounter; i++) {
+                    vertexId = moveSouth(vertexId);
+                    if (!vertexData[vertexId]) {
+                        return vertexId;
+                    }
+                }
+
+                // move west twice per loop
+                //System.out.println("move west");
+                for (int i = 0; i < 2 * loopCounter; i++) {
+                    vertexId = moveWest(vertexId);
+                    if (!vertexData[vertexId]) {
+                        return vertexId;
+                    }
+                }
+
+                // move north twice per loop
+                //System.out.println("move north");
+                for (int i = 0; i < 2 * loopCounter; i++) {
+                    vertexId = moveNorth(vertexId);
+                    if (!vertexData[vertexId]) {
+                        return vertexId;
+                    }
+                }
+
+                // move east once per loop
+                //System.out.println("move east");
+                for (int i = 0; i < loopCounter; i++) {
+                    vertexId = moveEast(vertexId);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param vertexId
+     * @return ID of point north of vertexId if possible
+     */
+    public static int moveNorth(int vertexId) {
+        int row = idToRow(vertexId);
+        if (row >= southToNorth - 1) {
+            return vertexId;
+        } else {
+            /*System.out.println("row = " + idToRow(vertexId) + ", col = " + idToCol(vertexId));
+            System.out.println("vertexId = " + vertexId);
+            System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));*/
+            vertexId = gridToId(row + 1, idToCol(vertexId));
+            /*System.out.println("row = " + idToRow(vertexId) + ", col = " + idToCol(vertexId));
+            System.out.println("vertexId = " + vertexId);
+            System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));*/
+            return vertexId;
+        }
+    }
+
+    /**
+     * @param vertexId
+     * @return ID of point south of vertexId if possible
+     */
+    public static int moveSouth(int vertexId) {
+        int row = idToRow(vertexId);
+        if (row <= 0) {
+            return vertexId;
+        } else {
+            vertexId = gridToId(row - 1, idToCol(vertexId));
+            //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
+            return vertexId;
+        }
+    }
+
+    /**
+     * @param vertexId
+     * @return ID of point west of vertexId with looping around
+     */
+    public static int moveWest(int vertexId) {
+        int col = idToCol(vertexId);
+        vertexId = gridToId(idToRow(vertexId), (((col - 1) % westToEast) + westToEast) % westToEast);
+        //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
+        return vertexId;
+    }
+
+    /**
+     * @param vertexId
+     * @return ID of point east of vertexId with looping around
+     */
+    public static int moveEast(int vertexId) {
+        int col = idToCol(vertexId);
+        vertexId = gridToId(idToRow(vertexId), (((col + 1) % westToEast) + westToEast) % westToEast);
+        //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
+        return vertexId;
+    }
+
     private static double getEuclideanDistance(double xA, double yA, double xB, double yB) {
         return Math.sqrt(Math.pow(xA - xB, 2) + Math.pow(yA - yB, 2));
     }

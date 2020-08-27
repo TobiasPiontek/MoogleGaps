@@ -84,6 +84,7 @@ public class Main {
                     System.out.println("[Debug] Latitude= " + startLatitude);
                     System.out.println("[Debug] Longitude= " + startLongitude);
                     int nodeID = GridGraph.findVertex(startLongitude, startLatitude); //Todo find next point in water instead of next point in grid
+                    nodeID = GridGraph.findVertexInWater(nodeID);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
                 }
 
