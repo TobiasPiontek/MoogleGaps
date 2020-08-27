@@ -13,43 +13,6 @@ Join Meetings with this Link: https://jitsi-meet.fmi.uni-stuttgart.de/AlgLabCour
 - Go through the dialog as follows
     - the route will be displayed as a geojson LineString, which can be copy pasted into the http://geojson.io website
     
-## Example for a successful Dialog:
-``` C
-The following Files are available: 
-[1]: antarctica-latest.osm.pbf
-[2]: central-america-latest.osm.pbf
-[3]: planet-coastlines.pbf
-[4]: south-america-latest.osm.pbf
-Enter file to load: 1
-Enter number of nodes for grid graph: 10000
-2020-06-10 10:25:30.235 Reading ways...
-21554 wayNodes detected, 689621 nodes detected!
-2020-06-10 10:25:38.541 Sorting NodeIds...
-2020-06-10 10:25:40.453 Extracting node coordinates...
-2020-06-10 10:25:47.426 Detecting simple polygons...
-6219 Polygons with simple Circle detection found
-2020-06-10 10:25:47.638 Detecting non-simple polygons...
-847 non-simple polygons found
-7066 Polygons in total
-2020-06-10 10:25:48.624 Building bounding boxes...
-2020-06-10 10:25:48.7 Generating grid graph...
-2020-06-10 10:25:48.703 Generating grid graph...
-southToNorth = 70, westToEast = 140, vertexData.length = 9800
-2020-06-10 10:25:54.703 Computing edge costs...
-2020-06-10 10:25:54.705
-Enter source node
-    longitude: -84
-    latitude: -66
-Node locked in to (-83.57142857142857, -65.57142857142857)
-Enter target node
-    longitude: -37
-    latitude: -71
-Node locked in to (-37.28571428571428, -70.71428571428571)
-2020-06-10 10:27:43.744 Computing Dijkstra's algorithm...
-2020-06-10 10:27:43.771 Getting way...
-Printing out Route: 
-```
-
 
 #### Task 1: Understand OSM Data Structures
 - As a first step, we need to get to know how the data is organized inside OSM.we are primarily interested in “nodes” and “ways”.
@@ -68,7 +31,7 @@ Printing out Route:
         - Detailed [tagging information](https://wiki.openstreetmap.org/wiki/Tag:natural%3Dcoastline) for coastlines
  
 #### Task 3: Distinguish between Water and Land
-- Implement the point in polygon test to determine if a certain position is inthe ocean (aka passable for ships). Be aware the latitude and longitude arenot coordinates on a plane. Use the spherical model of the earth to do yourcalculations.
+Implement the point in polygon test to determine if a certain position is inthe ocean (aka passable for ships). Be aware the latitude and longitude arenot coordinates on a plane. Use the spherical model of the earth to do your calculations.
 - Resources
     - [Many calculations for lat long points](http://www.movable-type.co.uk/scripts/latlong.html)
     - [Calculations with lat long but converted into vectors first](http://www.movable-type.co.uk/scripts/latlong-vectors.html)
@@ -80,7 +43,10 @@ Printing out Route:
 - Implement a grid graph representation which allows routing on the oceanscorresponding to the input. Use a bit vector to distinguish between accessible nodes (in the ocean) and non-accessible nodes (on land). Node position and edges should not explicitly be stored but be calculated on demand.
 
 #### Task 5: Dijkstra’s Algorithm
-- Implement Dijkstra’s Algorithm for shortest paths on your grid data structure.
+Implement Dijkstra’s Algorithm for shortest paths on your grid data structure.
+
+#### Task 6: Interactive Routing Front End
+Add a GUI to your project. It should be possible to set start and end nodesas well as visualizing the route. The calculated distance should be displayedin your GUI.
 
 #### Dependencies used (located in dependencies folder):
 - Osmosis Pbf
@@ -91,6 +57,8 @@ Printing out Route:
 - osm4j
     - used to parsePBF files in Java (alternative for Osmosis)
     - https://github.com/topobyte/osm4j-extra
+
+
         
 #### Tutorial used
 - ##### Task 3

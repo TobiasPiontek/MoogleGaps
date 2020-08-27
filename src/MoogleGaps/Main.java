@@ -83,7 +83,7 @@ public class Main {
                     double startLongitude = Double.parseDouble(latlng[1]);
                     System.out.println("[Debug] Latitude= " + startLatitude);
                     System.out.println("[Debug] Longitude= " + startLongitude);
-                    int nodeID = GridGraph.findVertex(startLongitude, startLatitude); //Todo find next point in water instead of next point in grid
+                    int nodeID = GridGraph.findVertex(startLongitude, startLatitude);
                     nodeID = GridGraph.findVertexInWater(nodeID);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
                 }
@@ -95,7 +95,7 @@ public class Main {
                     double endLongitude = Double.parseDouble(latlng[1]);
                     System.out.println("[Debug] Latitude= " + endLatitude);
                     System.out.println("[Debug] Longitude= " + endLongitude);
-                    int nodeID = GridGraph.findVertex(endLongitude, endLatitude); //Todo find next point in water instead of next point in grid
+                    int nodeID = GridGraph.findVertex(endLongitude, endLatitude);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
                 }
 
