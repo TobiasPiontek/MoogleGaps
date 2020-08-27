@@ -27,7 +27,7 @@ public class Polygons {
         createStartAndEndNodeArray();
         simpleCycleDetection();
         System.out.println(polygonIds.size() + " Polygons with simple Circle detection found");
-        int simplePolygonsSize= polygonIds.size();
+        int simplePolygonsSize = polygonIds.size();
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting non-simple polygons...");
         multiwayCycleDetection();
         int newPolygons = polygonIds.size() - simplePolygonsSize;
@@ -50,7 +50,7 @@ public class Polygons {
         boundingLonMax = new double[polygonIds.size()];
 
         //bounding Box creation
-        for(int i = 0; i< polygonIds.size(); i++){
+        for (int i = 0; i < polygonIds.size(); i++) {
             double[] latitudes = getPolygonLatitudes(i);
             double[] longitudes = getPolygonLongitudes(i);
 
@@ -60,17 +60,17 @@ public class Polygons {
             double longitudeMin = longitudes[0];
             double longitudeMax = longitudes[0];
 
-            for(int j = 1; j<latitudes.length;j++){
-                if(latitudes[j] < latittudeMin){
+            for (int j = 1; j < latitudes.length; j++) {
+                if (latitudes[j] < latittudeMin) {
                     latittudeMin = latitudes[j];
                 }
-                if(latitudes[j] > latitudeMax){
+                if (latitudes[j] > latitudeMax) {
                     latitudeMax = latitudes[j];
                 }
-                if(longitudes[j] < longitudeMin){
+                if (longitudes[j] < longitudeMin) {
                     longitudeMin = longitudes[j];
                 }
-                if(longitudes[j] > longitudeMax){
+                if (longitudes[j] > longitudeMax) {
                     longitudeMax = longitudes[j];
                 }
             }
@@ -108,9 +108,7 @@ public class Polygons {
                         }
                     }
                 }
-                if (start == end) {
-                    writeCycleToPolygonList(nodesIndexToAppend);
-                }
+                writeCycleToPolygonList(nodesIndexToAppend);
             }
         }
     }
@@ -138,6 +136,7 @@ public class Polygons {
 
     /**
      * A helper method to write the multiwaypolygon to the polygonlist
+     *
      * @param idsToAdd
      */
     private static void writeCycleToPolygonList(ArrayList<Integer> idsToAdd) {
@@ -203,6 +202,7 @@ public class Polygons {
 
     /**
      * helper method to get the length of a Polygon
+     *
      * @param iD The ID of the polygon
      * @return the length of the given polygon id
      */
