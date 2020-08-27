@@ -75,10 +75,6 @@ public class Navigation {
         int currentId = targetId;
         ArrayList<Integer> path = new ArrayList<>();
         while (currentId != sourceId) {
-            if (path.get(path.size() - 1) == currentId) {
-                System.err.println("Destination could not be reached!");
-                return new ArrayList<>();
-            }
             path.add(currentId);
             currentId = prev[currentId];
         }
