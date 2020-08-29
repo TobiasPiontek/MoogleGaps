@@ -1,38 +1,7 @@
 //dummy geojson objekt
 var myLines;
-/*var myLines = [{
-        "type": "LineString",
-        "coordinates": [
-            [8.1, 53.1],
-            [8.1, 51.6],
-            [8.1, 50.1]
-        ]
-    },
-    {
-        "type": "LineString",
-        "coordinates": [
-            [8.1, 51.6],
-            [9.5, 51.6]
-        ]
-    },
-    {
-        "type": "LineString",
-        "coordinates": [
-            [9.5, 53.1],
-            [9.5, 51.6],
-            [9.5, 50.1]
-        ]
-    },
-    {
-        "type": "LineString",
-        "coordinates": [
-            [11, 53.1],
-            [11, 50.1]
-        ]
-    }
-];
-*/
 
+//Use this variable to set line style
 var myStyle = {
     "color": "#ff0000",
     "weight": 10,
@@ -44,26 +13,26 @@ document.getElementById("back").disabled = true;
 document.getElementById("next").disabled = false;
 document.getElementById("compute").disabled = true;
 
-//die karte
+//the map element
 var mymap = L.map('mapcontainer').setView([51.316, 10.734], 6);
 
 //marker
 var firstmarker;
 var secondmarker;
 
-//gui steuerungsstatus
+//state of gui
 var state = 0;
 
-//hilfsvariablen für koordinaten, möglicherweise nicht nötig
+//helper variables to store up coordinates
 var x1;
 var y1;
 var x2;
 var y2;
 
-//geojson-objekt zum testen (und später anzeigen) eines weges auf der karte
+//Object that represents the ways later
 var weg;
 
-//laden der map in leaflet
+//loading of the leaflet map
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -72,21 +41,21 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     id: 'mapbox.streets'
 }).addTo(mymap);
 
-//funktion zum setzten der marker
+//function to test marker functionality
 mymap.on('click', function(e) {
 
     var k = e.latlng;
     console.log(k);
-    //prüfen des status, bei 0 ersten marker setzen, bei 1 (oder anderem) den zweiten marker setzen
+    //check state and set markers accordingly
     if (state == 0) {
-        //alten marker löschen und neuen setzen
+        //delete old marker and set new one
         if (firstmarker) {
             mymap.removeLayer(firstmarker);
         }
         firstmarker = new L.Marker(k).addTo(mymap);
         x1 = k.lat;
         y1 = k.lng;
-        //rausschreiben der koordinaten in html dokument
+        //write coordinates to html
         document.getElementById("lat1").innerHTML = x1;
         document.getElementById("long1").innerHTML = y1;
     } else {
@@ -101,7 +70,7 @@ mymap.on('click', function(e) {
     }
 });
 
-//hooks für buttons
+//hooks for buttons
 function next() {
     if (state == 0) {
         state = 1;
@@ -145,7 +114,6 @@ function compute() {
         };
         xhttp.open("POST", "http://localhost:8004/MoogleGaps", true);
         xhttp.send("calculateRoute;" + document.getElementById("lat1").innerHTML + "," + document.getElementById("long1").innerHTML + ";" + document.getElementById("lat2").innerHTML + "," + document.getElementById("long2").innerHTML);
-        //        document.getElementById("Out5").innerHTML = "Noch wird nur ein Dummyweg angezeigt, da die Berechnung noch nicht mit dem Frontend verknüpft ist. Es soll beim fertigen Projekt ein Weg von Start bis Ziel als GeoJSON Objekt dem Frontend übergeben und angezeigt werden.";
     }
 };
 

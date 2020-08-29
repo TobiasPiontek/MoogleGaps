@@ -1,17 +1,13 @@
 package MoogleGaps;
 
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -29,20 +25,16 @@ public class Main {
         //GeoJson.printGridGraph()
         //CLInterface.generateNavigationRoute();
 
-        //Start of the Webserver
 
+        //Start of the Webserver
         System.out.println("Starting webserver...");
         InetSocketAddress Adresse = new InetSocketAddress(8004);
         HttpServer server = HttpServer.create(Adresse, 0);
-        server.createContext("/MoogleGaps", new MyHandler()); // haengt verschiedene URLS ein
-        server.createContext("/index", new HtmlHandler());
+        server.createContext("/MoogleGaps", new MyHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
         System.out.println("Webserver online!");
-
-
     }
-
 
     static class MyHandler implements HttpHandler {
         @Override
@@ -64,16 +56,14 @@ public class Main {
                 System.out.println("Post wurde gesendet!");
                 String input = "";
 
-                // einlesen, des POST requests
+                // Block to read Post reqest
                 int x = t.getRequestBody().read();
                 while (x != -1) {
                     input = input + (char) x;
                     x = t.getRequestBody().read();
                 }
-                // ende einlesen des POST requests
 
                 System.out.println("[Debug]: " + input);
-                //Format der erhaltenen Nachricht: SetStartnode;lat,lng oder SetEndnode;lat,lng oder RouteRechnen;lat1,lng1;lat2,lng2
                 String[] split = input.split(";");
 
                 //Procedure to set the startnode
@@ -113,11 +103,8 @@ public class Main {
                     int targetId = GridGraph.findVertex(endLongitude, endLatitude);
                     ArrayList<Integer> route = Navigation.dijkstra(sourceId, targetId);
                     response = GeoJson.generateRoute(GridGraph.idToLongitude(route), GridGraph.idToLatitude(route));
-                    //response = calculation.WegKoordinatenAusgeben(ID1, ID2);
                     System.out.println(response);
-                    //response = "{\"type\": \"LineString\",\"coordinates\":[[8.1, 53.1],[8.1, 51.6],[8.1, 50.1]]}";
                 }
-
 
                 t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                 t.sendResponseHeaders(200, response.length());
@@ -125,47 +112,6 @@ public class Main {
                 os.write(response.getBytes());
                 os.close();
             }
-
-        }
-
-    }
-
-    static class HtmlHandler implements HttpHandler {
-        public void handle(HttpExchange t) throws IOException {
-            String root = "/home/markus/Documents/Uni/MoogleGaps/JavaScriptPlusMore";
-            URI uri = t.getRequestURI();
-            System.out.println("looking for: " + root + uri.getPath());
-            String path = uri.getPath();
-            File file = new File(root + path).getCanonicalFile();
-
-            if (!file.isFile()) {
-                // Object does not exist or is not a file: reject with 404 error.
-                String response = "404 (Not Found)\n";
-                t.sendResponseHeaders(404, response.length());
-                OutputStream os = t.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            } else {
-                // Object exists and is a file: accept with response code 200.
-                String mime = "text/html";
-                if (path.substring(path.length() - 3).equals(".js")) mime = "application/javascript";
-                if (path.substring(path.length() - 3).equals("css")) mime = "text/css";
-
-                Headers h = t.getResponseHeaders();
-                h.set("Content-Type", mime);
-                t.sendResponseHeaders(200, 0);
-
-                OutputStream os = t.getResponseBody();
-                FileInputStream fs = new FileInputStream(file);
-                final byte[] buffer = new byte[0x10000];
-                int count = 0;
-                while ((count = fs.read(buffer)) >= 0) {
-                    os.write(buffer, 0, count);
-                }
-                fs.close();
-                os.close();
-            }
         }
     }
-
 }

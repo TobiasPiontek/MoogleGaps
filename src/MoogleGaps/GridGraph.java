@@ -34,7 +34,6 @@ public class GridGraph {
                 vertexData[i * southToNorth + j] = Geometry.pointInPolygonTest(longitude, latitude);
             }
         }
-
         computeCosts();
     }
 
@@ -43,14 +42,10 @@ public class GridGraph {
         if (row == southToNorth) {
             row--;
         }
-
         int col = (int) ((longitude + 180) / sideLength);
         if (col == westToEast) {
             col--;
         }
-
-        //System.out.println("row = " + row + ", col = " + col);
-
         return gridToId(row, col);
     }
 
@@ -60,42 +55,24 @@ public class GridGraph {
         } else {
             int loopCounter = 1;
             while (true) {
-
-                // move north once
-                //System.out.println("move north");
                 vertexId = moveNorth(vertexId);
                 if (vertexSurroundedByWater(vertexId)) return vertexId;
-
-                // move east once per loop
-                //System.out.println("move east");
                 for (int i = 0; i < loopCounter; i++) {
                     vertexId = moveEast(vertexId);
                     if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
-
-                // move south twice per loop
-                //System.out.println("move south");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveSouth(vertexId);
                     if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
-
-                // move west twice per loop
-                //System.out.println("move west");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveWest(vertexId);
                     if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
-
-                // move north twice per loop
-                //System.out.println("move north");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveNorth(vertexId);
                     if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
-
-                // move east once per loop
-                //System.out.println("move east");
                 for (int i = 0; i < loopCounter; i++) {
                     vertexId = moveEast(vertexId);
                 }
@@ -121,13 +98,7 @@ public class GridGraph {
         if (row >= southToNorth - 1) {
             return vertexId;
         } else {
-            /*System.out.println("row = " + idToRow(vertexId) + ", col = " + idToCol(vertexId));
-            System.out.println("vertexId = " + vertexId);
-            System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));*/
             vertexId = gridToId(row + 1, idToCol(vertexId));
-            /*System.out.println("row = " + idToRow(vertexId) + ", col = " + idToCol(vertexId));
-            System.out.println("vertexId = " + vertexId);
-            System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));*/
             return vertexId;
         }
     }
@@ -142,7 +113,6 @@ public class GridGraph {
             return vertexId;
         } else {
             vertexId = gridToId(row - 1, idToCol(vertexId));
-            //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
             return vertexId;
         }
     }
@@ -154,7 +124,6 @@ public class GridGraph {
     public static int moveWest(int vertexId) {
         int col = idToCol(vertexId);
         vertexId = gridToId(idToRow(vertexId), (((col - 1) % westToEast) + westToEast) % westToEast);
-        //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
         return vertexId;
     }
 
@@ -165,7 +134,6 @@ public class GridGraph {
     public static int moveEast(int vertexId) {
         int col = idToCol(vertexId);
         vertexId = gridToId(idToRow(vertexId), (((col + 1) % westToEast) + westToEast) % westToEast);
-        //System.out.println("longitude = " + idToLongitude(vertexId) + ", latitude = " + idToLatitude(vertexId));
         return vertexId;
     }
 
@@ -199,8 +167,7 @@ public class GridGraph {
         coordinates[1] = latitude;
         return coordinates;
     }
-
-
+    
     /**
      * takes row and column of vertex ID
      *

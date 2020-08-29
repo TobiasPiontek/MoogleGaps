@@ -23,6 +23,8 @@ public class GeoJson {
     }
 
     /**
+     * internal helper method
+     *
      * @param moveCharsIn the static amount of Chars to move in
      * @param longitude   longitude coordinate of node to display
      * @param latitude    latitude coordinate of node to display
@@ -46,6 +48,8 @@ public class GeoJson {
     }
 
     /**
+     * Simple debug method, can pring a variety of coordinates as dots
+     *
      * @param longitudes
      * @param latitudes
      */
@@ -114,6 +118,12 @@ public class GeoJson {
         System.out.println("}");
     }
 
+    /**
+     * Prints list of coordinates as a way
+     *
+     * @param latitudes
+     * @param longitudes
+     */
     public static void DebugPrintWayByCoordinates(double[] latitudes, double[] longitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
@@ -130,7 +140,9 @@ public class GeoJson {
         }
     }
 
-
+    /**
+     * Helper method to get coordinates of the grid graph dots for initial debugging purpose
+     */
     public static void DebugPrintGridGraph() {
         ArrayList<Double> longitudes = new ArrayList<>();
         ArrayList<Double> latitudes = new ArrayList<>();
@@ -152,7 +164,12 @@ public class GeoJson {
         GeoJson.DebugprintNodes(longitudes.stream().mapToDouble(Double::doubleValue).toArray(), latitudes.stream().mapToDouble(Double::doubleValue).toArray());
     }
 
-
+    /**
+     * Helper Method to print a polygon for debug purposes
+     *
+     * @param longitudes
+     * @param latitudes
+     */
     public static void DebugPrintPolyline(double[] longitudes, double[] latitudes) {
         System.out.println("{");
         System.out.println("  \"type\": \"FeatureCollection\",");
