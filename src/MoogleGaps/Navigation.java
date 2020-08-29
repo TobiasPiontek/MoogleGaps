@@ -57,7 +57,7 @@ public class Navigation {
                 }
                 visited[currentNode] = true;
             }
-        } while (!queue.isEmpty() && currentNode != targetId);
+        } while (!queue.isEmpty()/* && currentNode != targetId*/);
 
         return weights[targetId];
 

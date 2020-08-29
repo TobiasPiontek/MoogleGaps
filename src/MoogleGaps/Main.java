@@ -81,6 +81,7 @@ public class Main {
                     String[] latlng = split[1].split(",");
                     double startLatitude = Double.parseDouble(latlng[0]);
                     double startLongitude = Double.parseDouble(latlng[1]);
+                    startLongitude = ((((startLongitude + 180) % 360) + 360) % 360) - 180;
                     System.out.println("[Debug] Latitude= " + startLatitude);
                     System.out.println("[Debug] Longitude= " + startLongitude);
                     int nodeID = GridGraph.findVertex(startLongitude, startLatitude);
@@ -93,6 +94,7 @@ public class Main {
                     String[] latlng = split[1].split(",");
                     double endLatitude = Double.parseDouble(latlng[0]);
                     double endLongitude = Double.parseDouble(latlng[1]);
+                    endLongitude = ((((endLongitude + 180) % 360) + 360) % 360) - 180;
                     System.out.println("[Debug] Latitude= " + endLatitude);
                     System.out.println("[Debug] Longitude= " + endLongitude);
                     int nodeID = GridGraph.findVertex(endLongitude, endLatitude);

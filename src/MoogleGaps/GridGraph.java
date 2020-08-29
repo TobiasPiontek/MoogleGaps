@@ -64,34 +64,34 @@ public class GridGraph {
                 // move north once
                 //System.out.println("move north");
                 vertexId = moveNorth(vertexId);
-                if (checkVertex(vertexId)) return vertexId;
+                if (vertexSurroundedByWater(vertexId)) return vertexId;
 
                 // move east once per loop
                 //System.out.println("move east");
                 for (int i = 0; i < loopCounter; i++) {
                     vertexId = moveEast(vertexId);
-                    if (checkVertex(vertexId)) return vertexId;
+                    if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
 
                 // move south twice per loop
                 //System.out.println("move south");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveSouth(vertexId);
-                    if (checkVertex(vertexId)) return vertexId;
+                    if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
 
                 // move west twice per loop
                 //System.out.println("move west");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveWest(vertexId);
-                    if (checkVertex(vertexId)) return vertexId;
+                    if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
 
                 // move north twice per loop
                 //System.out.println("move north");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveNorth(vertexId);
-                    if (checkVertex(vertexId)) return vertexId;
+                    if (vertexSurroundedByWater(vertexId)) return vertexId;
                 }
 
                 // move east once per loop
@@ -103,7 +103,7 @@ public class GridGraph {
         }
     }
 
-    private static boolean checkVertex(int vertexId) {
+    private static boolean vertexSurroundedByWater(int vertexId) {
         if (!vertexData[vertexId]) {
             if (Navigation.isSurroundedByWater(vertexId)) {
                 return true;
@@ -318,7 +318,18 @@ public class GridGraph {
     public static double[] idToLongitude(ArrayList<Integer> nodeIds) {
         double[] longitudeCoordinates = new double[nodeIds.size()];
         for (int i = 0; i < nodeIds.size(); i++) {
+            //Block to fix ugly ways at the border section
             longitudeCoordinates[i] = idToLongitude(nodeIds.get(i));
+            if (i > 0) {
+                if (Math.abs(longitudeCoordinates[i - 1] - idToLongitude(nodeIds.get(i))) > sideLength * 2) {
+                    System.err.println("Jumped into correction Block!");
+                    if (idToLongitude(nodeIds.get(i)) < 0) {
+                        longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) + 360;
+                    } else {
+                        longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) - 360;
+                    }
+                }
+            }
         }
         return longitudeCoordinates;
     }
