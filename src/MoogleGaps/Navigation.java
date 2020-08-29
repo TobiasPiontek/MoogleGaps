@@ -87,6 +87,7 @@ public class Navigation {
         ArrayList<Integer> path = new ArrayList<>();
         while (currentId != sourceId) {
             path.add(currentId);
+            System.out.println("Get weight of current node: " + weights[currentId]);
             currentId = prev[currentId];
             //preventing loop during way readout
             if (currentId == prev[currentId]) {
