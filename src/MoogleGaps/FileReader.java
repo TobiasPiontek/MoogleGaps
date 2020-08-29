@@ -2,7 +2,9 @@ package MoogleGaps;
 
 import crosby.binary.osmosis.OsmosisReader;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -20,6 +22,7 @@ public class FileReader {
 
     /**
      * Needs to be called to trigger the read in process
+     *
      * @param relativeFilePath the Path to the location of a PBF File
      */
     public static void readPbfFile(String relativeFilePath) {
@@ -154,6 +157,28 @@ public class FileReader {
             return wayIds.get(id + 1) - 1 - wayIds.get(id);
         } else {
             return (nodeIds.size() - 1) - wayIds.get(id);
+        }
+    }
+
+
+    public static class NodeSortComparator implements Comparator<Integer> {
+        private final ArrayList<Long> array;
+
+        public NodeSortComparator(ArrayList<Long> array) {
+            this.array = array;
+        }
+
+        public Integer[] createIndexArray() {
+            Integer[] indexes = new Integer[array.size()];
+            for (int i = 0; i < array.size(); i++) {
+                indexes[i] = i;
+            }
+            return indexes;
+        }
+
+        @Override
+        public int compare(Integer index1, Integer index2) {
+            return array.get(index1).compareTo(array.get(index2));
         }
     }
 }
