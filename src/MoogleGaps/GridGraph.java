@@ -64,44 +64,34 @@ public class GridGraph {
                 // move north once
                 //System.out.println("move north");
                 vertexId = moveNorth(vertexId);
-                if (!vertexData[vertexId]) {
-                    return vertexId;
-                }
+                if (checkVertex(vertexId)) return vertexId;
 
                 // move east once per loop
-                System.out.println("move east");
+                //System.out.println("move east");
                 for (int i = 0; i < loopCounter; i++) {
                     vertexId = moveEast(vertexId);
-                    if (!vertexData[vertexId]) {
-                        return vertexId;
-                    }
+                    if (checkVertex(vertexId)) return vertexId;
                 }
 
                 // move south twice per loop
                 //System.out.println("move south");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveSouth(vertexId);
-                    if (!vertexData[vertexId]) {
-                        return vertexId;
-                    }
+                    if (checkVertex(vertexId)) return vertexId;
                 }
 
                 // move west twice per loop
                 //System.out.println("move west");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveWest(vertexId);
-                    if (!vertexData[vertexId]) {
-                        return vertexId;
-                    }
+                    if (checkVertex(vertexId)) return vertexId;
                 }
 
                 // move north twice per loop
                 //System.out.println("move north");
                 for (int i = 0; i < 2 * loopCounter; i++) {
                     vertexId = moveNorth(vertexId);
-                    if (!vertexData[vertexId]) {
-                        return vertexId;
-                    }
+                    if (checkVertex(vertexId)) return vertexId;
                 }
 
                 // move east once per loop
@@ -111,6 +101,15 @@ public class GridGraph {
                 }
             }
         }
+    }
+
+    private static boolean checkVertex(int vertexId) {
+        if (!vertexData[vertexId]) {
+            if (Navigation.isSurroundedByWater(vertexId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

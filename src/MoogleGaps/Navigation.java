@@ -42,13 +42,7 @@ public class Navigation {
                 for (int neighbor : neighbors) {
                     if (!GridGraph.vertexData[neighbor]) {
                         // check if neighbor is surrounded by water
-                        surroundedByWater = true;
-                        neighborsOfNeighbor = GridGraph.getNeighbors(neighbor);
-                        for (int neighborsNeighbor : neighborsOfNeighbor) {
-                            if (GridGraph.vertexData[neighborsNeighbor]) {
-                                surroundedByWater = false;
-                            }
-                        }
+                        surroundedByWater = isSurroundedByWater(neighbor);
                         if (surroundedByWater) {
 
                             // check if neighbor is better
@@ -69,6 +63,23 @@ public class Navigation {
 
     }
 
+    /**
+     * @param vertex
+     * @return true if all 8 neighbour nodes of the vertex are on water, else false
+     */
+    public static boolean isSurroundedByWater(int vertex) {
+        boolean surroundedByWater;
+        int[] neighborsOfNeighbor;
+        surroundedByWater = true;
+        neighborsOfNeighbor = GridGraph.getNeighbors(vertex);
+        for (int neighborsNeighbor : neighborsOfNeighbor) {
+            if (GridGraph.vertexData[neighborsNeighbor]) {
+                surroundedByWater = false;
+            }
+        }
+        return surroundedByWater;
+    }
+
     private static ArrayList<Integer> getWay(int sourceId, int targetId) {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Getting way...");
 
@@ -77,6 +88,11 @@ public class Navigation {
         while (currentId != sourceId) {
             path.add(currentId);
             currentId = prev[currentId];
+            //preventing loop during way readout
+            if (currentId == prev[currentId]) {
+                System.out.println("No possible route found!");
+                return new ArrayList<>();
+            }
         }
         path.add(sourceId);
         return path;
