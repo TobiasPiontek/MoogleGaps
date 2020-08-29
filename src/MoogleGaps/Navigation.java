@@ -109,7 +109,7 @@ public class Navigation {
         int[] coordinates2 = GridGraph.idToGrid(index2);
         if (coordinates1[0] - coordinates2[0] == -1) {
             // north
-            if (Math.abs(coordinates1[1] - coordinates2[1]) == 1) {
+            if (Math.abs(coordinates1[1] - coordinates2[1]) >= 1) {
                 // diagonal
                 return GridGraph.costs[coordinates1[0] * 2 + 1];
             } else if (coordinates1[1] == coordinates2[1]) {
@@ -118,14 +118,14 @@ public class Navigation {
             }
         } else if (coordinates1[0] - coordinates2[0] == 1) {
             // south
-            if (Math.abs(coordinates1[1] - coordinates2[1]) == 1) {
+            if (Math.abs(coordinates1[1] - coordinates2[1]) >= 1) {
                 // diagonal
                 return GridGraph.costs[coordinates1[0] * 2 + 1];
             } else if (coordinates1[1] == coordinates2[1]) {
                 // vertical
                 return GridGraph.costs[coordinates1[0] * 2];
             }
-        } else if (coordinates1[0] == coordinates2[0] && Math.abs(coordinates1[1] - coordinates2[1]) == 1) {
+        } else if (coordinates1[0] == coordinates2[0] && Math.abs(coordinates1[1] - coordinates2[1]) >= 1) {
             // horizontal
             return GridGraph.costs[GridGraph.costs.length - 1];
         }

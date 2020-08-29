@@ -26,7 +26,7 @@ public class Polygons {
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting simple polygons...");
         createStartAndEndNodeArray();
         simpleCycleDetection();
-        System.out.println(polygonIds.size() + " Polygons with simple Circle detection found");
+        System.out.println(polygonIds.size() + " polygons found with simple circle detection");
         int simplePolygonsSize = polygonIds.size();
         System.out.println(new Timestamp(System.currentTimeMillis()) + " Detecting non-simple polygons...");
         multiwayCycleDetection();

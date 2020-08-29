@@ -98,6 +98,7 @@ public class Main {
                     System.out.println("[Debug] Latitude= " + endLatitude);
                     System.out.println("[Debug] Longitude= " + endLongitude);
                     int nodeID = GridGraph.findVertex(endLongitude, endLatitude);
+                    nodeID = GridGraph.findVertexInWater(nodeID);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
                 }
 
