@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class WebServer {
     public static void startWebServer() {
-        System.out.println(new Timestamp(System.currentTimeMillis()) + "Starting Wwbserver...");
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Starting Wwbserver...");
         InetSocketAddress Adresse = new InetSocketAddress(8004);
         HttpServer server = null;
         try {
@@ -23,19 +23,17 @@ public class WebServer {
         server.createContext("/MoogleGaps", new MyHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
-        System.out.println(new Timestamp(System.currentTimeMillis()) + "Webserver online!");
+        System.out.println(new Timestamp(System.currentTimeMillis()) + " Webserver is online!");
+        System.out.println("Start of the web server communication logs:");
     }
 
     private static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "uninitialisiert";
-            String global = "";
-
+            String response = "";
             if (t.getRequestMethod().equals("GET")) {
-                System.out.println("GET wurde gesendet!");
-                System.out.println("global ist: " + global);
-                response = "Es wurde ein GET request abgefragt!";
+                System.out.println("GET has been sent!");
+                response = "get request received!";
                 t.sendResponseHeaders(200, response.length());
                 OutputStream os = t.getResponseBody();
                 os.write(response.getBytes());
@@ -43,17 +41,15 @@ public class WebServer {
             }
 
             if (t.getRequestMethod().equals("POST")) {
-                System.out.println("Post wurde gesendet!");
                 String input = "";
-
-                // Block to read Post reqest
+                // Block to read Post request
                 int x = t.getRequestBody().read();
                 while (x != -1) {
                     input = input + (char) x;
                     x = t.getRequestBody().read();
                 }
 
-                System.out.println("[Debug]: " + input);
+                System.out.println(new Timestamp(System.currentTimeMillis()) + " [Frontend -> Backend]: " + input);
                 String[] split = input.split(";");
 
                 //Procedure to set the startnode
@@ -62,8 +58,6 @@ public class WebServer {
                     double startLatitude = Double.parseDouble(latlng[0]);
                     double startLongitude = Double.parseDouble(latlng[1]);
                     startLongitude = ((((startLongitude + 180) % 360) + 360) % 360) - 180;
-                    System.out.println("[Debug] Latitude= " + startLatitude);
-                    System.out.println("[Debug] Longitude= " + startLongitude);
                     int nodeID = GridGraph.findVertex(startLongitude, startLatitude);
                     nodeID = GridGraph.findVertexInWater(nodeID);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
@@ -75,8 +69,6 @@ public class WebServer {
                     double endLatitude = Double.parseDouble(latlng[0]);
                     double endLongitude = Double.parseDouble(latlng[1]);
                     endLongitude = ((((endLongitude + 180) % 360) + 360) % 360) - 180;
-                    System.out.println("[Debug] Latitude= " + endLatitude);
-                    System.out.println("[Debug] Longitude= " + endLongitude);
                     int nodeID = GridGraph.findVertex(endLongitude, endLatitude);
                     nodeID = GridGraph.findVertexInWater(nodeID);
                     response = GridGraph.idToLatitude(nodeID) + "," + GridGraph.idToLongitude(nodeID);
@@ -93,9 +85,8 @@ public class WebServer {
                     int targetId = GridGraph.findVertex(endLongitude, endLatitude);
                     ArrayList<Integer> route = Navigation.dijkstra(sourceId, targetId);
                     response = GeoJson.generateRoute(GridGraph.idToLongitude(route), GridGraph.idToLatitude(route));
-                    System.out.println(response);
                 }
-
+                System.out.println(new Timestamp(System.currentTimeMillis()) + " [Backend -> Frontend]: " + response);
                 t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                 t.sendResponseHeaders(200, response.length());
                 OutputStream os = t.getResponseBody();

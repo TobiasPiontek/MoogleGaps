@@ -167,7 +167,7 @@ public class GridGraph {
         coordinates[1] = latitude;
         return coordinates;
     }
-    
+
     /**
      * takes row and column of vertex ID
      *
@@ -289,7 +289,6 @@ public class GridGraph {
             longitudeCoordinates[i] = idToLongitude(nodeIds.get(i));
             if (i > 0) {
                 if (Math.abs(longitudeCoordinates[i - 1] - idToLongitude(nodeIds.get(i))) > sideLength * 2) {
-                    System.err.println("Jumped into correction Block!");
                     if (idToLongitude(nodeIds.get(i)) < 0) {
                         longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) + 360;
                     } else {

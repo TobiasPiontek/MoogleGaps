@@ -1,6 +1,5 @@
 package MoogleGaps;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -13,8 +12,6 @@ public class Navigation {
     private static int[] prev;
 
     private static double dijkstraCalculation(int sourceId, int targetId) {
-        System.out.println(new Timestamp(System.currentTimeMillis()) + " Computing Dijkstra's algorithm...");
-
         //Initialization
         weights = new double[GridGraph.vertexData.length];
         prev = new int[GridGraph.vertexData.length];
@@ -77,17 +74,16 @@ public class Navigation {
     }
 
     private static ArrayList<Integer> getWay(int sourceId, int targetId) {
-        System.out.println(new Timestamp(System.currentTimeMillis()) + " Getting way...");
 
         int currentId = targetId;
         ArrayList<Integer> path = new ArrayList<>();
         while (currentId != sourceId) {
             path.add(currentId);
-            System.out.println("Get weight of current node: " + weights[currentId]);
+            //System.out.println("Get weight of current node: " + weights[currentId]);
             currentId = prev[currentId];
             //preventing loop during way readout
             if (currentId == prev[currentId]) {
-                System.out.println("No possible route found!");
+                System.err.println("No possible route could be found!");
                 return new ArrayList<>();
             }
         }
