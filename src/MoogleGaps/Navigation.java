@@ -33,7 +33,6 @@ public class Navigation {
         double currentWeight;
         double cost;
         boolean surroundedByWater;
-        int[] neighborsOfNeighbor;
         do {
             currentNode = queue.poll();
             currentWeight = weights[currentNode];
@@ -44,7 +43,6 @@ public class Navigation {
                         // check if neighbor is surrounded by water
                         surroundedByWater = isSurroundedByWater(neighbor);
                         if (surroundedByWater) {
-
                             // check if neighbor is better
                             cost = getCosts(currentNode, neighbor);
                             if (weights[neighbor] > currentWeight + cost) {
@@ -58,9 +56,7 @@ public class Navigation {
                 visited[currentNode] = true;
             }
         } while (!queue.isEmpty()/* && currentNode != targetId*/);
-
         return weights[targetId];
-
     }
 
     /**
