@@ -121,6 +121,7 @@ public class Navigation {
             // horizontal
             return GridGraph.costs[GridGraph.costs.length - 1];
         }
+        System.err.println("[Debug] No reasonable cost could be assigned! (getCost function!)");
         return 0.0;
     }
 

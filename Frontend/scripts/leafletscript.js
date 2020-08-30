@@ -133,7 +133,7 @@ function checkFirst() {
             }
         };
         xhttp.open("POST", "http://localhost:8004/MoogleGaps", true);
-        xhttp.send("SetStartnode" + ";" + document.getElementById("lat1").innerHTML + "," + document.getElementById("long1").innerHTML);
+        xhttp.send("SetNode" + ";" + document.getElementById("lat1").innerHTML + "," + document.getElementById("long1").innerHTML);
     }
 };
 
@@ -152,5 +152,5 @@ function checkSecond() {
         }
     };
     xhttp.open("POST", "http://localhost:8004/MoogleGaps", true);
-    xhttp.send("SetStartnode" + ";" + document.getElementById("lat2").innerHTML + "," + document.getElementById("long2").innerHTML);
+    xhttp.send("SetNode" + ";" + document.getElementById("lat2").innerHTML + "," + document.getElementById("long2").innerHTML);
 };
