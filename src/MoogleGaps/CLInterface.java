@@ -40,7 +40,7 @@ public class CLInterface {
             }
         }
     }
-    
+
 
     public static int enterGridGraphResolution() {
         Scanner scanner = new Scanner(System.in);
@@ -48,4 +48,14 @@ public class CLInterface {
         return scanner.nextInt();
     }
 
+    public static boolean generateNewGridGraph() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Generate new grid graph [0] or use existing one[1]?");
+        int input = scanner.nextInt();
+        if (input == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

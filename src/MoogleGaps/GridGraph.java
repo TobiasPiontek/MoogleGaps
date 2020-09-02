@@ -1,5 +1,6 @@
 package MoogleGaps;
 
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -308,4 +309,45 @@ public class GridGraph {
         return latitudeCoordinates;
     }
 
+    /**
+     * serializes vertexData into n_vertex_data_hxw.ser
+     */
+    public static void serialize(String filepath) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("./OSMCacheData/" + vertexData.length + "[" + filepath + "]" + southToNorth + "x" + westToEast + ".ser");
+            //FileOutputStream fileOut = new FileOutputStream("./OSMCacheData/vertex_data.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(vertexData);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    /**
+     * deserializes n_vertex_data_hxw.ser into vertexData
+     */
+    public static void deserialize(String filepath) {
+        try {
+            //FileInputStream fileIn = new FileInputStream(name + ".ser");
+            FileInputStream fileIn = new FileInputStream(filepath);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            vertexData = (boolean[]) in.readObject();
+            in.close();
+            fileIn.close();
+            String[] numbers = filepath.replaceAll("^\\D+", "").split("\\D+");
+            southToNorth = Integer.parseInt(numbers[1]);
+            westToEast = Integer.parseInt(numbers[2]);
+            sideLength = 180.0 / southToNorth;
+            computeCosts();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Error");
+            c.printStackTrace();
+            return;
+        }
+    }
 }
