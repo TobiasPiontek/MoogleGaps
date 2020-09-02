@@ -302,15 +302,30 @@ public class GridGraph {
 
     public static double[] idToLongitude(ArrayList<Integer> nodeIds) {
         double[] longitudeCoordinates = new double[nodeIds.size()];
+        boolean rightBlock = false;
+        boolean leftBlock = false;
         for (int i = 0; i < nodeIds.size(); i++) {
             //Block to fix ugly ways at the border section
             longitudeCoordinates[i] = idToLongitude(nodeIds.get(i));
+
             if (i > 0) {
                 if (Math.abs(longitudeCoordinates[i - 1] - idToLongitude(nodeIds.get(i))) > sideLength * 2) {
                     if (idToLongitude(nodeIds.get(i)) < 0) {
-                        longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) + 360;
+                        rightBlock = true;
+                        if (!leftBlock) {
+                            longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) + 360;
+                        } else {
+                            rightBlock = false;
+                            longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) - 360;
+                        }
                     } else {
-                        longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) - 360;
+                        leftBlock = true;
+                        if (!rightBlock) {
+                            longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) - 360;
+                        } else {
+                            leftBlock = false;
+                            longitudeCoordinates[i] = idToLongitude(nodeIds.get(i)) + 360;
+                        }
                     }
                 }
             }
