@@ -27,14 +27,31 @@ public class GridGraph {
         vertexData = new boolean[southToNorth * westToEast];
         double longitude;
         double latitude;
-        System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
+
+        /*String progressBar = "[";
+        for (int i = 0; i < 100; i++) {
+            progressBar += " ";
+        }
+        progressBar += "]";*/
+
+        int percentage = 0;
+        int fullLength = westToEast * southToNorth;
+        float step = (float) (fullLength / 100.0);
+
         for (int i = 0; i < westToEast; i++) {
             longitude = colToLongitude(i);
             for (int j = 0; j < southToNorth; j++) {
                 latitude = rowToLatitude(j);
                 vertexData[i * southToNorth + j] = Geometry.pointInPolygonTest(longitude, latitude);
+
+                if (i * j >= percentage * step) {
+                    CLInterface.progressPercentage(i * j, fullLength);
+                    percentage += 1;
+                }
             }
         }
+        CLInterface.progressPercentage(1, 1);
+        System.out.println("southToNorth = " + southToNorth + ", westToEast = " + westToEast + ", vertexData.length = " + vertexData.length);
         computeCosts();
     }
 
